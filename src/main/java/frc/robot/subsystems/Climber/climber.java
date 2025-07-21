@@ -25,7 +25,6 @@ public class climber extends SubsystemBase{
         climberMotorCfg.Slot1.kD = 0;
         climberMotorCfg.Slot1.kI = 0;
         climberMotor.getConfigurator().apply(climberMotorCfg);
-
     }
 
     public void setAngle(Supplier<Double> Rotation) {

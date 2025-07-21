@@ -14,7 +14,6 @@ import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.AlgaeGetter.algaeGetter;
 
 public class elevator extends SubsystemBase {
     private TalonFX LeftTalon;
@@ -31,7 +30,7 @@ public class elevator extends SubsystemBase {
         LeftTalonCfg.MotorOutput.NeutralMode = NeutralModeValue.Brake; 
         RightTalonCfg.MotorOutput.NeutralMode = NeutralModeValue.Brake;             
         LeftTalonCfg.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-        RightTalonCfg.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        RightTalonCfg.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         LeftTalonCfg.Slot1.withGravityType(GravityTypeValue.Elevator_Static);
         LeftTalonCfg.Slot1.kP = 0.02;
         LeftTalonCfg.Slot1.kI = 0;

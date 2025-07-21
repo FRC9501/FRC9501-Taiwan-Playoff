@@ -91,8 +91,6 @@ public class MAXSwerveModule {
      Rotation2d.fromRadians(getAbsoluteEncoerRad()));
   }
 
-  
-
   public void setDesiredState(SwerveModuleState desiredState) {
     SwerveModuleState state = new SwerveModuleState();
     state.angle = Rotation2d.fromRadians(getTurningPosition());

@@ -129,8 +129,6 @@ public class DriveSubsystem extends SubsystemBase {
       modules[2].getPosition(),
       modules[3].getPosition()});
 
-
-
     // System.out.println(gyro.getRotation2d().getDegrees());
     m_odometry.update(
         gyro.getRotation2d(),

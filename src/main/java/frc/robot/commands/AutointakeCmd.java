@@ -1,42 +1,42 @@
-package frc.robot.commands;
+// package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Intake.IntakeSub;
+// import edu.wpi.first.wpilibj2.command.Command;
+// import frc.robot.subsystems.Intake.IntakeSub;
 
-public class AutointakeCmd extends Command{
+// public class AutointakeCmd extends Command{
 
-    private IntakeSub intake;
+//     private IntakeSub intake;
 
-    public AutointakeCmd(IntakeSub Intake) {
-        this.intake = Intake;
-        addRequirements(Intake);
-    }
+//     public AutointakeCmd(IntakeSub Intake) {
+//         this.intake = Intake;
+//         addRequirements(Intake);
+//     }
 
-    // @Override
-    // public void initialize() {
-    //     intake.motorSet(1, 0.4);
-    // }
+//     // @Override
+//     // public void initialize() {
+//     //     intake.motorSet(1, 0.4);
+//     // }
 
-    @Override
-    public void execute() {
-        if (intake.Distance() > 900) {
-            intake.stop();
-        }
-    }
+//     @Override
+//     public void execute() {
+//         if (intake.Distance() > 900) {
+//             intake.stop();
+//         }
+//     }
 
-    @Override
-    public void end(boolean interrupted){
+//     @Override
+//     public void end(boolean interrupted){
         
-    }
+//     }
 
-    // @Override
-    // public boolean isFinished() {
-    //     if (intake.Distance() > 900){
-    //         intake.motorSet(0, 0);
-    //         return true;
-    //     }else{
-    //         return false;
-    //     }
-    // }
+//     // @Override
+//     // public boolean isFinished() {
+//     //     if (intake.Distance() > 900){
+//     //         intake.motorSet(0, 0);
+//     //         return true;
+//     //     }else{
+//     //         return false;
+//     //     }
+//     // }
     
-}
+// }
