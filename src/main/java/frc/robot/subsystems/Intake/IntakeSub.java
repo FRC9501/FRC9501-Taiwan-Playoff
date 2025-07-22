@@ -9,19 +9,35 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
+import static edu.wpi.first.units.Units.Meters;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.Elevator.Elevator;
 
-public class IntakeSub extends SubsystemBase {      
-    
+public class IntakeSub extends SubsystemBase {
     private final SparkMax motor = new SparkMax(14, MotorType.kBrushless);
     private final TalonFXConfiguration armCFG = new TalonFXConfiguration();
     private final TalonFX armTalonFX = new TalonFX(1);
     private final PositionDutyCycle request = new PositionDutyCycle(0); 
+    private double position;
+    private static final Distance LEdSpacing =  Meters.of(1 / 120.0);
+    private AnalogInput analog = new AnalogInput(0);
+    private final SparkMaxConfig motorconfig;
 
     public IntakeSub() {
+        motorconfig = new SparkMaxConfig();
+        motorconfig.idleMode(IdleMode.kCoast);
         armCFG.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         armCFG.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        armCFG.Slot0.kG = 0;
+        armCFG.Slot0.kS = 0;
         armCFG.Slot0.kP = 0.05;
         armCFG.Slot0.kI = 0;
         armCFG.Slot0.kD = 0;
@@ -35,40 +51,57 @@ public class IntakeSub extends SubsystemBase {
     }
     
     public void readyPosition() {
-        armTalonFX.setControl(request.withSlot(0).withPosition(0));
+        position = 0;
     }
-
-    public void L0Position() {
-        armTalonFX.setControl(request.withSlot(0).withPosition(1));
-    }
-
     public void L1Position() {
-        armTalonFX.setControl(request.withSlot(0).withPosition(2));
+        position = 1;
     }
-
     public void L2Position() {
-        armTalonFX.setControl(request.withSlot(0).withPosition(3));
+        position = 2;
     }
     public void L3Position() {
-        armTalonFX.setControl(request.withSlot(0).withPosition(4));
+        position = 3;
     }
     public void L4Position() {
-        armTalonFX.setControl(request.withSlot(0).withPosition(5));
+        position = 4;
+    }
+    public void netPosition() {
+        position = 5;
+    }
+    public void processer() {
+        position = 7;
     }
 
     public void resetEncoder() {
         armTalonFX.setPosition(0);
     }
-
-    public void takeIn() {
-        motor.set(1);
+    public double nowposition() {
+        return armTalonFX.getPosition().getValueAsDouble();
     }
-
+    public boolean setpoint() {
+        return Math.abs(position - nowposition()) <= 1.0;
+    }
     public void shoot() {
         motor.set(-1);
+    }
+    public void stop() {
+        motor.set(0);
+    }
+    public double Distance() {
+        return analog.getValue();
+    }
+    
+    public void takeIn() {
+        motor.set(1);
+        if (Distance() > 650) {
+            stop();
+        } else {
+            motor.set(1);
+        }
     }
 
     @Override
     public void periodic() {
+        armTalonFX.setControl(request.withPosition(position));
     }
 }

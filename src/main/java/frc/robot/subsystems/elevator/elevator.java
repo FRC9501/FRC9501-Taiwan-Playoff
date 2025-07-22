@@ -1,4 +1,4 @@
-package frc.robot.subsystems.elevator;
+package frc.robot.subsystems.Elevator;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
@@ -11,15 +11,17 @@ import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class elevator extends SubsystemBase {
+public class Elevator extends SubsystemBase {
     private TalonFX LeftTalon;
     private TalonFX RightTalon;
     private TalonFXConfiguration RightTalonCfg = new TalonFXConfiguration();
     private TalonFXConfiguration LeftTalonCfg = new TalonFXConfiguration();
     private PositionDutyCycle request = new PositionDutyCycle(0);
     // private DutyCycleOut duty = new DutyCycleOut(0.2);
+    private double elevatorposition;
 
-    public elevator() {
+
+    public Elevator() {
         LeftTalon = new TalonFX(13);
         RightTalon = new TalonFX(14);
 
@@ -29,6 +31,7 @@ public class elevator extends SubsystemBase {
         RightTalonCfg.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         LeftTalonCfg.Slot1.withGravityType(GravityTypeValue.Elevator_Static);
         LeftTalonCfg.Slot1.kP = 0.02;
+        LeftTalonCfg.Slot1.kG = 0.0;
         LeftTalonCfg.Slot1.kI = 0;
         LeftTalonCfg.Slot1.kD = 0;
         LeftTalonCfg.Slot1.kA = 0;
@@ -39,6 +42,7 @@ public class elevator extends SubsystemBase {
 
         RightTalonCfg.Slot1.withGravityType(GravityTypeValue.Elevator_Static);
         RightTalonCfg.Slot1.kP = 0.02;
+        RightTalonCfg.Slot1.kG = 0.0;
         RightTalonCfg.Slot1.kI = 0;
         RightTalonCfg.Slot1.kD = 0;
         RightTalonCfg.Slot1.kA = 0;
@@ -50,6 +54,7 @@ public class elevator extends SubsystemBase {
         LeftTalon.getConfigurator().apply(LeftTalonCfg);
 
         resetEncoder();
+
     }
 
     // public void Duty() {
@@ -64,36 +69,45 @@ public class elevator extends SubsystemBase {
     public double get() {
         return RightTalon.getPosition().getValueAsDouble();
     }
-
+    public boolean setpoint(){
+        return Math.abs(nowposition() - elevatorposition) <= 0.1;
+    }
+    public double nowposition() {
+        return RightTalon.getPosition().getValueAsDouble();
+    }
     public void stop() {
         RightTalon.set(0);
         LeftTalon.set(0);
     }
 
+
+    public void readyPosition() {
+        elevatorposition = 0.0;
+    }
+    public void takecoral() {
+        elevatorposition = -1;
+    }
+
+    public void L4() {
+        elevatorposition = 4.0;
+    }
+
     public void L3() {
-        RightTalon.setControl(request.withPosition(39).withSlot(1).withFeedForward(-0));
-        LeftTalon.setControl(request.withPosition(39).withSlot(1).withFeedForward(-0));
+        elevatorposition = 3.0;
     }
 
     public void L2() {
-        RightTalon.setControl(request.withPosition(18).withSlot(1).withFeedForward(0.08));
-        LeftTalon.setControl(request.withPosition(18).withSlot(1).withFeedForward(0.08));
+        elevatorposition = 2.0;
     }
 
     public void L1() {
-        RightTalon.setControl(request.withPosition(7).withSlot(1).withFeedForward(0.06));
-        LeftTalon.setControl(request.withPosition(7).withSlot(1).withFeedForward(0.06));  
-    }
-
-    public void L0() {
-        RightTalon.setControl(request.withPosition(0).withSlot(1).withFeedForward(0.04));
-        LeftTalon.setControl(request.withPosition(0).withSlot(1).withFeedForward(0.04));  
+        elevatorposition = 1.0;
     }
 
     @Override
     public void periodic() {
-        get();
-        SmartDashboard.putNumber("get", get());
+        RightTalon.setControl(request.withPosition(elevatorposition).withSlot(1));
+        LeftTalon.setControl(request.withPosition(elevatorposition).withSlot(1));
     }
 
     // public void setAngle(Supplier<Double> Rotation) {
@@ -105,6 +119,7 @@ public class elevator extends SubsystemBase {
         RightTalon.setPosition(0);
         LeftTalon.setPosition(0);
     }
+    
 }
 
 

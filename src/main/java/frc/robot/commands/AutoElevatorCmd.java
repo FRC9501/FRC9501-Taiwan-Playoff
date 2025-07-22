@@ -3,22 +3,22 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 // import frc.robot.subsystems.Intake.IntakeSub;
-import frc.robot.subsystems.elevator.elevator;
+import frc.robot.subsystems.Elevator.Elevator;
 
 public class AutoElevatorCmd extends Command{
 
-    private elevator elevator;
+    private Elevator Elevator;
     // private IntakeSub intake;
 
-    public AutoElevatorCmd(elevator Elevator) {
-        this.elevator = Elevator;
+    public AutoElevatorCmd(Elevator Elevator) {
+        this.Elevator = Elevator;
         // this.intake = intakeSub;
-        addRequirements(elevator);
+        addRequirements(Elevator);
     }
 
     @Override
     public void initialize() {
-        elevator.L3();
+        Elevator.L3();
     }
 
     @Override
@@ -33,7 +33,7 @@ public class AutoElevatorCmd extends Command{
 
     @Override
     public boolean isFinished(){
-        if (elevator.get() > 40) {
+        if (Elevator.get() > 40) {
             return true;
         }else{
             return false;

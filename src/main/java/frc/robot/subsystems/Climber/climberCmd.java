@@ -4,11 +4,11 @@ import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class climberCmd extends Command{
-    private final climber climber = new climber();
+public class ClimberCmd extends Command{
+    private final Climber climber = new Climber();
     private final Supplier<Double> Rotation;
    
-    public climberCmd(climber climber,Supplier<Double> Rotation) {
+    public ClimberCmd(Climber climber,Supplier<Double> Rotation) {
         this.Rotation = Rotation;
         addRequirements(climber);
     }   

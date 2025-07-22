@@ -1,18 +1,17 @@
 package frc.robot;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.AutoElevatorCmd;
 import frc.robot.commands.AutoLeftVisionCmd;
 import frc.robot.commands.AutoRightVisionCmd;
-// import frc.robot.commands.AutoShootCmd;
-// import frc.robot.commands.AutointakeCmd;
 import frc.robot.commands.SwerveJoystickCmd;
-import frc.robot.subsystems.Climber.climber;
-import frc.robot.subsystems.Climber.climberCmd;
-// import frc.robot.subsystems.Intake.IntakeSub;
+import frc.robot.subsystems.Climber.Climber;
+import frc.robot.subsystems.Climber.ClimberCmd;
 import frc.robot.subsystems.Swerve.DriveSubsystem;
 import frc.robot.subsystems.Vision.LeftReefVision;
 import frc.robot.subsystems.Vision.RightReefVision;
-import frc.robot.subsystems.elevator.elevator;
+import frc.robot.subsystems.Elevator.Elevator;
+
+import java.util.function.BooleanSupplier;
+
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
@@ -29,7 +28,7 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 public class RobotContainer {
   private final LeftReefVision leftVision = new LeftReefVision();
   private final RightReefVision rightVision = new RightReefVision();
-  private final elevator elevator = new elevator();
+  private final Elevator elevator = new Elevator();
   private boolean isL1Active = false;
   private boolean isL2Active = false;
   private boolean isL3Active = false;
@@ -45,7 +44,7 @@ public class RobotContainer {
   // private final IntakeSub intakeSub = new IntakeSub();
   private final GenericHID button = new GenericHID(1);
   private double climberPosition = 0;
-  private final climber climber = new climber();
+  private final Climber climber = new Climber();
 
   private String m_autoSelected;
   private static final String Test = "test";
@@ -110,18 +109,19 @@ public class RobotContainer {
   private void configureBindings() {
   //控制elevator的按鈕設置
     new JoystickButton(joystick, Button.kX.value).onTrue(new InstantCommand(() -> swerveSubsystem.zeroHeading()));
+    BooleanSupplier coral = () -> button.getRawButton(2);
 
     up.whileTrue(new InstantCommand(() -> {
       climberPosition+=1;}));
     down.whileTrue(new InstantCommand(() -> {
       climberPosition-=1;}));
-    up.whileTrue(new climberCmd(climber,()-> climberPosition));
-    down.whileTrue(new climberCmd(climber,()-> climberPosition));
+    up.whileTrue(new ClimberCmd(climber,()-> climberPosition));
+    down.whileTrue(new ClimberCmd(climber,()-> climberPosition));
 
-    new JoystickButton(button, 2).onTrue(new RunCommand(() ->elevator.L0(), elevator));
-    new JoystickButton(button, 5).onTrue(new RunCommand(() ->elevator.L1(), elevator));
-    new JoystickButton(button, 8).onTrue(new RunCommand(() ->elevator.L2(), elevator));
-    new JoystickButton(button, 11).onTrue(new RunCommand(() ->elevator.L3(), elevator));
+    // new JoystickButton(button, 2).onTrue(new RunCommand(() ->elevator.L0(), elevator));
+    // new JoystickButton(button, 5).onTrue(new RunCommand(() ->elevator.L1(), elevator));
+    // new JoystickButton(button, 8).onTrue(new RunCommand(() ->elevator.L2(), elevator));
+    // new JoystickButton(button, 11).onTrue(new RunCommand(() ->elevator.L3(), elevator));
 
     new JoystickButton(joystick, Button.kA.value).onTrue(new InstantCommand(()-> leftVision.chagePiepeline()));
     new JoystickButton(joystick, Button.kY.value).onTrue(new InstantCommand(()-> rightVision.chagePiepeline()));

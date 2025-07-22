@@ -10,12 +10,12 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class climber extends SubsystemBase{
+public class Climber extends SubsystemBase{
     private final TalonFX climberMotor;
     private final TalonFXConfiguration climberMotorCfg;
     private final PositionDutyCycle request = new PositionDutyCycle(0);
 
-    public climber() {
+    public Climber() {
         climberMotorCfg = new TalonFXConfiguration();
         climberMotor = new TalonFX(1);
         climberMotorCfg.MotorOutput.NeutralMode = NeutralModeValue.Brake;
