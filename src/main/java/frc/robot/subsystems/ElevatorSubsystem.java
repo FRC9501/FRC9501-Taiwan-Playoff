@@ -1,4 +1,4 @@
-package frc.robot.subsystems.Elevator;
+package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
@@ -8,10 +8,10 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Elevator extends SubsystemBase {
+public class ElevatorSubsystem extends SubsystemBase {
     private TalonFX LeftTalon;
     private TalonFX RightTalon;
     private TalonFXConfiguration RightTalonCfg = new TalonFXConfiguration();
@@ -21,7 +21,7 @@ public class Elevator extends SubsystemBase {
     private double elevatorposition;
 
 
-    public Elevator() {
+    public ElevatorSubsystem() {
         LeftTalon = new TalonFX(13);
         RightTalon = new TalonFX(14);
 

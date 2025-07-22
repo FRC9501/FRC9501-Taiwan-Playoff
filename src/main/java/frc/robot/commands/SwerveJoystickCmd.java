@@ -8,16 +8,16 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.Swerve.DriveSubsystem;
+import frc.robot.subsystems.SwerveDriveSubsystem;
 
 public class SwerveJoystickCmd extends Command{
-    private final DriveSubsystem swerveSubsystem;
+    private final SwerveDriveSubsystem m_swerveSubsystem;
     private final Supplier<Double> xSpeedFuntion, ySpeedFunction, turningSpeedFunction;
     private final Supplier<Boolean> fieldOrientedFunction;
     private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
 
-    public SwerveJoystickCmd(DriveSubsystem swerveSubsystem, Supplier<Double> xSupplier, Supplier<Double>ySupplier, Supplier<Double> turningSupplier, Supplier<Boolean> fieldOrientedSupplier){
-        this.swerveSubsystem = swerveSubsystem;
+    public SwerveJoystickCmd(SwerveDriveSubsystem swerveSubsystem, Supplier<Double> xSupplier, Supplier<Double>ySupplier, Supplier<Double> turningSupplier, Supplier<Boolean> fieldOrientedSupplier){
+        this.m_swerveSubsystem = swerveSubsystem;
         this.xSpeedFuntion = xSupplier;
         this.ySpeedFunction = ySupplier;
         this.turningSpeedFunction = turningSupplier;
@@ -27,7 +27,7 @@ public class SwerveJoystickCmd extends Command{
         this.yLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
         this.turningLimiter = new SlewRateLimiter(DriveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
 
-        addRequirements(swerveSubsystem);
+        addRequirements(m_swerveSubsystem);
     }
 
     @Override
@@ -45,22 +45,22 @@ public class SwerveJoystickCmd extends Command{
         turningSpeed = turningLimiter.calculate(turningSpeed)*DriveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
         
         if(xSpeed == 0 && ySpeed == 0 && turningSpeed == 0){
-            swerveSubsystem.stopModules();
+            m_swerveSubsystem.stopModules();
         }
 
         ChassisSpeeds chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
 
         if(fieldOrientedFunction.get()){    
-            chassisSpeeds = ChassisSpeeds.discretize(ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed,ySpeed,turningSpeed,swerveSubsystem.getRotation2d()),0.02);
+            chassisSpeeds = ChassisSpeeds.discretize(ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed,ySpeed,turningSpeed,m_swerveSubsystem.getRotation2d()),0.02);
         }
 
         SwerveModuleState[] moduleStates = DriveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
-        swerveSubsystem.setModuleStates(moduleStates);
+        m_swerveSubsystem.setModuleStates(moduleStates);
     }
 
     @Override
     public void end(boolean interrupted){
-        swerveSubsystem.stopModules();
+        m_swerveSubsystem.stopModules();
     }
 
     @Override

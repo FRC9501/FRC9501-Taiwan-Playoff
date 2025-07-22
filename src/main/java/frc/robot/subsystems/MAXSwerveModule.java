@@ -1,4 +1,4 @@
-package frc.robot.subsystems.Swerve;
+package frc.robot.subsystems;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -45,9 +45,9 @@ public class MAXSwerveModule {
     drivingController = driveMotor.getClosedLoopController();
     turningController = turningMotor.getClosedLoopController();
 
-    driveMotor.configure(Configs.MAXSwerveModule.drivingConfig.inverted(driveMotorReverse), ResetMode.kResetSafeParameters,
+    driveMotor.configure(SwerveConfigs.MAXSwerveModule.drivingConfig.inverted(driveMotorReverse), ResetMode.kResetSafeParameters,
         PersistMode.kPersistParameters);
-    turningMotor.configure(Configs.MAXSwerveModule.turningConfig.inverted(turningMotorReverse), ResetMode.kResetSafeParameters,
+    turningMotor.configure(SwerveConfigs.MAXSwerveModule.turningConfig.inverted(turningMotorReverse), ResetMode.kResetSafeParameters,
         PersistMode.kPersistParameters);
 
     resetEncoders();

@@ -1,4 +1,4 @@
-package frc.robot.subsystems.Intake;
+package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkMax;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -12,26 +12,22 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
-import static edu.wpi.first.units.Units.Meters;
-import static edu.wpi.first.units.Units.MetersPerSecond;
-
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.measure.Distance;
+// import static edu.wpi.first.units.Units.Meters;
+// import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.subsystems.Elevator.Elevator;
 
-public class IntakeSub extends SubsystemBase {
+public class IntakeSubsystem extends SubsystemBase {
     private final SparkMax motor = new SparkMax(14, MotorType.kBrushless);
     private final TalonFXConfiguration armCFG = new TalonFXConfiguration();
     private final TalonFX armTalonFX = new TalonFX(1);
     private final PositionDutyCycle request = new PositionDutyCycle(0); 
     private double position;
-    private static final Distance LEdSpacing =  Meters.of(1 / 120.0);
+    // private static final Distance LEdSpacing =  Meters.of(1 / 120.0);
     private AnalogInput analog = new AnalogInput(0);
     private final SparkMaxConfig motorconfig;
 
-    public IntakeSub() {
+    public IntakeSubsystem() {
         motorconfig = new SparkMaxConfig();
         motorconfig.idleMode(IdleMode.kCoast);
         armCFG.MotorOutput.NeutralMode = NeutralModeValue.Brake;

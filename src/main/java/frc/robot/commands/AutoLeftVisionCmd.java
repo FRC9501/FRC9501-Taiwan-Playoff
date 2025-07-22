@@ -1,25 +1,24 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.Timer;
-import frc.robot.subsystems.Swerve.DriveSubsystem;
-import frc.robot.subsystems.Vision.LeftReefVision;
+import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.subsystems.LeftReefVision;
 
 public class AutoLeftVisionCmd extends Command {
 
-    private final LeftReefVision leftVision;
-    private final DriveSubsystem swerveSubsystem;
+    private final LeftReefVision m_leftVision;
+    private final SwerveDriveSubsystem m_SwerveSubsystem;
     private Boolean TargetStatus = true;
 
-    public AutoLeftVisionCmd(LeftReefVision left,DriveSubsystem swerve) {
-        this.leftVision = left;
-        this.swerveSubsystem = swerve;
-        addRequirements(left,swerve);
+    public AutoLeftVisionCmd(LeftReefVision left,SwerveDriveSubsystem swerve) {
+        this.m_leftVision = left;
+        this.m_SwerveSubsystem = swerve;
+        addRequirements(m_leftVision,m_SwerveSubsystem);
     }
 
     @Override
     public void initialize() {
-        if (leftVision.states()) {
+        if (m_leftVision.states()) {
             TargetStatus = true;
         }else{
             TargetStatus = false;
@@ -30,14 +29,14 @@ public class AutoLeftVisionCmd extends Command {
 
     @Override
     public void execute() {
-        if (TargetStatus) {
-            new SwerveJoystickCmd(
-                swerveSubsystem,
-                () -> -leftVision.ySpeedOutput(),
-                () -> leftVision.xSpeedOutput(),
-                () -> 0.0,
-                () -> false);
-            }
+        // if (TargetStatus) {
+        //     new SwerveJoystickCmd(
+        //         swerveSubsystem,
+        //         () -> -m_leftVision.ySpeedOutput(),
+        //         () -> m_leftVision.xSpeedOutput(),
+        //         () -> 0.0,
+        //         () -> false);
+        //     }
     }
 
     @Override

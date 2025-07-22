@@ -7,31 +7,31 @@ package frc.robot.commands;
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Intake.IntakeSub;
-import frc.robot.subsystems.Elevator.Elevator;
+import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class PutL3 extends Command {
   /** Creates a new L0. */
-  private final Elevator m_elevatorSub;
-  private final IntakeSub m_intakeSub;
+  private final ElevatorSubsystem m_elevatorSubsystem;
+  private final IntakeSubsystem m_intakeSubsystem;
   private final BooleanSupplier ifFeedFunc;
   private boolean coral;
   
   
-  public PutL3(Elevator elevatorSub, IntakeSub intakeSub, BooleanSupplier ifFeedFunc) {
+  public PutL3(ElevatorSubsystem elevatorSubsystem, IntakeSubsystem intakeSubsystem, BooleanSupplier ifFeedFunc) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.m_elevatorSub = elevatorSub;
-    this.m_intakeSub = intakeSub;
+    this.m_elevatorSubsystem = elevatorSubsystem;
+    this.m_intakeSubsystem = intakeSubsystem;
     this.ifFeedFunc = ifFeedFunc;    
-    addRequirements(m_intakeSub, m_elevatorSub);
+    addRequirements(m_intakeSubsystem, m_elevatorSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_elevatorSub.L3();
-    m_intakeSub.L3Position();
+    m_elevatorSubsystem.L3();
+    m_intakeSubsystem.L3Position();
     // This is where you would put any initialization code for the command.
     // For example, you might set a motor to a specific speed or position.
   }
@@ -40,9 +40,9 @@ public class PutL3 extends Command {
   @Override
   public void execute() {
     coral = ifFeedFunc.getAsBoolean();
-    if (m_intakeSub.setpoint()&& m_elevatorSub.setpoint()&& coral == true) {
-      m_intakeSub.readyPosition();
-      m_intakeSub.shoot();
+    if (m_intakeSubsystem.setpoint()&& m_elevatorSubsystem.setpoint()&& coral == true) {
+      m_intakeSubsystem.readyPosition();
+      m_intakeSubsystem.shoot();
     }
   }
 

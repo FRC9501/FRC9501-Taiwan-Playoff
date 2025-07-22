@@ -3,12 +3,11 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AutoLeftVisionCmd;
 import frc.robot.commands.AutoRightVisionCmd;
 import frc.robot.commands.SwerveJoystickCmd;
-import frc.robot.subsystems.Climber.Climber;
-import frc.robot.subsystems.Climber.ClimberCmd;
-import frc.robot.subsystems.Swerve.DriveSubsystem;
-import frc.robot.subsystems.Vision.LeftReefVision;
-import frc.robot.subsystems.Vision.RightReefVision;
-import frc.robot.subsystems.Elevator.Elevator;
+import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.SwerveDriveSubsystem;
+import frc.robot.subsystems.LeftReefVision;
+import frc.robot.subsystems.RightReefVision;
+import frc.robot.subsystems.ElevatorSubsystem;
 
 import java.util.function.BooleanSupplier;
 
@@ -28,7 +27,7 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 public class RobotContainer {
   private final LeftReefVision leftVision = new LeftReefVision();
   private final RightReefVision rightVision = new RightReefVision();
-  private final Elevator elevator = new Elevator();
+  private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
   private boolean isL1Active = false;
   private boolean isL2Active = false;
   private boolean isL3Active = false;
@@ -39,12 +38,11 @@ public class RobotContainer {
   private boolean isProPositionActive = false;
   private boolean isBargePositionActive = false;
 
-  private final DriveSubsystem swerveSubsystem = new DriveSubsystem();
+  private final SwerveDriveSubsystem swerveSubsystem = new SwerveDriveSubsystem();
   private final Joystick joystick = new Joystick(OIConstants.kDriverControllerPort);
   // private final IntakeSub intakeSub = new IntakeSub();
   private final GenericHID button = new GenericHID(1);
   private double climberPosition = 0;
-  private final Climber climber = new Climber();
 
   private String m_autoSelected;
   private static final String Test = "test";
@@ -103,20 +101,20 @@ public class RobotContainer {
     ));
     configureBindings();
     
-    elevator.resetEncoder();
+    m_ElevatorSubsystem.resetEncoder();
   }
 
   private void configureBindings() {
   //控制elevator的按鈕設置
     new JoystickButton(joystick, Button.kX.value).onTrue(new InstantCommand(() -> swerveSubsystem.zeroHeading()));
-    BooleanSupplier coral = () -> button.getRawButton(2);
+    BooleanSupplier ifFeedFunc = () -> button.getRawButton(2);
 
     up.whileTrue(new InstantCommand(() -> {
       climberPosition+=1;}));
     down.whileTrue(new InstantCommand(() -> {
       climberPosition-=1;}));
-    up.whileTrue(new ClimberCmd(climber,()-> climberPosition));
-    down.whileTrue(new ClimberCmd(climber,()-> climberPosition));
+    // up.whileTrue(new ClimberCmd(climber,()-> climberPosition));
+    // down.whileTrue(new ClimberCmd(climber,()-> climberPosition));
 
     // new JoystickButton(button, 2).onTrue(new RunCommand(() ->elevator.L0(), elevator));
     // new JoystickButton(button, 5).onTrue(new RunCommand(() ->elevator.L1(), elevator));

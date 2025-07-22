@@ -1,6 +1,6 @@
-package frc.robot.subsystems.Climber;
+package frc.robot.subsystems;
 
-import java.util.function.Supplier;
+import java.util.function.DoubleSupplier;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
@@ -10,12 +10,12 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.StaticFeedforwardSignValue;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Climber extends SubsystemBase{
+public class ClimberSubsystem extends SubsystemBase{
     private final TalonFX climberMotor;
     private final TalonFXConfiguration climberMotorCfg;
     private final PositionDutyCycle request = new PositionDutyCycle(0);
 
-    public Climber() {
+    public ClimberSubsystem() {
         climberMotorCfg = new TalonFXConfiguration();
         climberMotor = new TalonFX(1);
         climberMotorCfg.MotorOutput.NeutralMode = NeutralModeValue.Brake;
@@ -27,7 +27,7 @@ public class Climber extends SubsystemBase{
         climberMotor.getConfigurator().apply(climberMotorCfg);
     }
 
-    public void setAngle(Supplier<Double> Rotation) {
-        climberMotor.setControl(request.withPosition(Rotation.get()).withSlot(1));
+    public void setAngle(DoubleSupplier Rotation) {
+        climberMotor.setControl(request.withPosition(Rotation.getAsDouble()).withSlot(1));
     }
 }
