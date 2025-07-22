@@ -3,7 +3,7 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.AutoElevatorCmd;
 import frc.robot.commands.AutoLeftVisionCmd;
 import frc.robot.commands.AutoRightVisionCmd;
-import frc.robot.commands.AutoShootCmd;
+// import frc.robot.commands.AutoShootCmd;
 // import frc.robot.commands.AutointakeCmd;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.subsystems.Climber.climber;
