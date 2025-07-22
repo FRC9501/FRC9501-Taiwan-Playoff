@@ -1,10 +1,6 @@
 package frc.robot.subsystems.elevator;
 
-import java.util.function.Supplier;
-
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.DifferentialPositionDutyCycle;
-import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.GravityTypeValue;
@@ -52,7 +48,6 @@ public class elevator extends SubsystemBase {
         RightTalonCfg.Slot1.withStaticFeedforwardSign(StaticFeedforwardSignValue.UseClosedLoopSign);
         RightTalon.getConfigurator().apply(RightTalonCfg);
         LeftTalon.getConfigurator().apply(LeftTalonCfg);
-
 
         resetEncoder();
     }
