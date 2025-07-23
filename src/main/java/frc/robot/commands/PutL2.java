@@ -24,6 +24,7 @@ public class PutL2 extends Command {
     this.m_ElevatorSubsystem = elevatorSubsystem;
     this.m_IntakeSubsystem = intakeSubsystem;
     this.ifFeedFunc = ifFeedFunc;    
+     // This is where you would put any initialization code for the command.
     addRequirements(m_IntakeSubsystem, m_ElevatorSubsystem);
   }
 
@@ -40,7 +41,7 @@ public class PutL2 extends Command {
   @Override
   public void execute() {
     coral = ifFeedFunc.getAsBoolean();
-    if (m_IntakeSubsystem.setpoint()&& m_ElevatorSubsystem.setpoint()&& coral == true) {
+    if (m_IntakeSubsystem.setpoint()&& m_ElevatorSubsystem.setpoint()&&coral == true) {
       m_IntakeSubsystem.readyPosition();
       m_IntakeSubsystem.shoot();
     }

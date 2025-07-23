@@ -1,13 +1,22 @@
 package frc.robot;
 import frc.robot.Constants.OIConstants;
+import frc.robot.commands.AlgaeL2;
+import frc.robot.commands.AlgaeL3;
 import frc.robot.commands.AutoLeftVisionCmd;
 import frc.robot.commands.AutoRightVisionCmd;
+import frc.robot.commands.Getcoral;
+import frc.robot.commands.Processer;
+import frc.robot.commands.PutL1;
+import frc.robot.commands.PutL2;
+import frc.robot.commands.PutL3;
+import frc.robot.commands.PutL4;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.LeftReefVision;
 import frc.robot.subsystems.RightReefVision;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 import java.util.function.BooleanSupplier;
 
@@ -21,6 +30,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
@@ -28,6 +38,7 @@ public class RobotContainer {
   private final LeftReefVision leftVision = new LeftReefVision();
   private final RightReefVision rightVision = new RightReefVision();
   private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
+  private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
   private boolean isL1Active = false;
   private boolean isL2Active = false;
   private boolean isL3Active = false;
@@ -41,7 +52,7 @@ public class RobotContainer {
   private final SwerveDriveSubsystem swerveSubsystem = new SwerveDriveSubsystem();
   private final Joystick joystick = new Joystick(OIConstants.kDriverControllerPort);
   // private final IntakeSub intakeSub = new IntakeSub();
-  private final GenericHID button = new GenericHID(1);
+  private final CommandJoystick button = new CommandJoystick(1);
   private double climberPosition = 0;
 
   private String m_autoSelected;
@@ -107,7 +118,6 @@ public class RobotContainer {
   private void configureBindings() {
   //控制elevator的按鈕設置
     new JoystickButton(joystick, Button.kX.value).onTrue(new InstantCommand(() -> swerveSubsystem.zeroHeading()));
-    BooleanSupplier ifFeedFunc = () -> button.getRawButton(2);
 
     up.whileTrue(new InstantCommand(() -> {
       climberPosition+=1;}));
@@ -137,6 +147,22 @@ public class RobotContainer {
     () -> 0.0,
     () -> false
  ));
+
+ 
+
+  BooleanSupplier ifFeedFunc = () -> button.button(1).getAsBoolean();  
+  button.button(2).onTrue(new Getcoral(m_IntakeSubsystem, m_ElevatorSubsystem));
+  button.button(3).onTrue(new PutL1(m_ElevatorSubsystem,m_IntakeSubsystem ,ifFeedFunc ));
+  button.button(4).onTrue(new PutL2(m_ElevatorSubsystem,m_IntakeSubsystem ,ifFeedFunc ));
+  button.button(5).onTrue(new PutL3(m_ElevatorSubsystem,m_IntakeSubsystem ,ifFeedFunc ));
+  button.button(6).onTrue(new PutL4(m_ElevatorSubsystem,m_IntakeSubsystem ,ifFeedFunc ));
+  button.button(7).onTrue(new AlgaeL2(m_ElevatorSubsystem,m_IntakeSubsystem ,ifFeedFunc ));
+  button.button(8).onTrue(new AlgaeL3(m_ElevatorSubsystem,m_IntakeSubsystem ,ifFeedFunc ));
+  button.button(9).onTrue(new Processer(m_ElevatorSubsystem,m_IntakeSubsystem ,ifFeedFunc ));
+
+
+
+
   }
 
   public PathPlannerAuto getAutonomousCommand() {

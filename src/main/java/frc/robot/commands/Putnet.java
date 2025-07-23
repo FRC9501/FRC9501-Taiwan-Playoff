@@ -11,7 +11,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class PutAlgae extends Command {
+public class Putnet extends Command {
   /** Creates a new L0. */
   private final ElevatorSubsystem m_ElevatorSubsystem;
   private final IntakeSubsystem m_IntakeSubsystem;
@@ -19,7 +19,7 @@ public class PutAlgae extends Command {
   private boolean coral;
   
   
-  public PutAlgae(ElevatorSubsystem elevatorSubsystem, IntakeSubsystem intakeSubsystem, BooleanSupplier ifFeedFunc) {
+  public Putnet(ElevatorSubsystem elevatorSubsystem, IntakeSubsystem intakeSubsystem, BooleanSupplier ifFeedFunc) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_ElevatorSubsystem = elevatorSubsystem;
     this.m_IntakeSubsystem = intakeSubsystem;
@@ -30,7 +30,7 @@ public class PutAlgae extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_ElevatorSubsystem.L4();
+    m_ElevatorSubsystem.Net();
     m_IntakeSubsystem.netPosition();
     // This is where you would put any initialization code for the command.
     // For example, you might set a motor to a specific speed or position.
@@ -41,10 +41,10 @@ public class PutAlgae extends Command {
   public void execute() {
     coral = ifFeedFunc.getAsBoolean();
     if (m_IntakeSubsystem.setpoint()&& m_IntakeSubsystem.setpoint()&& coral == true) {
-      m_IntakeSubsystem.readyPosition();
       m_IntakeSubsystem.shoot();
+      }
     }
-  }
+  
 
   // Called once the command ends or is interrupted.
   @Override
@@ -55,6 +55,6 @@ public class PutAlgae extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return false; // This command will run indefinitely until interrupted.
   }
 }

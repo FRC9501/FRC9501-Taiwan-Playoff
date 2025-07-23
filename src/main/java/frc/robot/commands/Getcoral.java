@@ -23,7 +23,7 @@ public class Getcoral extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_ElevatorSubsystem.takecoral();
+    m_ElevatorSubsystem.readyPosition();
     m_IntakeSubsystem.readyPosition();
   
   }
@@ -31,7 +31,8 @@ public class Getcoral extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_IntakeSubsystem.setpoint() == true) {
+    if (m_IntakeSubsystem.setpoint()&&m_ElevatorSubsystem.setpoint() == true) {
+      m_ElevatorSubsystem.takecoral();
       m_IntakeSubsystem.takeIn();
     }
   }

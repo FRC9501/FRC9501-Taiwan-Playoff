@@ -11,27 +11,27 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class PutL3 extends Command {
+public class Processer extends Command {
   /** Creates a new L0. */
-  private final ElevatorSubsystem m_elevatorSubsystem;
-  private final IntakeSubsystem m_intakeSubsystem;
+  private final ElevatorSubsystem m_ElevatorSubsystem;
+  private final IntakeSubsystem m_IntakeSubsystem;
   private final BooleanSupplier ifFeedFunc;
   private boolean coral;
   
   
-  public PutL3(ElevatorSubsystem elevatorSubsystem, IntakeSubsystem intakeSubsystem, BooleanSupplier ifFeedFunc) {
+  public Processer(ElevatorSubsystem elevatorSubsystem, IntakeSubsystem intakeSubsystem, BooleanSupplier ifFeedFunc) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.m_elevatorSubsystem = elevatorSubsystem;
-    this.m_intakeSubsystem = intakeSubsystem;
+    this.m_ElevatorSubsystem = elevatorSubsystem;
+    this.m_IntakeSubsystem = intakeSubsystem;
     this.ifFeedFunc = ifFeedFunc;    
-    addRequirements(m_intakeSubsystem, m_elevatorSubsystem);
+    addRequirements(m_ElevatorSubsystem, m_IntakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_elevatorSubsystem.L3();
-    m_intakeSubsystem.L3Position();
+    m_ElevatorSubsystem.processer();
+    m_IntakeSubsystem.processer();
     // This is where you would put any initialization code for the command.
     // For example, you might set a motor to a specific speed or position.
   }
@@ -40,12 +40,10 @@ public class PutL3 extends Command {
   @Override
   public void execute() {
     coral = ifFeedFunc.getAsBoolean();
-    if (m_intakeSubsystem.setpoint()&& m_elevatorSubsystem.setpoint()&&coral == true) {
-      m_intakeSubsystem.readyPosition();
-      m_intakeSubsystem.shoot();
-      }
+    if (m_IntakeSubsystem.setpoint()&& m_IntakeSubsystem.setpoint()&& coral == true) {
+      m_IntakeSubsystem.shoot();
     }
-  
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -56,6 +54,6 @@ public class PutL3 extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return false; // This command will run indefinitely until interrupted.
   }
 }

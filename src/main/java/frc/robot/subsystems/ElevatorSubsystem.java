@@ -103,6 +103,12 @@ public class ElevatorSubsystem extends SubsystemBase {
     public void L1() {
         elevatorposition = 1.0;
     }
+    public void Net() {
+        elevatorposition = 5.0;
+    }
+    public void processer() {
+        elevatorposition = 7.0;
+    }
 
     @Override
     public void periodic() {
