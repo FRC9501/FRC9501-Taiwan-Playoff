@@ -11,15 +11,15 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class Processer extends Command {
+public class PutProcesser extends Command {
   /** Creates a new L0. */
   private final ElevatorSubsystem m_ElevatorSubsystem;
   private final IntakeSubsystem m_IntakeSubsystem;
   private final BooleanSupplier ifFeedFunc;
-  private boolean coral;
+  private boolean ifFeed;
   
   
-  public Processer(ElevatorSubsystem elevatorSubsystem, IntakeSubsystem intakeSubsystem, BooleanSupplier ifFeedFunc) {
+  public PutProcesser(ElevatorSubsystem elevatorSubsystem, IntakeSubsystem intakeSubsystem, BooleanSupplier ifFeedFunc) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_ElevatorSubsystem = elevatorSubsystem;
     this.m_IntakeSubsystem = intakeSubsystem;
@@ -39,8 +39,8 @@ public class Processer extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    coral = ifFeedFunc.getAsBoolean();
-    if (m_IntakeSubsystem.setpoint()&& m_IntakeSubsystem.setpoint()&& coral == true) {
+    ifFeed = ifFeedFunc.getAsBoolean();
+    if (m_IntakeSubsystem.setpoint()&& m_IntakeSubsystem.setpoint()&& ifFeed == true) {
       m_IntakeSubsystem.shoot();
     }
   }

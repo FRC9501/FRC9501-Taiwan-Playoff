@@ -16,7 +16,7 @@ public class PutL2 extends Command {
   private final ElevatorSubsystem m_ElevatorSubsystem;
   private final IntakeSubsystem m_IntakeSubsystem;
   private final BooleanSupplier ifFeedFunc;
-  private boolean coral;
+  private boolean ifFeed;
   
   
   public PutL2(ElevatorSubsystem elevatorSubsystem, IntakeSubsystem intakeSubsystem, BooleanSupplier ifFeedFunc) {
@@ -40,8 +40,8 @@ public class PutL2 extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    coral = ifFeedFunc.getAsBoolean();
-    if (m_IntakeSubsystem.setpoint()&& m_ElevatorSubsystem.setpoint()&&coral == true) {
+    ifFeed = ifFeedFunc.getAsBoolean();
+    if (m_IntakeSubsystem.setpoint()&& m_ElevatorSubsystem.setpoint()&&ifFeed == true) {
       m_IntakeSubsystem.readyPosition();
       m_IntakeSubsystem.shoot();
     }

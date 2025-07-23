@@ -11,19 +11,19 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class AlgaeL2 extends Command {
+public class IntakeAlgae_Low extends Command {
   /** Creates a new L0. */
   private final ElevatorSubsystem m_ElevatorSubsystem;
   private final IntakeSubsystem m_IntakeSubsystem;
-  private final BooleanSupplier ifFeedFunc;
-  private boolean coral;
+  private final BooleanSupplier ifIntakeFunc;
+  private boolean ifIntake;
   
   
-  public AlgaeL2(ElevatorSubsystem elevatorSubsystem, IntakeSubsystem intakeSubsystem, BooleanSupplier ifFeedFunc) {
+  public IntakeAlgae_Low(ElevatorSubsystem elevatorSubsystem, IntakeSubsystem intakeSubsystem, BooleanSupplier ifIntakeFunc) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_ElevatorSubsystem = elevatorSubsystem;
     this.m_IntakeSubsystem = intakeSubsystem;
-    this.ifFeedFunc = ifFeedFunc;    
+    this.ifIntakeFunc = ifIntakeFunc;    
      // This is where you would put any initialization code for the command.
     addRequirements(m_IntakeSubsystem, m_ElevatorSubsystem);
   }
@@ -40,8 +40,8 @@ public class AlgaeL2 extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    coral = ifFeedFunc.getAsBoolean();
-    if (m_IntakeSubsystem.setpoint()&& m_ElevatorSubsystem.setpoint()&&coral == true) {
+    ifIntake = ifIntakeFunc.getAsBoolean();
+    if (m_IntakeSubsystem.setpoint()&& m_ElevatorSubsystem.setpoint()&&ifIntake == true) {
       m_IntakeSubsystem.takeIn();
     }
   }

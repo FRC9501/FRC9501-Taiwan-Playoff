@@ -1,17 +1,14 @@
 package frc.robot;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.AlgaeL2;
-import frc.robot.commands.AlgaeL3;
-import frc.robot.commands.AutoLeftVisionCmd;
-import frc.robot.commands.AutoRightVisionCmd;
+import frc.robot.commands.IntakeAlgae_Low;
+import frc.robot.commands.IntakeAlgae_High;
 import frc.robot.commands.Getcoral;
-import frc.robot.commands.Processer;
+import frc.robot.commands.PutProcesser;
 import frc.robot.commands.PutL1;
 import frc.robot.commands.PutL2;
 import frc.robot.commands.PutL3;
 import frc.robot.commands.PutL4;
 import frc.robot.commands.SwerveJoystickCmd;
-import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.LeftReefVision;
 import frc.robot.subsystems.RightReefVision;
@@ -23,13 +20,11 @@ import java.util.function.BooleanSupplier;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
-import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -152,13 +147,13 @@ public class RobotContainer {
 
   BooleanSupplier ifFeedFunc = () -> button.button(1).getAsBoolean();  
   button.button(2).onTrue(new Getcoral(m_IntakeSubsystem, m_ElevatorSubsystem));
-  button.button(3).onTrue(new PutL1(m_ElevatorSubsystem,m_IntakeSubsystem ,ifFeedFunc ));
-  button.button(4).onTrue(new PutL2(m_ElevatorSubsystem,m_IntakeSubsystem ,ifFeedFunc ));
-  button.button(5).onTrue(new PutL3(m_ElevatorSubsystem,m_IntakeSubsystem ,ifFeedFunc ));
-  button.button(6).onTrue(new PutL4(m_ElevatorSubsystem,m_IntakeSubsystem ,ifFeedFunc ));
-  button.button(7).onTrue(new AlgaeL2(m_ElevatorSubsystem,m_IntakeSubsystem ,ifFeedFunc ));
-  button.button(8).onTrue(new AlgaeL3(m_ElevatorSubsystem,m_IntakeSubsystem ,ifFeedFunc ));
-  button.button(9).onTrue(new Processer(m_ElevatorSubsystem,m_IntakeSubsystem ,ifFeedFunc ));
+  button.button(3).onTrue(new PutL1(m_ElevatorSubsystem, m_IntakeSubsystem, ifFeedFunc));
+  button.button(4).onTrue(new PutL2(m_ElevatorSubsystem, m_IntakeSubsystem, ifFeedFunc));
+  button.button(5).onTrue(new PutL3(m_ElevatorSubsystem, m_IntakeSubsystem, ifFeedFunc));
+  button.button(6).onTrue(new PutL4(m_ElevatorSubsystem, m_IntakeSubsystem, ifFeedFunc));
+  button.button(7).onTrue(new IntakeAlgae_Low(m_ElevatorSubsystem, m_IntakeSubsystem, ifFeedFunc));
+  button.button(8).onTrue(new IntakeAlgae_High(m_ElevatorSubsystem, m_IntakeSubsystem, ifFeedFunc));
+  button.button(9).onTrue(new PutProcesser(m_ElevatorSubsystem, m_IntakeSubsystem, ifFeedFunc));
 
 
 
