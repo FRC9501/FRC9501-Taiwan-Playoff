@@ -31,7 +31,7 @@ public class AutoElevatorCmd extends Command{
 
     @Override
     public boolean isFinished(){
-        if (m_ElevatorSubsystem.get() > 40) {
+        if (m_ElevatorSubsystem.nowposition() > 40) {
             return true;
         }else{
             return false;
