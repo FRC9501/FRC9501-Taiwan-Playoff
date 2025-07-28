@@ -5,18 +5,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.PawSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class Getcoral extends Command {
-    private final IntakeSubsystem m_IntakeSubsystem;
+    private final PawSubsystem m_PawSubsystem;
     private final ElevatorSubsystem m_ElevatorSubsystem;
   /** Creates a new Hand. */
-  public Getcoral(IntakeSubsystem intakeSubsystem, ElevatorSubsystem elevatorSubsystem) {
+  public Getcoral(PawSubsystem pawSubsystem, ElevatorSubsystem elevatorSubsystem) {
     this.m_ElevatorSubsystem = elevatorSubsystem;
-    this.m_IntakeSubsystem = intakeSubsystem;
-    addRequirements(m_ElevatorSubsystem, m_IntakeSubsystem);
+    this.m_PawSubsystem = pawSubsystem;
+    addRequirements(m_ElevatorSubsystem, m_PawSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -24,16 +24,16 @@ public class Getcoral extends Command {
   @Override
   public void initialize() {
     m_ElevatorSubsystem.readyPosition();
-    m_IntakeSubsystem.readyPosition();
+    m_PawSubsystem.readyPosition();
   
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_IntakeSubsystem.setpoint()&&m_ElevatorSubsystem.setpoint() == true) {
+    if (m_PawSubsystem.setpoint()&&m_ElevatorSubsystem.setpoint() == true) {
       m_ElevatorSubsystem.takecoral();
-      m_IntakeSubsystem.takeIn();
+      m_PawSubsystem.takeIn();
     }
   }
 

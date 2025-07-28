@@ -17,7 +17,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class IntakeSubsystem extends SubsystemBase {
+public class PawSubsystem extends SubsystemBase {
     private final SparkMax motor = new SparkMax(14, MotorType.kBrushless);
     private final TalonFXConfiguration armCFG = new TalonFXConfiguration();
     private final TalonFX armTalonFX = new TalonFX(1);
@@ -27,7 +27,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private AnalogInput analog = new AnalogInput(0);
     private final SparkMaxConfig motorconfig;
 
-    public IntakeSubsystem() {
+    public PawSubsystem() {
         motorconfig = new SparkMaxConfig();
         motorconfig.idleMode(IdleMode.kCoast);
         armCFG.MotorOutput.NeutralMode = NeutralModeValue.Brake;

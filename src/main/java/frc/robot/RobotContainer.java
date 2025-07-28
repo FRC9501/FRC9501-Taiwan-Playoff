@@ -13,7 +13,7 @@ import frc.robot.subsystems.SwerveDriveSubsystem;
 import frc.robot.subsystems.LeftReefVision;
 import frc.robot.subsystems.RightReefVision;
 import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.PawSubsystem;
 
 import java.util.function.BooleanSupplier;
 
@@ -33,16 +33,7 @@ public class RobotContainer {
   private final LeftReefVision leftVision = new LeftReefVision();
   private final RightReefVision rightVision = new RightReefVision();
   private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
-  private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();
-  private boolean isL1Active = false;
-  private boolean isL2Active = false;
-  private boolean isL3Active = false;
-  
-  // 新增變數來追蹤algaeGetter的狀態
-  private boolean isDefaultPositionActive = false; 
-  private boolean isReefPositionActive = false;
-  private boolean isProPositionActive = false;
-  private boolean isBargePositionActive = false;
+  private final PawSubsystem m_IntakeSubsystem = new PawSubsystem();  
 
   private final SwerveDriveSubsystem swerveSubsystem = new SwerveDriveSubsystem();
   private final Joystick joystick = new Joystick(OIConstants.kDriverControllerPort);
@@ -121,11 +112,6 @@ public class RobotContainer {
     // up.whileTrue(new ClimberCmd(climber,()-> climberPosition));
     // down.whileTrue(new ClimberCmd(climber,()-> climberPosition));
 
-    // new JoystickButton(button, 2).onTrue(new RunCommand(() ->elevator.L0(), elevator));
-    // new JoystickButton(button, 5).onTrue(new RunCommand(() ->elevator.L1(), elevator));
-    // new JoystickButton(button, 8).onTrue(new RunCommand(() ->elevator.L2(), elevator));
-    // new JoystickButton(button, 11).onTrue(new RunCommand(() ->elevator.L3(), elevator));
-
     new JoystickButton(joystick, Button.kA.value).onTrue(new InstantCommand(()-> leftVision.chagePiepeline()));
     new JoystickButton(joystick, Button.kY.value).onTrue(new InstantCommand(()-> rightVision.chagePiepeline()));
 
@@ -143,8 +129,6 @@ public class RobotContainer {
     () -> false
  ));
 
- 
-
   BooleanSupplier ifFeedFunc = () -> button.button(1).getAsBoolean();  
   button.button(2).onTrue(new Getcoral(m_IntakeSubsystem, m_ElevatorSubsystem));
   button.button(3).onTrue(new PutL1(m_ElevatorSubsystem, m_IntakeSubsystem, ifFeedFunc));
@@ -154,10 +138,6 @@ public class RobotContainer {
   button.button(7).onTrue(new IntakeAlgae_Low(m_ElevatorSubsystem, m_IntakeSubsystem, ifFeedFunc));
   button.button(8).onTrue(new IntakeAlgae_High(m_ElevatorSubsystem, m_IntakeSubsystem, ifFeedFunc));
   button.button(9).onTrue(new PutProcesser(m_ElevatorSubsystem, m_IntakeSubsystem, ifFeedFunc));
-
-
-
-
   }
 
   public PathPlannerAuto getAutonomousCommand() {

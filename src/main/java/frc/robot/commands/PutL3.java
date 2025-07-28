@@ -7,31 +7,31 @@ package frc.robot.commands;
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.PawSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class PutL3 extends Command {
   /** Creates a new L0. */
   private final ElevatorSubsystem m_elevatorSubsystem;
-  private final IntakeSubsystem m_intakeSubsystem;
+  private final PawSubsystem m_PawSubsystem;
   private final BooleanSupplier ifFeedFunc;
   private boolean ifFeed;
   
   
-  public PutL3(ElevatorSubsystem elevatorSubsystem, IntakeSubsystem intakeSubsystem, BooleanSupplier ifFeedFunc) {
+  public PutL3(ElevatorSubsystem elevatorSubsystem, PawSubsystem pawSubsystem, BooleanSupplier ifFeedFunc) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_elevatorSubsystem = elevatorSubsystem;
-    this.m_intakeSubsystem = intakeSubsystem;
+    this.m_PawSubsystem = pawSubsystem;
     this.ifFeedFunc = ifFeedFunc;    
-    addRequirements(m_intakeSubsystem, m_elevatorSubsystem);
+    addRequirements(m_PawSubsystem, m_elevatorSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_elevatorSubsystem.L3();
-    m_intakeSubsystem.L3Position();
+    m_PawSubsystem.L3Position();
     // This is where you would put any initialization code for the command.
     // For example, you might set a motor to a specific speed or position.
   }
@@ -40,9 +40,9 @@ public class PutL3 extends Command {
   @Override
   public void execute() {
     ifFeed = ifFeedFunc.getAsBoolean();
-    if (m_intakeSubsystem.setpoint()&& m_elevatorSubsystem.setpoint()&&ifFeed == true) {
-      m_intakeSubsystem.readyPosition();
-      m_intakeSubsystem.shoot();
+    if (m_PawSubsystem.setpoint()&& m_elevatorSubsystem.setpoint()&&ifFeed == true) {
+      m_PawSubsystem.readyPosition();
+      m_PawSubsystem.shoot();
       }
     }
   
