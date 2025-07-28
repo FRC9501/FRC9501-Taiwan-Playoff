@@ -9,6 +9,15 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import static frc.robot.Constants.ElevatorConstants.kL1;
+import static frc.robot.Constants.ElevatorConstants.kL2;
+import static frc.robot.Constants.ElevatorConstants.kL3;
+import static frc.robot.Constants.ElevatorConstants.kL4;
+import static frc.robot.Constants.ElevatorConstants.knet;
+import static frc.robot.Constants.ElevatorConstants.kprocesser;
+import static frc.robot.Constants.ElevatorConstants.kreadyPosition;
+import static frc.robot.Constants.ElevatorConstants.ktakecoral;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ElevatorSubsystem extends SubsystemBase {
@@ -85,34 +94,32 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
 
 
+
     public void readyPosition() {
-        elevatorGoalPosition = 0.0;
+        elevatorGoalPosition = kreadyPosition;
     }
     public void takecoral() {
-        elevatorGoalPosition = -1;
+        elevatorGoalPosition = ktakecoral;
     }
-
     public void L4() {
-        elevatorGoalPosition = 4.0;
+        elevatorGoalPosition = kL4;
     }
-
     public void L3() {
-        elevatorGoalPosition = 3.0;
+        elevatorGoalPosition = kL3;
     }
-
     public void L2() {
-        elevatorGoalPosition = 2.0;
+        elevatorGoalPosition = kL2;
     }
-
     public void L1() {
-        elevatorGoalPosition = 1.0;
+        elevatorGoalPosition = kL1;
     }
     public void Net() {
-        elevatorGoalPosition = 5.0;
+        elevatorGoalPosition = knet;
     }
     public void processer() {
-        elevatorGoalPosition = 7.0;
+        elevatorGoalPosition = kprocesser;
     }
+
 
     public void resetEncoder() {
         rightTalon.setPosition(0);

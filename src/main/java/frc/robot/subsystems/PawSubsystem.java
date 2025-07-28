@@ -1,6 +1,9 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkMax;
+
+import static frc.robot.Constants.PawConstants.*;
+
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -15,6 +18,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 // import static edu.wpi.first.units.Units.Meters;
 // import edu.wpi.first.units.measure.Distance;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class PawSubsystem extends SubsystemBase {
@@ -23,6 +27,7 @@ public class PawSubsystem extends SubsystemBase {
     private final TalonFX armTalonFX = new TalonFX(1);
     private final PositionDutyCycle request = new PositionDutyCycle(0); 
     private double position;
+    
     // private static final Distance LEdSpacing =  Meters.of(1 / 120.0);
     private AnalogInput analog = new AnalogInput(0);
     private final SparkMaxConfig motorconfig;
@@ -47,25 +52,25 @@ public class PawSubsystem extends SubsystemBase {
     }
     
     public void readyPosition() {
-        position = 0;
+        position = kreadyPosition;
     }
     public void L1Position() {
-        position = 1;
+        position = kL1Position;
     }
     public void L2Position() {
-        position = 2;
+        position = kL2Position;
     }
     public void L3Position() {
-        position = 3;
+        position = kL3Position;
     }
     public void L4Position() {
-        position = 4;
+        position = kL4Position;
     }
     public void netPosition() {
-        position = 5;
+        position = knetPosition;
     }
     public void processer() {
-        position = 7;
+        position = kprocesserPosition;
     }
 
     public void resetEncoder() {
@@ -83,13 +88,13 @@ public class PawSubsystem extends SubsystemBase {
     public void stop() {
         motor.set(0);
     }
-    public double Distance() {
+    public double distance() {
         return analog.getValue();
     }
     
     public void takeIn() {
         motor.set(1);
-        if (Distance() > 650) {
+        if (distance() > 650) {
             stop();
         } else {
             motor.set(1);
@@ -98,6 +103,7 @@ public class PawSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        SmartDashboard.putNumber("distance", distance());
         armTalonFX.setControl(request.withPosition(position));
     }
 }

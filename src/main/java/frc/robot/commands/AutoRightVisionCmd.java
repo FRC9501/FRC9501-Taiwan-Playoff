@@ -36,6 +36,7 @@ public class AutoRightVisionCmd extends Command {
         //         () -> 0.0,
         //         () -> false);
         //     }
+        
     }
 
     @Override
