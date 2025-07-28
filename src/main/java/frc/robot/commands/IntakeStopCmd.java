@@ -16,9 +16,10 @@ public class IntakeStopCmd extends Command {
   private IntakeSubsystem m_intakeSubsystem; 
   private PawSubsystem m_PawSubsystem;
 
-  public IntakeStopCmd(IntakeSubsystem intakeSubsystem) {
+  public IntakeStopCmd(PawSubsystem m_PawSubsystem ,IntakeSubsystem intakeSubsystem) {
     this.m_intakeSubsystem = intakeSubsystem;
-    addRequirements(m_intakeSubsystem);
+    this.m_PawSubsystem = m_PawSubsystem;
+    addRequirements(m_PawSubsystem,m_intakeSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
