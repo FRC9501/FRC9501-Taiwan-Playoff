@@ -20,18 +20,18 @@ public class IntakeSubsystem extends SubsystemBase {
     private final RelativeEncoder encoder = intakeMotor.getEncoder();
     private CANcoder intakeCANcoder = new CANcoder(20);
     private PIDController intakePID = new PIDController(0.1, 0.01, 0.001);
-    private double nowposition = 0.0;
+    // private double nowposition = 0.0;
     private double position = 0.0;
 
     public IntakeSubsystem() {      
     }
     
-    
+
     public void intakePIDMove(double setpoint){
-        intakeMotor.set(intakePID.calculate(nowposition,setpoint));
+        intakeMotor.set(intakePID.calculate(get(),setpoint));
     }
     public double get(){
-        return nowposition = intakeCANcoder.getAbsolutePosition().getValueAsDouble()*360;
+        return intakeCANcoder.getAbsolutePosition().getValueAsDouble()*360;
     }
 
 
@@ -47,6 +47,5 @@ public class IntakeSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         position = encoder.getPosition();
-        get();
     }
 }
