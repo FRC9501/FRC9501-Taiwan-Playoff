@@ -23,6 +23,7 @@ public class Getcoral extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_PawSubsystem.coast();
     m_ElevatorSubsystem.readyPosition();
     m_PawSubsystem.readyPosition();
   

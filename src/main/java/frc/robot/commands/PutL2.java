@@ -31,6 +31,7 @@ public class PutL2 extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_PawSubsystem.coast();
     m_ElevatorSubsystem.L2();
     m_PawSubsystem.L2Position();
     // This is where you would put any initialization code for the command.

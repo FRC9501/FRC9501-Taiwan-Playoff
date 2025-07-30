@@ -31,6 +31,7 @@ public class TakeAlgae_Low extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_PawSubsystem.brake();
     m_ElevatorSubsystem.L2();
     m_PawSubsystem.L2Position();
     // This is where you would put any initialization code for the command.

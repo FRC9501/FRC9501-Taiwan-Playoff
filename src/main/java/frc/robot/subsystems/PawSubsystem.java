@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 
 import static frc.robot.Constants.PawConstants.*;
 
@@ -95,6 +97,16 @@ public class PawSubsystem extends SubsystemBase {
     public double distance() {
         return analog.getValue();
     }
+
+    public void brake(){
+        motorconfig.idleMode(IdleMode.kBrake);
+        motor.configure(motorconfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+    }
+    public void coast(){
+        motorconfig.idleMode(IdleMode.kCoast);
+        motor.configure(motorconfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+    }
+    
     public void takeIn() {
         motor.set(1);
         if (distance() > 650) {
