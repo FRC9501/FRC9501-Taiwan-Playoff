@@ -18,7 +18,6 @@ public class IntakeSubsystem extends SubsystemBase {
     private SparkMax intakeMotor = new SparkMax(10, MotorType.kBrushless);
     private SparkMax intakeMotor2 = new SparkMax(11, MotorType.kBrushless);
     private final RelativeEncoder encoder = intakeMotor.getEncoder();
-    private final SparkMaxConfig intakeMotorConfig = new SparkMaxConfig();
     private CANcoder intakeCANcoder = new CANcoder(20);
     private PIDController intakePID = new PIDController(0.1, 0.01, 0.001);
     private double nowposition = 0.0;
@@ -45,5 +44,4 @@ public class IntakeSubsystem extends SubsystemBase {
         position = encoder.getPosition();
         get();
     }
-    
 }

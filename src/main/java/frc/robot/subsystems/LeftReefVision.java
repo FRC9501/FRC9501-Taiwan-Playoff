@@ -39,7 +39,6 @@ public class LeftReefVision extends SubsystemBase {
         return LimelightHelpers.getTX("limelight");
     }
 
-
     public double TA() {
         if (LimelightHelpers.getTA("limelight") > 12.5) {
             return 0;
@@ -80,9 +79,6 @@ public class LeftReefVision extends SubsystemBase {
         // 其餘情況下返回原始計算結果
         return xSpeedOutput;
     }
-    
-    
-       
 
     
     public double ySpeedOutput() {
@@ -97,7 +93,6 @@ public class LeftReefVision extends SubsystemBase {
             return ySpeedOutput;
         }
     }
-    
 
     public double RotationOutput() {
         RotationOutput = RotationController.calculate(TX(), 0);
@@ -119,7 +114,6 @@ public class LeftReefVision extends SubsystemBase {
     }
     
     
-
     public void displayturnOutput() {
         SmartDashboard.putNumber("TurnOutput", RotationOutput());
     }

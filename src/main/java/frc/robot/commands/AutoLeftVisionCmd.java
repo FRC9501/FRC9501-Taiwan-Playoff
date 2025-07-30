@@ -6,23 +6,12 @@ import frc.robot.subsystems.LeftReefVision;
 
 public class AutoLeftVisionCmd extends Command {
 
-    private final LeftReefVision m_leftVision;
-    private final SwerveDriveSubsystem m_SwerveSubsystem;
-    private Boolean TargetStatus = true;
-
-    public AutoLeftVisionCmd(LeftReefVision left,SwerveDriveSubsystem swerve) {
-        this.m_leftVision = left;
-        this.m_SwerveSubsystem = swerve;
-        addRequirements(m_leftVision,m_SwerveSubsystem);
+    public AutoLeftVisionCmd() {
+    
     }
 
     @Override
     public void initialize() {
-        if (m_leftVision.states()) {
-            TargetStatus = true;
-        }else{
-            TargetStatus = false;
-        }
     }
 
 
@@ -46,10 +35,6 @@ public class AutoLeftVisionCmd extends Command {
 
     @Override
     public boolean isFinished() {
-        if (!TargetStatus){
-            return true;
-        }else{
-            return false;
-        }
+        return false;
     }
 }
