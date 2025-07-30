@@ -56,6 +56,8 @@ public class RobotContainer {
   private final POVButton down = new POVButton(joystick, 180);
   private final SendableChooser<String> m_chooser = new SendableChooser<>();
 
+
+  
   public RobotContainer() {
     // NamedCommands.registerCommand("intake", new AutointakeCmd(intakeSub).until(() -> intakeSub.Distance() > 1000));
     // NamedCommands.registerCommand("shoot", new AutoShootCmd(intakeSub,elevator));
@@ -93,6 +95,8 @@ public class RobotContainer {
         break;
     }
 
+
+
     swerveSubsystem.setDefaultCommand(
       new SwerveJoystickCmd(swerveSubsystem, 
       () -> -joystick.getRawAxis(OIConstants.kDriverXAxis),
@@ -105,8 +109,9 @@ public class RobotContainer {
     m_ElevatorSubsystem.resetEncoder();
   }
 
+
+
   private void configureBindings() {
-  //控制elevator的按鈕設置
     new JoystickButton(joystick, Button.kX.value).onTrue(new InstantCommand(() -> swerveSubsystem.zeroHeading()));
 
     up.whileTrue(new InstantCommand(() -> {
@@ -118,6 +123,7 @@ public class RobotContainer {
 
     new JoystickButton(joystick, Button.kA.value).onTrue(new InstantCommand(()-> leftVision.chagePiepeline()));
     new JoystickButton(joystick, Button.kY.value).onTrue(new InstantCommand(()-> rightVision.chagePiepeline()));
+
 
     new JoystickButton(joystick, Button.kA.value).whileTrue(new SwerveJoystickCmd(swerveSubsystem, 
        () -> -leftVision.ySpeedOutput(),
@@ -132,9 +138,6 @@ public class RobotContainer {
     () -> 0.0,
     () -> false
  ));
-
-
-
 
   //控制按鈕設置
   BooleanSupplier ifFeedFunc = () -> button.button(1).getAsBoolean();  

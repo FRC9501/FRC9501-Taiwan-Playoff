@@ -26,18 +26,23 @@ public class IntakeSubsystem extends SubsystemBase {
     public IntakeSubsystem() {      
     }
     
+    
     public void intakePIDMove(double setpoint){
         intakeMotor.set(intakePID.calculate(nowposition,setpoint));
     }
     public double get(){
-        return nowposition = intakeCANcoder.getPosition().getValueAsDouble();
+        return nowposition = intakeCANcoder.getAbsolutePosition().getValueAsDouble()*360;
     }
+
+
+
     public void suck(){
         intakeMotor2.set(1);
     }
     public void stop(){
         intakeMotor2.set(0);
     }
+
 
     @Override
     public void periodic() {

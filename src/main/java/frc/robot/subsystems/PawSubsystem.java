@@ -73,25 +73,28 @@ public class PawSubsystem extends SubsystemBase {
         position = kprocesserPosition;
     }
 
-    public void resetEncoder() {
-        armTalonFX.setPosition(0);
-    }
-    public double nowposition() {
-        return armTalonFX.getPosition().getValueAsDouble();
-    }
-    public boolean setpoint() {
-        return Math.abs(position - nowposition()) <= 1.0;
-    }
+    
     public void shoot() {
         motor.set(-1);
     }
     public void stop() {
         motor.set(0);
     }
+    public void resetEncoder() {
+        armTalonFX.setPosition(0);
+    }
+
+
+
+    public double nowposition() {
+        return armTalonFX.getPosition().getValueAsDouble();
+    }
+    public boolean setpoint() {
+        return Math.abs(position - nowposition()) <= 1.0;
+    }
     public double distance() {
         return analog.getValue();
     }
-    
     public void takeIn() {
         motor.set(1);
         if (distance() > 650) {
