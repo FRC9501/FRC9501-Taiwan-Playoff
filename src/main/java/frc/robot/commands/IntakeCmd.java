@@ -26,7 +26,7 @@ public class IntakeCmd extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intakeSubsystem.intakePIDMove(ksetpoint);
+    m_intakeSubsystem.set();
     if(m_intakeSubsystem.get() - ksetpoint <= 0.6)
     {m_intakeSubsystem.suck();}
   }

@@ -106,6 +106,7 @@ public final class Constants {
     public static final double ksetpoint = 1;
     public static final double kresetpoint = 0;
   }
+
   public static final class ElevatorConstants{
     public static final double kreadyPosition = 0.0;
     public static final double ktakecoral = -1.0;
@@ -116,7 +117,7 @@ public final class Constants {
     public static final double knet = 5.0;
     public static final double kprocesser = 7.0;
   }
-  //
+  
   public static final class PawConstants{
     public static final double kreadyPosition = 0.0;
     public static final double kL1Position = 1.0;

@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import static frc.robot.Constants.IntakeConstants.*;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.revrobotics.spark.SparkMax;
 
@@ -22,19 +23,22 @@ public class IntakeSubsystem extends SubsystemBase {
     private PIDController intakePID = new PIDController(0.1, 0.01, 0.001);
     // private double nowposition = 0.0;
     private double position = 0.0;
+    private double setpoint = 0.0;
 
     public IntakeSubsystem() {      
     }
     
-
-    public void intakePIDMove(double setpoint){
-        intakeMotor.set(intakePID.calculate(get(),setpoint));
+    public void set(){
+        setpoint = ksetpoint;
     }
+    public void reset(){
+        setpoint = kresetpoint;
+    }
+
+    
     public double get(){
         return intakeCANcoder.getAbsolutePosition().getValueAsDouble()*360;
     }
-
-
 
     public void suck(){
         intakeMotor2.set(1);
@@ -47,5 +51,7 @@ public class IntakeSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         position = encoder.getPosition();
+        intakeMotor.set(intakePID.calculate(get(),setpoint));
+
     }
 }
