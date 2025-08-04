@@ -12,8 +12,7 @@ import frc.robot.commands.PutL3;
 import frc.robot.commands.PutL4;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.subsystems.SwerveDriveSubsystem;
-import frc.robot.subsystems.LeftReefVision;
-import frc.robot.subsystems.RightReefVision;
+import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PawSubsystem;
@@ -33,8 +32,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 public class RobotContainer {
-  private final LeftReefVision leftVision = new LeftReefVision();
-  private final RightReefVision rightVision = new RightReefVision();
+  private final Vision leftVision = new Vision();
   private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();  
   private final PawSubsystem m_PawSubsystem = new PawSubsystem();
@@ -61,17 +59,17 @@ public class RobotContainer {
   public RobotContainer() {
     // NamedCommands.registerCommand("intake", new AutointakeCmd(intakeSub).until(() -> intakeSub.Distance() > 1000));
     // NamedCommands.registerCommand("shoot", new AutoShootCmd(intakeSub,elevator));
-    // NamedCommands.registerCommand("elevator",new AutoElevatorCmd(elevator,intakeSub).until(()-> elevator.get() >38));
-    NamedCommands.registerCommand("Vision", new SwerveJoystickCmd(swerveSubsystem, 
-       () -> -leftVision.ySpeedOutput() ,
-       () -> leftVision.xSpeedOutput(), 
-       () -> 0.0,
-       () -> false).withTimeout(1.2));
-    NamedCommands.registerCommand("Right", new SwerveJoystickCmd(swerveSubsystem, 
-       () -> -rightVision.ySpeedOutput(),
-       () -> rightVision.xSpeedOutput(), 
-       () -> 0.0,
-       () -> false).withTimeout(1.2));
+    // // NamedCommands.registerCommand("elevator",new AutoElevatorCmd(elevator,intakeSub).until(()-> elevator.get() >38));
+    // NamedCommands.registerCommand("Vision", new SwerveJoystickCmd(swerveSubsystem, 
+    //    () -> -leftVision.ySpeedOutput() ,
+    //    () -> leftVision.xSpeedOutput(), 
+    //    () -> 0.0,
+    //    () -> false).withTimeout(1.2));
+    // NamedCommands.registerCommand("Right", new SwerveJoystickCmd(swerveSubsystem, 
+    //    () -> -rightVision.ySpeedOutput(),
+    //    () -> rightVision.xSpeedOutput(), 
+    //    () -> 0.0,
+    //    () -> false).withTimeout(1.2));
 
     m_chooser.setDefaultOption("test", Test);
     m_chooser.addOption("Blue MR", BlueMR);
@@ -121,23 +119,6 @@ public class RobotContainer {
     // up.whileTrue(new ClimberCmd(climber,()-> climberPosition));
     // down.whileTrue(new ClimberCmd(climber,()-> climberPosition));
 
-    new JoystickButton(joystick, Button.kA.value).onTrue(new InstantCommand(()-> leftVision.chagePiepeline()));
-    new JoystickButton(joystick, Button.kY.value).onTrue(new InstantCommand(()-> rightVision.chagePiepeline()));
-
-
-    new JoystickButton(joystick, Button.kA.value).whileTrue(new SwerveJoystickCmd(swerveSubsystem, 
-       () -> -leftVision.ySpeedOutput(),
-       () -> leftVision.xSpeedOutput(), 
-       () -> 0.0,
-       () -> false
-    ));
-
-    new JoystickButton(joystick, Button.kY.value).whileTrue(new SwerveJoystickCmd(swerveSubsystem, 
-    () -> -rightVision.ySpeedOutput(),
-    () -> rightVision.xSpeedOutput(), 
-    () -> 0.0,
-    () -> false
- ));
 
   //控制按鈕設置
   BooleanSupplier ifFeedFunc = () -> button.button(1).getAsBoolean();  
