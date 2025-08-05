@@ -12,7 +12,7 @@ import frc.robot.commands.PutL3;
 import frc.robot.commands.PutL4;
 import frc.robot.commands.SwerveJoystickCmd;
 import frc.robot.subsystems.SwerveDriveSubsystem;
-import frc.robot.subsystems.Vision;
+// import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.PawSubsystem;
@@ -32,7 +32,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 public class RobotContainer {
-  private final Vision leftVision = new Vision();
+  // private final Vision leftVision = new Vision();
   private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();  
   private final PawSubsystem m_PawSubsystem = new PawSubsystem();
