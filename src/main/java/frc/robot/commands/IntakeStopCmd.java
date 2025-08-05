@@ -32,6 +32,7 @@ public class IntakeStopCmd extends Command {
   public void execute() {
     if(m_PawSubsystem.distance() >= 650){
       m_intakeSubsystem.stop();
+      m_intakeSubsystem.stopmove();
       m_intakeSubsystem.reset();
   } }
 
