@@ -42,7 +42,6 @@ public class RobotContainer {
   private final Joystick joystick = new Joystick(OIConstants.kDriverControllerPort);
   // private final IntakeSub intakeSub = new IntakeSub();
   private final CommandJoystick button = new CommandJoystick(1);
-  private double climberPosition = 0;
 
   private String m_autoSelected;
   private static final String Test = "test";
@@ -112,14 +111,6 @@ public class RobotContainer {
 
   private void configureBindings() {
     new JoystickButton(joystick, Button.kX.value).onTrue(new InstantCommand(() -> swerveSubsystem.zeroHeading()));
-
-    up.whileTrue(new InstantCommand(() -> {
-      climberPosition+=1;}));
-    down.whileTrue(new InstantCommand(() -> {
-      climberPosition-=1;}));
-    // up.whileTrue(new ClimberCmd(climber,()-> climberPosition));
-    // down.whileTrue(new ClimberCmd(climber,()-> climberPosition));
-
 
   //搖桿
   BooleanSupplier ifFeedFunc = () -> button.button(1).getAsBoolean();  
