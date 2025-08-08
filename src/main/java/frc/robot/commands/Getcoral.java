@@ -23,10 +23,7 @@ public class Getcoral extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_PawSubsystem.coast();
-    m_ElevatorSubsystem.readyPosition();
-    m_PawSubsystem.readyPosition();
-  
+    m_PawSubsystem.coast();  
   }
   //test
   // Called every time the scheduler runs while the command is scheduled.
@@ -41,8 +38,9 @@ public class Getcoral extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
-  }
+    m_PawSubsystem.readyPosition();
+    m_ElevatorSubsystem.readyPosition();
+    }
 
   // Returns true when the command should end.
   @Override

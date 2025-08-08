@@ -1,6 +1,7 @@
 package frc.robot;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.TakeAlgae_Low;
+import frc.robot.commands.Ready;
 import frc.robot.commands.TakeAlgae_High;
 import frc.robot.commands.Getcoral;
 import frc.robot.commands.IntakeCmd;
@@ -120,19 +121,22 @@ public class RobotContainer {
     // down.whileTrue(new ClimberCmd(climber,()-> climberPosition));
 
 
-  //控制按鈕設置
+  //搖桿
   BooleanSupplier ifFeedFunc = () -> button.button(1).getAsBoolean();  
-  button.button(2).onTrue(new Getcoral(m_PawSubsystem, m_ElevatorSubsystem));
-  button.button(3).onTrue(new PutL1(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
-  button.button(4).onTrue(new PutL2(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
-  button.button(5).onTrue(new PutL3(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
-  button.button(6).onTrue(new PutL4(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
-  button.button(7).onTrue(new TakeAlgae_Low(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
-  button.button(8).onTrue(new TakeAlgae_High(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
-  button.button(9).onTrue(new PutProcesser(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
-  button.button(10).onTrue(new IntakeCmd(m_IntakeSubsystem));
-  button.button(11).onTrue(new IntakeStopCmd(m_PawSubsystem, m_IntakeSubsystem));
-  }
+  button.button(10).whileTrue(new IntakeCmd(m_IntakeSubsystem));
+  button.button(11).whileTrue(new IntakeStopCmd(m_PawSubsystem, m_IntakeSubsystem));
+  button.button(2).whileTrue(new Getcoral(m_PawSubsystem, m_ElevatorSubsystem));
+//按鈕盤
+  button.button(3).whileTrue(new PutL1(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
+  button.button(4).whileTrue(new PutL2(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
+  button.button(5).whileTrue(new PutL3(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
+  button.button(6).whileTrue(new PutL4(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
+  button.button(7).whileTrue(new TakeAlgae_Low(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
+  button.button(8).whileTrue(new TakeAlgae_High(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
+  button.button(9).whileTrue(new PutProcesser(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
+  button.button(0).whileTrue(new Ready(m_ElevatorSubsystem, m_PawSubsystem));
+  
+}
 
 
 

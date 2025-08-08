@@ -30,6 +30,7 @@ public class PutNet extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_PawSubsystem.brake();
     m_ElevatorSubsystem.Net();
     m_PawSubsystem.netPosition();
     // This is where you would put any initialization code for the command.
@@ -49,7 +50,6 @@ public class PutNet extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
   }
 
   // Returns true when the command should end.

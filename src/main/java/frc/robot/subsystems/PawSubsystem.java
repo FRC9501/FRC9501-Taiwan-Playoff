@@ -74,6 +74,9 @@ public class PawSubsystem extends SubsystemBase {
     public void processer() {
         position = kprocesserPosition;
     }
+    public void haveAlgae() {
+        position = khaveAlgae;
+    }
 
     
     public void shoot() {

@@ -4,36 +4,32 @@
 
 package frc.robot.commands;
 
-import static frc.robot.Constants.IntakeConstants.kresetpoint;
-
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.PawSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class IntakeStopCmd extends Command {
-  /** Creates a new IntakeStop. */
-  private IntakeSubsystem m_intakeSubsystem; 
+public class Ready extends Command {
+  /** Creates a new * w ready. */
+  private ElevatorSubsystem m_elevatorSubsystem;
   private PawSubsystem m_PawSubsystem;
-
-  public IntakeStopCmd(PawSubsystem m_PawSubsystem ,IntakeSubsystem intakeSubsystem) {
-    this.m_intakeSubsystem = intakeSubsystem;
-    this.m_PawSubsystem = m_PawSubsystem;
-    addRequirements(m_PawSubsystem,m_intakeSubsystem);
+  public Ready(ElevatorSubsystem elevatorSubsystem, PawSubsystem pawSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.m_elevatorSubsystem = elevatorSubsystem;
+    this.m_PawSubsystem = pawSubsystem;
+    addRequirements(m_PawSubsystem, m_elevatorSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_elevatorSubsystem.readyPosition();
+    m_PawSubsystem.readyPosition();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-      m_intakeSubsystem.stop();
-      m_intakeSubsystem.stopmove();
-      m_intakeSubsystem.reset();
-  } 
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

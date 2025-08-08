@@ -50,7 +50,8 @@ public class TakeAlgae_High extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
+    m_PawSubsystem.haveAlgae();
+    m_ElevatorSubsystem.haveAlgae();
   }
 
   // Returns true when the command should end.

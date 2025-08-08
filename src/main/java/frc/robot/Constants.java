@@ -115,7 +115,8 @@ public final class Constants {
     public static final double kL2 = 2.0;
     public static final double kL1 = 1.0;
     public static final double knet = 5.0;
-    public static final double kprocesser = 7.0;
+    public static final double kprocesser = 6.0;
+    public static final double khaveAlgae = 7.0;
   }
   
   public static final class PawConstants{
@@ -125,6 +126,7 @@ public final class Constants {
     public static final double kL3Position = 3.0;
     public static final double kL4Position = 4.0;
     public static final double knetPosition = 5.0;
-    public static final double kprocesserPosition = 7.0;
+    public static final double kprocesserPosition = 6.0;
+    public static final double khaveAlgae = 7.0;
   }
 }

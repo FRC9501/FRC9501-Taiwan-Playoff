@@ -50,7 +50,9 @@ public class PutL4 extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    
+    m_ElevatorSubsystem.readyPosition();
+    m_PawSubsystem.readyPosition();
+    m_PawSubsystem.brake();
   }
 
   // Returns true when the command should end.

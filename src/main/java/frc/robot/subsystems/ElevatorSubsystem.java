@@ -17,6 +17,7 @@ import static frc.robot.Constants.ElevatorConstants.knet;
 import static frc.robot.Constants.ElevatorConstants.kprocesser;
 import static frc.robot.Constants.ElevatorConstants.kreadyPosition;
 import static frc.robot.Constants.ElevatorConstants.ktakecoral;
+import static frc.robot.Constants.PawConstants.khaveAlgae;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -118,6 +119,9 @@ public class ElevatorSubsystem extends SubsystemBase {
     }
     public void processer() {
         elevatorGoalPosition = kprocesser;
+    }
+    public void haveAlgae() {
+        elevatorGoalPosition = khaveAlgae; 
     }
 
 
