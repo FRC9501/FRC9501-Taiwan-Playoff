@@ -7,19 +7,19 @@ package frc.robot.commands;
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.PawSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class TakeAlgae_High extends Command {
   /** Creates a new L0. */
   private final ElevatorSubsystem m_ElevatorSubsystem;
-  private final PawSubsystem m_PawSubsystem;
+  private final ArmSubsystem m_PawSubsystem;
   private final BooleanSupplier ifIntakeFunc;
   private boolean ifIntake;
   
   
-  public TakeAlgae_High(ElevatorSubsystem elevatorSubsystem, PawSubsystem pawSubsystem, BooleanSupplier ifIntakeFunc) {
+  public TakeAlgae_High(ElevatorSubsystem elevatorSubsystem, ArmSubsystem pawSubsystem, BooleanSupplier ifIntakeFunc) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_ElevatorSubsystem = elevatorSubsystem;
     this.m_PawSubsystem = pawSubsystem;

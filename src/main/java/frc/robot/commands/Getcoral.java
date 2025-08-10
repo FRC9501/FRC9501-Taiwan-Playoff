@@ -5,15 +5,15 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.PawSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class Getcoral extends Command {
-    private final PawSubsystem m_PawSubsystem;
+    private final ArmSubsystem m_PawSubsystem;
     private final ElevatorSubsystem m_ElevatorSubsystem;
   /** Creates a new Hand. */
-  public Getcoral(PawSubsystem pawSubsystem, ElevatorSubsystem elevatorSubsystem) {
+  public Getcoral(ArmSubsystem pawSubsystem, ElevatorSubsystem elevatorSubsystem) {
     this.m_ElevatorSubsystem = elevatorSubsystem;
     this.m_PawSubsystem = pawSubsystem;
     addRequirements(m_ElevatorSubsystem, m_PawSubsystem);

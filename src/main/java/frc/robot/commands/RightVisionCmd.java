@@ -4,14 +4,11 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OperatorConstants;
-import static frc.robot.Constants.VisionConstants.*;
-import frc.robot.RobotContainer;
+import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.RightVisionSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
-import frc.robot.subsystems.RightVisionSubsystem;
 
 public class RightVisionCmd extends Command {
     public double turnOutput;
@@ -60,25 +57,27 @@ public class RightVisionCmd extends Command {
     m_RightVisionSubsystem.LEDDD();
     if(m_RightVisionSubsystem.hastarget()) {
       fieldOrient = false;
-      xSpeed = m_RightVisionSubsystem.getXOutput(rightXSetpoint);
-      ySpeed = -m_RightVisionSubsystem.getYOutput(rightYSetpoint);
-      zSpeed = -m_RightVisionSubsystem.getZOutput(rightZSetpoint);
-      m_RightVisionSubsystem.AQLED();
-      if(m_RightVisionSubsystem.Xposition()){
+
+      xSpeed = m_RightVisionSubsystem.getXOutput(VisionConstants.rightXSetpoint);
+      ySpeed = -m_RightVisionSubsystem.getYOutput(VisionConstants.rightYSetpoint);
+      zSpeed = -m_RightVisionSubsystem.getZOutput(VisionConstants.rightZSetpoint);
+
+      if(m_RightVisionSubsystem.arriveXposition()){
         xSpeed = 0;
       }
-      if(m_RightVisionSubsystem.Yposition()){
+      if(m_RightVisionSubsystem.arriveYposition()){
         ySpeed = 0;
       }
-      if(m_RightVisionSubsystem.ryPosition()){
+      if(m_RightVisionSubsystem.arriveRotationPosition()){
         zSpeed=0;
       }
     } 
     else {
       fieldOrient = true;
-      this.xSpeed = -xSpeedFunc.getAsDouble();
-      this.ySpeed = -ySpeedFunc.getAsDouble();
-      this.zSpeed = -zSpeedFunc.getAsDouble();
+
+      this.xSpeed = -xSpeedFunc.getAsDouble() * 0.4;
+      this.ySpeed = -ySpeedFunc.getAsDouble() * 0.4;
+      this.zSpeed = -zSpeedFunc.getAsDouble() * 0.2;
 
       this.xSpeed = MathUtil.applyDeadband(this.xSpeed, OperatorConstants.kJoystickDeadBand);
       this.ySpeed = MathUtil.applyDeadband(this.ySpeed, OperatorConstants.kJoystickDeadBand);
@@ -89,7 +88,6 @@ public class RightVisionCmd extends Command {
       this.zSpeed = zLimiter.calculate(this.zSpeed);
     }
     m_SwerveSubsystem.drive(xSpeed, ySpeed, zSpeed, fieldOrient);
-
   }
 
   @Override

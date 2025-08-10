@@ -4,20 +4,11 @@
 
 package frc.robot.subsystems;
 
-import static edu.wpi.first.units.Units.Meters;
-import static edu.wpi.first.units.Units.MetersPerSecond;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.DoubleArraySubscriber;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.units.measure.Distance;
-import edu.wpi.first.wpilibj.AddressableLED;
-import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import edu.wpi.first.wpilibj.AddressableLEDBufferView;
-import edu.wpi.first.wpilibj.LEDPattern;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.VisionConstants;
@@ -30,13 +21,13 @@ public class RightVisionSubsystem extends SubsystemBase {
   private final NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight-right");
   private final DoubleArraySubscriber doubleArray = table.getDoubleArrayTopic("botpose_targetspace").subscribe(new double[]{0, 0, 0, 0, 0, 0});
   
-  private final LEDPattern rainbow = LEDPattern.rainbow(255,255);
-  private static final Distance LEDSpacing = Meters.of(1/120.0);
-  private final LEDPattern scrollingRainbow =  rainbow.scrollAtAbsoluteSpeed(MetersPerSecond.of(2), LEDSpacing);
-  private AddressableLED led = new AddressableLED(0);
-  private AddressableLEDBuffer ledBuffer = new AddressableLEDBuffer(100);
-  private final LEDPattern Aqua = LEDPattern.solid(Color.kAqua);
-  private final LEDPattern Green = LEDPattern.solid(Color.kDarkGreen);
+  // private final LEDPattern rainbow = LEDPattern.rainbow(255,255);
+  // private static final Distance LEDSpacing = Meters.of(1/120.0);
+  // private final LEDPattern scrollingRainbow =  rainbow.scrollAtAbsoluteSpeed(MetersPerSecond.of(2), LEDSpacing);
+  // private AddressableLED led = new AddressableLED(0);
+  // private AddressableLEDBuffer ledBuffer = new AddressableLEDBuffer(100);
+  // private final LEDPattern Aqua = LEDPattern.solid(Color.kAqua);
+  // private final LEDPattern Green = LEDPattern.solid(Color.kDarkGreen);
 
 
   public RightVisionSubsystem() {
@@ -45,24 +36,24 @@ public class RightVisionSubsystem extends SubsystemBase {
       zPID = new PIDController(0.01, 0, 0);
 
       
-      led.setLength(ledBuffer.getLength());
-      led.start();
+      // led.setLength(ledBuffer.getLength());
+      // led.start();
       arriveSetpoint();
     }
 
-    public double getXOutput(double xSetpoint) {
-        return Constants.setMaxOutput(xPID.calculate(getZ(),xSetpoint), 0.2);
-    }
-    public double getYOutput(double zSetpoint) {
-        return Constants.setMaxOutput(yPID.calculate(getX(), zSetpoint), 0.2) ;
-    }
-    public double getZOutput(double zSetpoint) {
-        return Constants.setMaxOutput(zPID.calculate(getRY(), zSetpoint), 0.1);
-    }
-  public double getX(){
+  public double getXOutput() {
+        return Constants.setMaxOutput(xPID.calculate(getTZ(), VisionConstants.rightReefXSetpoint), 0.2);
+  }
+  public double getYOutput() {
+        return Constants.setMaxOutput(yPID.calculate(getTX(), VisionConstants.rightReefYSetpoint), 0.2) ;
+  }
+  public double getZOutput() {
+        return Constants.setMaxOutput(zPID.calculate(getRY(), VisionConstants.rightReefZSetpoint), 0.1);
+  }
+  public double getTX(){
     return LimelightHelpers.getTargetPose3d_RobotSpace("limelight-right").getX();
   }
-  public double getZ(){
+  public double getTZ(){
     return LimelightHelpers.getTargetPose3d_RobotSpace("limelight-right").getZ();
   }
   public double getRY(){
@@ -72,27 +63,14 @@ public class RightVisionSubsystem extends SubsystemBase {
     return LimelightHelpers.getTV("limelight-right");
   }
 
-  public boolean Xposition(){
-    return Math.abs(xPID.getError())<0.05;
+  public boolean arriveXposition(){
+    return Math.abs(xPID.getError()) <= 0.05;
   }
-  public boolean Yposition(){
-    return Math.abs(yPID.getError())<0.05;
+  public boolean arriveYposition(){
+    return Math.abs(yPID.getError()) <= 0.05;
   }
-  public boolean ryPosition(){
-    return Math.abs(zPID.getError())<1;
-  }
-
-  public void LED(){
-    scrollingRainbow.applyTo(ledBuffer);
-    led.setData(ledBuffer);
-  }
-  public void AQLED(){
-      Aqua.applyTo(ledBuffer);
-      led.setData(ledBuffer);
-  }
-  public void GLED(){
-    Green.applyTo(ledBuffer);
-    led.setData(ledBuffer);
+  public boolean arriveRotationPosition(){
+    return Math.abs(zPID.getError()) <= 1;
   }
 
   public void tracking_hasTarget(){
@@ -108,30 +86,27 @@ public class RightVisionSubsystem extends SubsystemBase {
   }
 
   public void LEDDD(){
-    if(Xposition()&Yposition()&&ryPosition()){
-      AQLED();
+    if(arriveXposition() && arriveYposition() && arriveRotationPosition()){
       arriveSetpoint();
     }
     else{
         if(hastarget()){
-          GLED();
           tracking_hasTarget();
         }
         else{
-          LED();
           tracking_noTarget();
       }
     }
   }
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Tx", getX());
-    SmartDashboard.putNumber("Tz", getZ());
+    SmartDashboard.putNumber("Tx", getTX());
+    SmartDashboard.putNumber("Tz", getTZ());
     SmartDashboard.putNumber("RY", getRY());
     SmartDashboard.putBoolean("hastarget", hastarget());
-    SmartDashboard.putNumber("xoutput", getXOutput(VisionConstants.rightXSetpoint));
-    SmartDashboard.putNumber("youtput", getYOutput(VisionConstants.rightYSetpoint));
-    SmartDashboard.putNumber("RYoutput", getZOutput(VisionConstants.rightZSetpoint));
+    SmartDashboard.putNumber("xoutput", getXOutput());
+    SmartDashboard.putNumber("youtput", getYOutput());
+    SmartDashboard.putNumber("RYoutput", getZOutput());
     
   }
 }

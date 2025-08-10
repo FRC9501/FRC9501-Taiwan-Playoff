@@ -1,0 +1,178 @@
+package frc.robot.subsystems;
+
+import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+
+import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
+
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
+
+import edu.wpi.first.math.controller.ArmFeedforward;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
+public class ArmSubsystem extends SubsystemBase {
+    private final TalonFX armPivotMotor;
+    private final SparkMax armWheelMotor;
+    private final CANcoder armCANcoder;
+    private final AnalogInput irSensor;
+
+    private final SparkMaxConfig armWheelMotorConfig;
+    private final TalonFXConfiguration armPivotMotorConfig;
+    private final CANcoderConfiguration armCANcoderConfig;
+
+    private final PIDController armPID;
+    private final ArmFeedforward armFeedforward;
+
+    private double armGoalPosition;
+    private double armPIDOutput;
+    private double armFeedforwardOutput;
+    private double armOutput;
+    
+    // private static final Distance LEdSpacing =  Meters.of(1 / 120.0);
+    
+    
+
+    public ArmSubsystem() {
+        armPivotMotor = new TalonFX(ArmConstants.armPivotMotorID);
+        armWheelMotor = new SparkMax(ArmConstants.armPivotMotorID, MotorType.kBrushless);
+        armCANcoder = new CANcoder(ArmConstants.armCANcoderID);
+        irSensor = new AnalogInput(ArmConstants.armIRSensorID);
+
+        armPivotMotorConfig = new TalonFXConfiguration();
+        armWheelMotorConfig = new SparkMaxConfig();
+        armCANcoderConfig = new CANcoderConfiguration();
+
+        armPID = new PIDController(0, 0, 0);
+        armFeedforward = new ArmFeedforward(0, 0, 0);
+
+        armPivotMotorConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        armPivotMotorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+
+        armWheelMotorConfig.idleMode(IdleMode.kBrake);
+        armWheelMotorConfig.inverted(false);
+
+        armCANcoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
+        armCANcoderConfig.MagnetSensor.MagnetOffset = ArmConstants.paeCANcoderOffset;
+
+        armPivotMotor.getConfigurator().apply(armPivotMotorConfig);
+        armWheelMotor.configure(armWheelMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+        armCANcoder.getConfigurator().apply(armCANcoderConfig);
+
+        intakeCoral_Pivot();
+    }
+    
+    //pivot
+    public void intakeCoral_Pivot() {
+        armGoalPosition = ArmConstants.coralIntakePosition;
+    }
+    public void putL1_Pivot() {
+        armGoalPosition = ArmConstants.coralL1Position;
+    }
+    public void putL2_Pivot() {
+        armGoalPosition = ArmConstants.coralL2Position;
+    }
+    public void putL3_Pivot() {
+        armGoalPosition = ArmConstants.coralL3Position;
+    }
+    public void putL4_Pivot() {
+        armGoalPosition = ArmConstants.coralL4Position;
+    }
+    public void intakeAlgaeHigh_Pivot(){
+        armGoalPosition = ArmConstants.algaeHighPosition;
+    }
+    public void intaleAlgaeLow_Pivot(){
+        armGoalPosition = ArmConstants.algaeLowPosition;
+    }
+    public void intakeAlgaeFloor_Pivot(){
+        armGoalPosition = ArmConstants.algaeFloorPosition;
+    }
+    public void putNet_Pivot() {
+        armGoalPosition = ArmConstants.algaeNetPosition;
+    }
+    public void putProcesser_Pivot() {
+        armGoalPosition = ArmConstants.algaeProcessorPosition;
+    }
+    public void primitive_Algae_Pivot() {
+        armGoalPosition = ArmConstants.algaePrimitivePosition;
+    }
+
+    //wheel
+    public void intakeCoral_Wheel(){
+        armWheelMotor.setVoltage(ArmConstants.intakeCoralVol);
+    }
+    public void intakeAlgaeHih_Wheel(){
+        armWheelMotor.setVoltage(ArmConstants.intakeAlgaeHighVol);
+    }
+    public void intakeAlgaeLow_Wheel(){
+        armWheelMotor.setVoltage(ArmConstants.intakeAlgaeLowVol);
+    }
+    public void intakeAlgaeFloor_Wheel(){
+        armWheelMotor.setVoltage(ArmConstants.intakeAlgaeFloorVol);
+    }
+    public void putNet_Wheel(){
+        armWheelMotor.setVoltage(ArmConstants.putNetVol);
+    }
+    public void putProcessor_Wheel(){
+        armWheelMotor.setVoltage(ArmConstants.putProcessorVol);
+    }
+    public void holdAlgae_Wheel(){
+        armWheelMotor.setVoltage(ArmConstants.holdAlgaeVol);
+    }
+
+    public double getAbsolutePosition(){
+        return armCANcoder.getAbsolutePosition().getValueAsDouble();
+    }
+    public double getAngle_Degrees(){
+        return getAbsolutePosition() * 360;
+    }
+    public double getAngle_Radians(){
+        return Math.toRadians(getAngle_Degrees());
+    }
+    public double getAngularVelocity(){
+        return Units.rotationsPerMinuteToRadiansPerSecond(armCANcoder.getVelocity().getValueAsDouble() * 60);
+    }
+    public boolean arriveSetpoint(){
+        return Math.abs(armPID.getError()) <= 1;
+    }
+    public double getDistance() {
+        return irSensor.getValue();
+    }
+
+    public void brake(){
+        armWheelMotorConfig.idleMode(IdleMode.kBrake);
+        armWheelMotor.configure(armWheelMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+    }
+    public void coast(){
+        armWheelMotorConfig.idleMode(IdleMode.kCoast);
+        armWheelMotor.configure(armWheelMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+    }
+    
+    public boolean hasGamePiece(){
+        return getDistance() <= 600;
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("distance", getDistance());
+        armFeedforwardOutput = armFeedforward.calculate(getAngle_Radians(), getAngularVelocity());
+        armPIDOutput = armPID.calculate(armGoalPosition, getAngle_Degrees());
+        armPIDOutput = Constants.setMaxOutput(armPIDOutput, 0.4);
+        armOutput = armFeedforwardOutput + armPIDOutput;
+        armPivotMotor.setVoltage(armOutput);
+    }
+}

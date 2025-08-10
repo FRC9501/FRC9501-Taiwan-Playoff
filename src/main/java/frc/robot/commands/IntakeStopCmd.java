@@ -4,21 +4,19 @@
 
 package frc.robot.commands;
 
-import static frc.robot.Constants.IntakeConstants.kresetpoint;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
-import frc.robot.subsystems.PawSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class IntakeStopCmd extends Command {
   /** Creates a new IntakeStop. */
   private IntakeSubsystem m_intakeSubsystem; 
-  private PawSubsystem m_PawSubsystem;
+  private ArmSubsystem m_PawSubsystem;
 
-  public IntakeStopCmd(PawSubsystem m_PawSubsystem ,IntakeSubsystem intakeSubsystem) {
+  public IntakeStopCmd(ArmSubsystem pawSubsystem ,IntakeSubsystem intakeSubsystem) {
     this.m_intakeSubsystem = intakeSubsystem;
-    this.m_PawSubsystem = m_PawSubsystem;
+    this.m_PawSubsystem = pawSubsystem;
     addRequirements(m_PawSubsystem,m_intakeSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }

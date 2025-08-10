@@ -4,14 +4,8 @@
 
 package frc.robot.subsystems;
 
-import java.lang.management.MemoryType;
-
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
-import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.InvertedValue;
-import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.spark.SparkFlex;
 import com.revrobotics.spark.SparkMax;
@@ -27,9 +21,8 @@ import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.Module_KrakenConstants;;
+import frc.robot.Constants.ModuleConstants;;
 
 public class SwerveModule extends SubsystemBase {
   /** Creates a new SwerveModule. */
@@ -55,10 +48,10 @@ public class SwerveModule extends SubsystemBase {
     absolutedEncoder = new CANcoder(absolutedEncoder_ID);
     cancoderConfig = new CANcoderConfiguration();
 
-    turningPidController = new PIDController(Module_KrakenConstants.turningPidController_Kp, Module_KrakenConstants.turningPidController_Ki, Module_KrakenConstants.turningPidController_Kd);
-    turningPidController.enableContinuousInput(Module_KrakenConstants.pidRangeMin, Module_KrakenConstants.pidRangeMax);
+    turningPidController = new PIDController(ModuleConstants.turningPidController_Kp, ModuleConstants.turningPidController_Ki, ModuleConstants.turningPidController_Kd);
+    turningPidController.enableContinuousInput(ModuleConstants.pidRangeMin, ModuleConstants.pidRangeMax);
 
-    driveFeedForward = new SimpleMotorFeedforward(Module_KrakenConstants.driveFeedforward_Ks, Module_KrakenConstants.driveFeedforward_Kv);
+    driveFeedForward = new SimpleMotorFeedforward(ModuleConstants.driveFeedforward_Ks, ModuleConstants.driveFeedforward_Kv);
 
     turningConfig.inverted(true);
     driveConfig.inverted(true);
@@ -90,7 +83,7 @@ public class SwerveModule extends SubsystemBase {
   }
 
   public double getDriveVelocity() {
-    return driveMotor.getEncoder().getVelocity()*Module_KrakenConstants.driveEncoderRot2Meter;
+    return driveMotor.getEncoder().getVelocity()*ModuleConstants.driveEncoderRot2Meter;
   }
 
   public double getDrivePosition() {

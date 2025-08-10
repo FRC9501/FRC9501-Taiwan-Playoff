@@ -4,11 +4,9 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OperatorConstants;
 import static frc.robot.Constants.VisionConstants.*;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.LeftVisionSubsystem;
 
@@ -62,14 +60,13 @@ public class LeftVisionCmd extends Command {
       xSpeed = m_LeftVisionSubsystem.getXOutput(leftXSetpoint);
       ySpeed = -m_LeftVisionSubsystem.getYOutput(leftYSetpoint);
       zSpeed = -m_LeftVisionSubsystem.getZOutput(leftZSetpoint);
-      m_LeftVisionSubsystem.AQLED();
-      if(m_LeftVisionSubsystem.Xposition()){
+      if(m_LeftVisionSubsystem.arriveXposition()){
         xSpeed = 0;
       }
-      if(m_LeftVisionSubsystem.Yposition()){
+      if(m_LeftVisionSubsystem.arriveYposition()){
         ySpeed = 0;
       }
-      if(m_LeftVisionSubsystem.ryPosition()){
+      if(m_LeftVisionSubsystem.arriveRotationPosition()){
         zSpeed=0;
       }
     } 

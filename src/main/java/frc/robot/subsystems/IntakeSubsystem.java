@@ -1,67 +1,113 @@
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.IntakeConstants.*;
+import frc.robot.Constants;
+import frc.robot.Constants.IntakeConstants;
 
-import java.beans.Encoder;
-
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.spark.SparkMax;
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 
+import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.AnalogEncoder;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 public class IntakeSubsystem extends SubsystemBase {
-    private SparkMax intakeMotor = new SparkMax(10, MotorType.kBrushless);
-    private SparkMax intakeMotor2 = new SparkMax(11, MotorType.kBrushless);
-    private SparkMax moveMotor = new SparkMax(12, MotorType.kBrushless);
-    private CANcoder intakeCANcoder = new CANcoder(20);
-    private PIDController intakePID = new PIDController(0.1, 0.01, 0.001);
-    // private double nowposition = 0.0;
-    // private double position = 0.0;
-    private double setpoint = 0.0;
-    
+    private final SparkMax intakePivotLeftMotor;
+    private final SparkMax intakePivotRightMotor;
+    private final SparkMax intakeWheelMotor;
+    private final CANcoder intakeCANcoder;
 
-    public IntakeSubsystem() {      
+    private final SparkMaxConfig intakePivotLeftMotorConfig;
+    private final SparkMaxConfig intakePivotRightMotorConfig;
+    private final SparkMaxConfig intakeWheelMotorConfig;
+    private final CANcoderConfiguration intakeCANcoderConfig;
+
+    private final PIDController intakePID;
+    private final ArmFeedforward intakeFeedforward;
+
+    private double intakePivotSetpoint;
+    private double intakePIDOutput;
+    private double intakeFeedforwardOutput;
+    private double intakeOutput;
+    
+    public IntakeSubsystem() {   
+        intakePivotLeftMotor = new SparkMax(IntakeConstants.intakePivotLeftMotorID, MotorType.kBrushless);
+        intakePivotRightMotor = new SparkMax(IntakeConstants.intakePivotRightMotorID, MotorType.kBrushless);
+        intakeWheelMotor = new SparkMax(IntakeConstants.intakeWheelMotorID, MotorType.kBrushless);
+        intakeCANcoder = new CANcoder(IntakeConstants.intakeCANcoderID);
+
+        intakePivotLeftMotorConfig = new SparkMaxConfig();
+        intakePivotRightMotorConfig = new SparkMaxConfig();
+        intakeWheelMotorConfig = new SparkMaxConfig();
+        intakeCANcoderConfig = new CANcoderConfiguration();
+
+        intakePID = new PIDController(0, 0, 0);
+        intakeFeedforward = new ArmFeedforward(0, 0, 0);
+
+        intakePivotLeftMotorConfig.idleMode(IdleMode.kBrake);
+        intakePivotRightMotorConfig.idleMode(IdleMode.kBrake);
+        intakeWheelMotorConfig.idleMode(IdleMode.kCoast);
+
+        intakePivotLeftMotorConfig.inverted(false);
+        intakePivotRightMotorConfig.inverted(false);
+        intakeWheelMotorConfig.inverted(false);
+
+        intakePivotLeftMotorConfig.follow(intakePivotRightMotor.getDeviceId(), true);
+
+        intakeCANcoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
+        intakeCANcoderConfig.MagnetSensor.MagnetOffset = IntakeConstants.intakeCANcoderOffset;
+
+        intakePivotLeftMotor.configure(intakePivotLeftMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+        intakePivotRightMotor.configure(intakePivotRightMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+        intakeWheelMotor.configure(intakeWheelMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
+        intakeCANcoder.getConfigurator().apply(intakeCANcoderConfig);
     }
     
-    public void set(){
-        setpoint = ksetpoint;
+    public void intakeCoral_Pivot(){
+        intakePivotSetpoint = IntakeConstants.intakeOutPosition;
     }
-    public void reset(){
-        setpoint = kresetpoint;
-    }
-    public void incoral(){
-        moveMotor.set(1);
-    }
-    public void stopmove(){
-        moveMotor.set(0);
+    public void intakkePrimitive_Pivot(){
+        intakePivotSetpoint = IntakeConstants.intakePrimitivePosition;
     }
 
-    
-    public double get(){
-        return intakeCANcoder.getAbsolutePosition().getValueAsDouble()*360;
+    public void intakeCoral(){
+        intakeWheelMotor.setVoltage(IntakeConstants.intakeCoralVol);
+    }
+    public void rejectCoral(){
+        intakeWheelMotor.setVoltage(IntakeConstants.rejectCoralVol);
+    }
+    public void stopMotor(){
+        intakeWheelMotor.stopMotor();
     }
 
-    public void suck(){
-        intakeMotor2.set(1);
+    public double getAbsolutePosition(){
+        return intakeCANcoder.getAbsolutePosition().getValueAsDouble();
     }
-    public void stop(){
-        intakeMotor2.set(0);
+    public double getAngle_Degrees(){
+        return getAbsolutePosition() * 360;
+    }
+    public double getAngle_Raadians(){
+        return Math.toRadians(getAngle_Degrees());
+    }
+    public double getAngularVelocity(){
+        return Units.rotationsPerMinuteToRadiansPerSecond(intakeCANcoder.getVelocity().getValueAsDouble() * 60);
     }
 
 
     @Override
     public void periodic() {
-        // position = encoder.getPosition();
-        intakeMotor.set(intakePID.calculate(get(),setpoint));
-
+        intakeFeedforwardOutput = intakeFeedforward.calculate(getAngle_Raadians(), getAngularVelocity());
+        intakePIDOutput = intakePID.calculate(getAngle_Degrees(), intakePivotSetpoint);
+        intakePIDOutput = Constants.setMaxOutput(intakePIDOutput, 0.4);
+        intakeOutput = intakeFeedforwardOutput + intakePIDOutput;
+        intakePivotRightMotor.setVoltage(intakeOutput);
     }
 }

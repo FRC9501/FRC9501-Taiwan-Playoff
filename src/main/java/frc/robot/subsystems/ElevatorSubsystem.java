@@ -9,31 +9,28 @@ import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import static frc.robot.Constants.ElevatorConstants.kL1;
-import static frc.robot.Constants.ElevatorConstants.kL2;
-import static frc.robot.Constants.ElevatorConstants.kL3;
-import static frc.robot.Constants.ElevatorConstants.kL4;
-import static frc.robot.Constants.ElevatorConstants.knet;
-import static frc.robot.Constants.ElevatorConstants.kprocesser;
-import static frc.robot.Constants.ElevatorConstants.kreadyPosition;
-import static frc.robot.Constants.ElevatorConstants.ktakecoral;
-import static frc.robot.Constants.PawConstants.khaveAlgae;
+import frc.robot.Constants.ElevatorConstants;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ElevatorSubsystem extends SubsystemBase {
     private TalonFX leftTalon;
     private TalonFX rightTalon;
-    private TalonFXConfiguration elevatorMotorConfig = new TalonFXConfiguration();
-    private PositionDutyCycle request = new PositionDutyCycle(0);
-    private MotionMagicConfigs elevatorMotionMagicConfigs = new MotionMagicConfigs();
+    private TalonFXConfiguration elevatorMotorConfig;
+    private PositionDutyCycle request;
+    private MotionMagicConfigs elevatorMotionMagicConfigs;
     // private DutyCycleOut duty = new DutyCycleOut(0.2);
     private double elevatorGoalPosition;
 
 
     public ElevatorSubsystem() {
-        leftTalon = new TalonFX(13);
-        rightTalon = new TalonFX(14);
+        leftTalon = new TalonFX(ElevatorConstants.elevatorLeftMotorID);
+        rightTalon = new TalonFX(ElevatorConstants.elevatorRightMotorID);
+
+        elevatorGoalPosition = ElevatorConstants.coralPrimitivePosition;
+
+        elevatorMotorConfig = new TalonFXConfiguration();
+        elevatorMotionMagicConfigs = new MotionMagicConfigs();
 
         elevatorMotorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;             
         elevatorMotorConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
@@ -47,20 +44,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         elevatorMotionMagicConfigs.MotionMagicCruiseVelocity = 80;
         elevatorMotionMagicConfigs.MotionMagicAcceleration = 90;
         elevatorMotionMagicConfigs.MotionMagicJerk = 400;
-        // leftTalonCfg.MotorOutput.PeakForwardDutyCycle = 0.6;
-        // leftTalonCfg.MotorOutput.PeakReverseDutyCycle = -0.6;
-        // leftTalonCfg.Slot1.withStaticFeedforwardSign(StaticFeedforwardSignValue.UseClosedLoopSign);
 
-        // elevatorMotorConfig.Slot1.withGravityType(GravityTypeValue.Elevator_Static);
-        // elevatorMotorConfig.Slot1.kP = 0.02;
-        // elevatorMotorConfig.Slot1.kG = 0.0;
-        // elevatorMotorConfig.Slot1.kI = 0;
-        // elevatorMotorConfig.Slot1.kD = 0;
-        // elevatorMotorConfig.Slot1.kA = 0;
-        // elevatorMotorConfig.Slot1.kV = 0;
-        // elevatorMotorConfig.MotorOutput.PeakForwardDutyCycle = 0.6;
-        // elevatorMotorConfig.MotorOutput.PeakReverseDutyCycle = -0.6;
-        // elevatorMotorConfig.Slot1.withStaticFeedforwardSign(StaticFeedforwardSignValue.UseClosedLoopSign);
         rightTalon.getConfigurator().apply(elevatorMotorConfig);
         leftTalon.getConfigurator().apply(elevatorMotorConfig);
         rightTalon.getConfigurator().apply(elevatorMotionMagicConfigs);
@@ -68,66 +52,57 @@ public class ElevatorSubsystem extends SubsystemBase {
         leftTalon.setControl(new Follower(rightTalon.getDeviceID(), true));
 
         resetEncoder();
+        primitive_Coral();
 
-    }
-
-    // public void Duty() {
-    //     rightTalon.set(0.3);
-    //     leftTalon.set(0.3);
-    // }
-
-    // public void Reverse() {
-    //     rightTalon.set(-0.3);
-    //     leftTalon.set(-0.3);
-    // }
-    // public double get() {
-    //     return rightTalon.getPosition().getValueAsDouble();
-    // }
-    public boolean setpoint(){
-        return Math.abs(nowposition() - elevatorGoalPosition) <= 0.1;
-    }
-    public double nowposition() {
-        return rightTalon.getPosition().getValueAsDouble();
-    }
-    public void stop() {
-        rightTalon.set(0);
-        leftTalon.set(0);
+        request = new PositionDutyCycle(elevatorGoalPosition);
     }
 
-
-
-    public void readyPosition() {
-        elevatorGoalPosition = kreadyPosition;
+    public void primitive_Coral() {
+        elevatorGoalPosition = ElevatorConstants.coralPrimitivePosition;
     }
-    public void takecoral() {
-        elevatorGoalPosition = ktakecoral;
+    public void intakeCoral() {
+        elevatorGoalPosition = ElevatorConstants.coralIntakePosition;
     }
-    public void L4() {
-        elevatorGoalPosition = kL4;
+    public void putL4() {
+        elevatorGoalPosition = ElevatorConstants.coralL4Position;
     }
-    public void L3() {
-        elevatorGoalPosition = kL3;
+    public void putL3() {
+        elevatorGoalPosition = ElevatorConstants.coralL3Position;
     }
-    public void L2() {
-        elevatorGoalPosition = kL2;
+    public void putL2() {
+        elevatorGoalPosition = ElevatorConstants.coralL2Position;
     }
-    public void L1() {
-        elevatorGoalPosition = kL1;
+    public void putL1() {
+        elevatorGoalPosition = ElevatorConstants.coralL1Position;
     }
-    public void Net() {
-        elevatorGoalPosition = knet;
+    public void putNet() {
+        elevatorGoalPosition = ElevatorConstants.algaeNetPosition;
     }
-    public void processer() {
-        elevatorGoalPosition = kprocesser;
+    public void putProcesser() {
+        elevatorGoalPosition = ElevatorConstants.algaeProcessorPosition;
     }
-    public void haveAlgae() {
-        elevatorGoalPosition = khaveAlgae; 
+    public void primitive_Algae() {
+        elevatorGoalPosition = ElevatorConstants.algaePrimitivePosition; 
     }
-
+    public void intakeAlgaeHigh(){
+        elevatorGoalPosition = ElevatorConstants.algaeHighPosition;
+    }
+    public void intakeAlgaeLow(){
+        elevatorGoalPosition = ElevatorConstants.algaeLowPosition;
+    }
+    public void intakeAlgaeFloor(){
+        elevatorGoalPosition = ElevatorConstants.algaeFloorPosition;
+    }
 
     public void resetEncoder() {
         rightTalon.setPosition(0);
         leftTalon.setPosition(0);
+    }
+    public boolean arriveSetpoint(){
+        return Math.abs(getPosition() - elevatorGoalPosition) <= 0.1;
+    }
+    public double getPosition() {
+        return rightTalon.getPosition().getValueAsDouble();
     }
 
     @Override
@@ -135,10 +110,6 @@ public class ElevatorSubsystem extends SubsystemBase {
         rightTalon.setControl(request.withPosition(elevatorGoalPosition).withSlot(1));
     }
 
-    // public void setAngle(Supplier<Double> Rotation) {
-    //     leftTalon.setControl(request.withPosition(Rotation.get()).withSlot(1));
-    //     rightTalon.setControl(request.withPosition(Rotation.get()).withSlot(1));
-    // }
 
     
     

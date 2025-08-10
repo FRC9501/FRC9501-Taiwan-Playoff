@@ -6,14 +6,14 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.PawSubsystem;
+import frc.robot.subsystems.ArmSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class Ready extends Command {
   /** Creates a new * w ready. */
   private ElevatorSubsystem m_elevatorSubsystem;
-  private PawSubsystem m_PawSubsystem;
-  public Ready(ElevatorSubsystem elevatorSubsystem, PawSubsystem pawSubsystem) {
+  private ArmSubsystem m_PawSubsystem;
+  public Ready(ElevatorSubsystem elevatorSubsystem, ArmSubsystem pawSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_elevatorSubsystem = elevatorSubsystem;
     this.m_PawSubsystem = pawSubsystem;
