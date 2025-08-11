@@ -5,26 +5,26 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class Ready extends Command {
-  /** Creates a new * w ready. */
-  private ElevatorSubsystem m_elevatorSubsystem;
-  private ArmSubsystem m_PawSubsystem;
-  public Ready(ElevatorSubsystem elevatorSubsystem, ArmSubsystem pawSubsystem) {
+  private ElevatorSubsystem m_ElevatorSubsystem;
+  private ArmSubsystem m_ArmSubsystem;
+  /** Creates a new Ready. */
+  public Ready(ElevatorSubsystem elevatorSubsystem, ArmSubsystem armSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.m_elevatorSubsystem = elevatorSubsystem;
-    this.m_PawSubsystem = pawSubsystem;
-    addRequirements(m_PawSubsystem, m_elevatorSubsystem);
+    this.m_ElevatorSubsystem = elevatorSubsystem;
+    this.m_ArmSubsystem = armSubsystem;
+    addRequirements(m_ElevatorSubsystem, m_ArmSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_elevatorSubsystem.readyPosition();
-    m_PawSubsystem.readyPosition();
+    m_ElevatorSubsystem.primitive_Coral();
+    m_ArmSubsystem.intakeCoral_Pivot();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

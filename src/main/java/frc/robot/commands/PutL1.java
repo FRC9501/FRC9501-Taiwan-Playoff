@@ -7,52 +7,44 @@ package frc.robot.commands;
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class PutL1 extends Command {
-  /** Creates a new L0. */
-  private final ElevatorSubsystem m_ElevatorSubsystem;
-  private final ArmSubsystem m_PawSubsystem;
-  private final BooleanSupplier ifFeedFunc;
+  private ArmSubsystem m_ArmSubsystem;
+  private ElevatorSubsystem m_ElevatorSubsystem;
+  private BooleanSupplier ifFeedFunc;
   private boolean ifFeed;
-  
-  
-  public PutL1(ElevatorSubsystem elevatorSubsystem, ArmSubsystem pawSubsystem, BooleanSupplier ifFeedFunc) {
-    // Use addRequirements() here to declare subsystem dependencies.
+
+  /** Creates a new L4. */
+  public PutL1(ArmSubsystem armSubsystem, ElevatorSubsystem elevatorSubsystem, BooleanSupplier ifFeedFunc) {
+    this.m_ArmSubsystem = armSubsystem;
     this.m_ElevatorSubsystem = elevatorSubsystem;
-    this.m_PawSubsystem = pawSubsystem;
-    this.ifFeedFunc = ifFeedFunc;    
-    addRequirements(m_PawSubsystem, m_ElevatorSubsystem);
+    this.ifFeedFunc = ifFeedFunc;
+    addRequirements(m_ArmSubsystem, m_ElevatorSubsystem);
+
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_PawSubsystem.coast();
-    m_ElevatorSubsystem.L1();
-    m_PawSubsystem.L1Position();
-    // This is where you would put any initialization code for the command.
-    // For example, you might set a motor to a specific speed or position.
+    m_ArmSubsystem.coast();
+    m_ArmSubsystem.readyL1_Pivot();
+    m_ElevatorSubsystem.putL1();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    ifFeed = ifFeedFunc.getAsBoolean();
-    if (m_PawSubsystem.setpoint()&& m_ElevatorSubsystem.setpoint()&& ifFeed == true) {
-      m_PawSubsystem.readyPosition();
-      m_PawSubsystem.shoot();
-    }
+    m_ArmSubsystem.putL1_Wheel();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_ElevatorSubsystem.readyPosition();
-    m_PawSubsystem.readyPosition();
-    m_PawSubsystem.brake();
+    m_ArmSubsystem.brake();
   }
 
   // Returns true when the command should end.

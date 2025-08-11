@@ -49,7 +49,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     public ArmSubsystem() {
         armPivotMotor = new TalonFX(ArmConstants.armPivotMotorID);
-        armWheelMotor = new SparkMax(ArmConstants.armPivotMotorID, MotorType.kBrushless);
+        armWheelMotor = new SparkMax(ArmConstants.armWheelMotorID, MotorType.kBrushless);
         armCANcoder = new CANcoder(ArmConstants.armCANcoderID);
         irSensor = new AnalogInput(ArmConstants.armIRSensorID);
 
@@ -80,22 +80,34 @@ public class ArmSubsystem extends SubsystemBase {
     public void intakeCoral_Pivot() {
         armGoalPosition = ArmConstants.coralIntakePosition;
     }
+    public void readyL1_Pivot() {
+        armGoalPosition = ArmConstants.coralL1ReadyPosition;
+    }
+    public void readyL2_Pivot() {
+        armGoalPosition = ArmConstants.coralL2ReadyPosition;
+    }
+    public void readyL3_Pivot() {
+        armGoalPosition = ArmConstants.coralL3ReadyPosition;
+    }
+    public void readyL4_Pivot() {
+        armGoalPosition = ArmConstants.coralL4ReadyPosition;
+    }
     public void putL1_Pivot() {
-        armGoalPosition = ArmConstants.coralL1Position;
+        armGoalPosition = ArmConstants.coralL1PutPosition;
     }
     public void putL2_Pivot() {
-        armGoalPosition = ArmConstants.coralL2Position;
+        armGoalPosition = ArmConstants.coralL2PutPosition;
     }
     public void putL3_Pivot() {
-        armGoalPosition = ArmConstants.coralL3Position;
+        armGoalPosition = ArmConstants.coralL3PutPosition;
     }
     public void putL4_Pivot() {
-        armGoalPosition = ArmConstants.coralL4Position;
+        armGoalPosition = ArmConstants.coralL4PutPosition;
     }
     public void intakeAlgaeHigh_Pivot(){
         armGoalPosition = ArmConstants.algaeHighPosition;
     }
-    public void intaleAlgaeLow_Pivot(){
+    public void intakeAlgaeLow_Pivot(){
         armGoalPosition = ArmConstants.algaeLowPosition;
     }
     public void intakeAlgaeFloor_Pivot(){
@@ -133,6 +145,11 @@ public class ArmSubsystem extends SubsystemBase {
     public void holdAlgae_Wheel(){
         armWheelMotor.setVoltage(ArmConstants.holdAlgaeVol);
     }
+    public void putL1_Wheel(){
+        armWheelMotor.setVoltage(ArmConstants.putL1Vol);
+    }
+
+
 
     public double getAbsolutePosition(){
         return armCANcoder.getAbsolutePosition().getValueAsDouble();
@@ -168,7 +185,7 @@ public class ArmSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("distance", getDistance());
+        SmartDashboard.putNumber("armdistance", getDistance());
         armFeedforwardOutput = armFeedforward.calculate(getAngle_Radians(), getAngularVelocity());
         armPIDOutput = armPID.calculate(armGoalPosition, getAngle_Degrees());
         armPIDOutput = Constants.setMaxOutput(armPIDOutput, 0.4);

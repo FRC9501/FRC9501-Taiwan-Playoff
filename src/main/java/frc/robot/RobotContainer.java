@@ -1,16 +1,5 @@
 package frc.robot;
 
-import frc.robot.commands.TakeAlgae_Low;
-import frc.robot.commands.Ready;
-import frc.robot.commands.TakeAlgae_High;
-import frc.robot.commands.Getcoral;
-import frc.robot.commands.IntakeCmd;
-import frc.robot.commands.IntakeStopCmd;
-import frc.robot.commands.PutProcesser;
-import frc.robot.commands.PutL1;
-import frc.robot.commands.PutL2;
-import frc.robot.commands.PutL3;
-import frc.robot.commands.PutL4;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.LeftVisionCmd;
 import frc.robot.commands.ManualDrive;
@@ -55,28 +44,16 @@ public class RobotContainer {
 
   private void configureBindings() {
   //搖桿
-  button.button(10).whileTrue(new IntakeCmd(m_IntakeSubsystem));
-  button.button(11).whileTrue(new IntakeStopCmd(m_PawSubsystem, m_IntakeSubsystem));
-  button.button(2).whileTrue(new Getcoral(m_PawSubsystem, m_ElevatorSubsystem));
-
+  BooleanSupplier ifFeed  = ()-> driverController.getRawAxis(3) <= 0.4;
   DoubleSupplier xSpeedFunc = ()-> driverController.getRawAxis(1);
   DoubleSupplier ySpeedFunc = ()-> driverController.getRawAxis(0);
   DoubleSupplier zSpeedFunc = ()-> driverController.getRawAxis(4);
-  BooleanSupplier isSlowFunc = ()-> driverController.getHID().getRawButton(6);
+  
   driverController.button(6).whileTrue(new RightVisionCmd(m_RightVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
   driverController.button(5).whileTrue(new LeftVisionCmd(m_LeftVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
-  m_SwerveSubsystem.setDefaultCommand(new ManualDrive(m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc, isSlowFunc));
+  m_SwerveSubsystem.setDefaultCommand(new ManualDrive(m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
   driverController.button(3).whileTrue(Commands.runOnce(() -> m_SwerveSubsystem.resetGyro()));
-  //按鈕盤
-  BooleanSupplier ifFeedFunc = () -> button.button(1).getAsBoolean();  
-  button.button(3).whileTrue(new PutL1(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
-  button.button(4).whileTrue(new PutL2(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
-  button.button(5).whileTrue(new PutL3(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
-  button.button(6).whileTrue(new PutL4(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
-  button.button(7).whileTrue(new TakeAlgae_Low(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
-  button.button(8).whileTrue(new TakeAlgae_High(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
-  button.button(9).whileTrue(new PutProcesser(m_ElevatorSubsystem, m_PawSubsystem, ifFeedFunc));
-  button.button(0).whileTrue(new Ready(m_ElevatorSubsystem, m_PawSubsystem));
+  //按鈕盤 
 }
 
 

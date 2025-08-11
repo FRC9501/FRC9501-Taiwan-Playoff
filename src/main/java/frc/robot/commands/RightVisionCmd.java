@@ -58,9 +58,9 @@ public class RightVisionCmd extends Command {
     if(m_RightVisionSubsystem.hastarget()) {
       fieldOrient = false;
 
-      xSpeed = m_RightVisionSubsystem.getXOutput(VisionConstants.rightXSetpoint);
-      ySpeed = -m_RightVisionSubsystem.getYOutput(VisionConstants.rightYSetpoint);
-      zSpeed = -m_RightVisionSubsystem.getZOutput(VisionConstants.rightZSetpoint);
+      xSpeed = m_RightVisionSubsystem.getXOutput();
+      ySpeed = -m_RightVisionSubsystem.getYOutput();
+      zSpeed = -m_RightVisionSubsystem.getZOutput();
 
       if(m_RightVisionSubsystem.arriveXposition()){
         xSpeed = 0;

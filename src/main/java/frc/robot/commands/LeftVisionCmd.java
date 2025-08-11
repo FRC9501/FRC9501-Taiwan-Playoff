@@ -57,9 +57,12 @@ public class LeftVisionCmd extends Command {
     m_LeftVisionSubsystem.LEDDD();
     if(m_LeftVisionSubsystem.hastarget()) {
       fieldOrient = false;
-      xSpeed = m_LeftVisionSubsystem.getXOutput(leftXSetpoint);
-      ySpeed = -m_LeftVisionSubsystem.getYOutput(leftYSetpoint);
-      zSpeed = -m_LeftVisionSubsystem.getZOutput(leftZSetpoint);
+      xSpeed = m_LeftVisionSubsystem.getXOutput();
+      ySpeed = -m_LeftVisionSubsystem.getYOutput();
+      zSpeed = -m_LeftVisionSubsystem.getZOutput(
+
+      
+      );
       if(m_LeftVisionSubsystem.arriveXposition()){
         xSpeed = 0;
       }

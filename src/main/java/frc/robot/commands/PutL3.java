@@ -12,49 +12,41 @@ import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class PutL3 extends Command {
-  /** Creates a new L0. */
-  private final ElevatorSubsystem m_elevatorSubsystem;
-  private final ArmSubsystem m_PawSubsystem;
-  private final BooleanSupplier ifFeedFunc;
+  private ArmSubsystem m_ArmSubsystem;
+  private ElevatorSubsystem m_ElevatorSubsystem;
+  private BooleanSupplier ifFeedFunc;
   private boolean ifFeed;
-  
-  
-  public PutL3(ElevatorSubsystem elevatorSubsystem, ArmSubsystem pawSubsystem, BooleanSupplier ifFeedFunc) {
+
+  /** Creates a new L4. */
+  public PutL3(ArmSubsystem armSubsystem, ElevatorSubsystem elevatorSubsystem, BooleanSupplier ifFeedFunc) {
+    this.m_ArmSubsystem = armSubsystem;
+    this.m_ElevatorSubsystem = elevatorSubsystem;
+    this.ifFeedFunc = ifFeedFunc;
+    addRequirements(m_ArmSubsystem, m_ElevatorSubsystem);
+
     // Use addRequirements() here to declare subsystem dependencies.
-    this.m_elevatorSubsystem = elevatorSubsystem;
-    this.m_PawSubsystem = pawSubsystem;
-    this.ifFeedFunc = ifFeedFunc;    
-    addRequirements(m_PawSubsystem, m_elevatorSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_PawSubsystem.coast();
-    m_elevatorSubsystem.L3();
-    m_PawSubsystem.L3Position();
-    // This is where you would put any initialization code for the command.
-    // For example, you might set a motor to a specific speed or position.
+    m_ArmSubsystem.coast();
+    m_ArmSubsystem.readyL3_Pivot();
+    m_ElevatorSubsystem.putL3();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    ifFeed = ifFeedFunc.getAsBoolean();
-    if (m_PawSubsystem.setpoint()&& m_elevatorSubsystem.setpoint()&&ifFeed == true) {
-      m_PawSubsystem.readyPosition();
-      m_PawSubsystem.shoot();
-      }
+    if(m_ArmSubsystem.arriveSetpoint() && ifFeed && m_ElevatorSubsystem.arriveSetpoint()){
+      m_ArmSubsystem.putL3_Pivot();
     }
-  
+  }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_PawSubsystem.readyPosition();
-    m_elevatorSubsystem.readyPosition();
-    m_PawSubsystem.brake();
-    
+    m_ArmSubsystem.brake();
   }
 
   // Returns true when the command should end.

@@ -21,7 +21,6 @@ public class ManualDrive extends Command {
   private final DoubleSupplier xSpeedFunc;
   private final DoubleSupplier ySpeedFunc;
   private final DoubleSupplier zSpeedFunc;
-  private final BooleanSupplier isSlowFunc;
 
   private final SlewRateLimiter xLimiter;
   private final SlewRateLimiter yLimiter;
@@ -30,14 +29,12 @@ public class ManualDrive extends Command {
   private double xSpeed;
   private double ySpeed;
   private double zSpeed;
-  private boolean isSlow;
-  public ManualDrive(SwerveSubsystem swerveSubsystem, DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier zSpeed, BooleanSupplier isSlow) {
+  public ManualDrive(SwerveSubsystem swerveSubsystem, DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier zSpeed) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_SwerveSubsystem = swerveSubsystem;
     this.xSpeedFunc = xSpeed;
     this.ySpeedFunc = ySpeed;
     this.zSpeedFunc = zSpeed;
-    this.isSlowFunc = isSlow;
 
     this.xLimiter = new SlewRateLimiter(4.6);
     this.yLimiter = new SlewRateLimiter(4.6);
@@ -68,17 +65,11 @@ public class ManualDrive extends Command {
     this.ySpeed = yLimiter.calculate(this.ySpeed);
     this.zSpeed = zLimiter.calculate(this.zSpeed);
 
-    this.isSlow = isSlowFunc.getAsBoolean();
 
-    if(isSlow) {
-      xSpeed = xSpeed*0.2;
-      ySpeed = ySpeed*0.2;
-      zSpeed = zSpeed*0.2;
-    }else {
-      xSpeed = xSpeed*0.4;
-      ySpeed = ySpeed*0.4;
-      zSpeed = zSpeed*0.4;
-    }
+    xSpeed = xSpeed*0.4;
+    ySpeed = ySpeed*0.4;
+    zSpeed = zSpeed*0.4;
+  
 
     SmartDashboard.putNumber("ManualDrive/Xspeed", xSpeed);
     SmartDashboard.putNumber("ManualDrive/Yspeed", ySpeed);

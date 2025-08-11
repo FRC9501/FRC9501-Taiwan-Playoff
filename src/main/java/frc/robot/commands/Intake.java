@@ -7,44 +7,53 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class Getcoral extends Command {
-    private final ArmSubsystem m_PawSubsystem;
-    private final ElevatorSubsystem m_ElevatorSubsystem;
-  /** Creates a new Hand. */
-  public Getcoral(ArmSubsystem pawSubsystem, ElevatorSubsystem elevatorSubsystem) {
+public class Intake extends Command {
+  private IntakeSubsystem m_IntakeSubsystem;
+  private ArmSubsystem m_ArmSubsystem;
+  private ElevatorSubsystem m_ElevatorSubsystem;
+  /** Creates a new Intake. */
+  public Intake(IntakeSubsystem intakeSubsystem, ArmSubsystem armSubsystem, ElevatorSubsystem elevatorSubsystem) {
+    this.m_IntakeSubsystem = intakeSubsystem;
+    this.m_ArmSubsystem = armSubsystem;
     this.m_ElevatorSubsystem = elevatorSubsystem;
-    this.m_PawSubsystem = pawSubsystem;
-    addRequirements(m_ElevatorSubsystem, m_PawSubsystem);
+    addRequirements(m_ArmSubsystem, m_ElevatorSubsystem, m_IntakeSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_PawSubsystem.coast();  
+    m_ArmSubsystem.coast();
+    m_ArmSubsystem.intakeCoral_Pivot();
+    m_ElevatorSubsystem.primitive_Coral();
+    m_IntakeSubsystem.intakeCoral_Pivot();
+    m_IntakeSubsystem.intakeCoral_Wheel();
   }
-  //test
+
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_PawSubsystem.setpoint()&&m_ElevatorSubsystem.setpoint() == true) {
-      m_ElevatorSubsystem.takecoral();
-      m_PawSubsystem.takeIn();
+    if(m_IntakeSubsystem.hasGamePiece()){
+      m_IntakeSubsystem.intakePrimitive_Pivot();
+      m_IntakeSubsystem.stopMotor();
+      m_ArmSubsystem.intakeCoral_Wheel();
+      m_ElevatorSubsystem.intakeCoral();
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_PawSubsystem.readyPosition();
-    m_ElevatorSubsystem.readyPosition();
-    }
+    m_ArmSubsystem.brake();
+    m_ElevatorSubsystem.primitive_Coral();
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_ArmSubsystem.hasGamePiece();
   }
 }

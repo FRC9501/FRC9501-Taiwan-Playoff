@@ -11,17 +11,14 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class PutL2 extends Command {
+public class TakeHighAlgae extends Command {
   private ArmSubsystem m_ArmSubsystem;
   private ElevatorSubsystem m_ElevatorSubsystem;
-  private BooleanSupplier ifFeedFunc;
-  private boolean ifFeed;
 
   /** Creates a new L4. */
-  public PutL2(ArmSubsystem armSubsystem, ElevatorSubsystem elevatorSubsystem, BooleanSupplier ifFeedFunc) {
+  public TakeHighAlgae(ArmSubsystem armSubsystem, ElevatorSubsystem elevatorSubsystem) {
     this.m_ArmSubsystem = armSubsystem;
     this.m_ElevatorSubsystem = elevatorSubsystem;
-    this.ifFeedFunc = ifFeedFunc;
     addRequirements(m_ArmSubsystem, m_ElevatorSubsystem);
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -30,23 +27,26 @@ public class PutL2 extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_ArmSubsystem.coast();
-    m_ArmSubsystem.readyL2_Pivot();
-    m_ElevatorSubsystem.putL2();
+    m_ArmSubsystem.brake();
+    m_ArmSubsystem.intakeAlgaeHigh_Pivot();
+    m_ArmSubsystem.intakeAlgaeHih_Wheel();
+    m_ElevatorSubsystem.intakeAlgaeHigh();
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_ArmSubsystem.arriveSetpoint() && ifFeed && m_ElevatorSubsystem.arriveSetpoint()){
-      m_ArmSubsystem.putL2_Pivot();
-    }
+      if(m_ArmSubsystem.hasGamePiece()){
+        m_ArmSubsystem.holdAlgae_Wheel();
+      }
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_ArmSubsystem.brake();
+    m_ArmSubsystem.primitive_Algae_Pivot();
   }
 
   // Returns true when the command should end.

@@ -4,38 +4,45 @@
 
 package frc.robot.commands;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class IntakeStopCmd extends Command {
-  /** Creates a new IntakeStop. */
-  private IntakeSubsystem m_intakeSubsystem; 
-  private ArmSubsystem m_PawSubsystem;
+public class FloorAlgae extends Command {
+  private ArmSubsystem m_ArmSubsystem;
+  private ElevatorSubsystem m_ElevatorSubsystem;
 
-  public IntakeStopCmd(ArmSubsystem pawSubsystem ,IntakeSubsystem intakeSubsystem) {
-    this.m_intakeSubsystem = intakeSubsystem;
-    this.m_PawSubsystem = pawSubsystem;
-    addRequirements(m_PawSubsystem,m_intakeSubsystem);
+
+  /** Creates a new L4. */
+  public FloorAlgae(ArmSubsystem armSubsystem, ElevatorSubsystem elevatorSubsystem, BooleanSupplier ifFeedFunc) {
+    this.m_ArmSubsystem = armSubsystem;
+    this.m_ElevatorSubsystem = elevatorSubsystem;
+    addRequirements(m_ArmSubsystem, m_ElevatorSubsystem);
+
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_ArmSubsystem.brake();
+    m_ElevatorSubsystem.intakeAlgaeFloor();
+    m_ArmSubsystem.intakeAlgaeFloor_Pivot();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      m_intakeSubsystem.stop();
-      m_intakeSubsystem.stopmove();
-      m_intakeSubsystem.reset();
-  } 
+    m_ArmSubsystem.intakeAlgaeFloor_Wheel();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override

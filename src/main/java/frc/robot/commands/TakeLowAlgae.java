@@ -4,38 +4,49 @@
 
 package frc.robot.commands;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.IntakeSubsystem;
-import static frc.robot.Constants.IntakeConstants.*;
+import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class IntakeCmd extends Command {
-  /** Creates a new IntakeCmd. */
-  private IntakeSubsystem m_intakeSubsystem;
+public class TakeLowAlgae extends Command {
+  private ArmSubsystem m_ArmSubsystem;
+  private ElevatorSubsystem m_ElevatorSubsystem;
 
-  public IntakeCmd(IntakeSubsystem intakeSubsystem) {
+  /** Creates a new L4. */
+  public TakeLowAlgae(ArmSubsystem armSubsystem, ElevatorSubsystem elevatorSubsystem) {
+    this.m_ArmSubsystem = armSubsystem;
+    this.m_ElevatorSubsystem = elevatorSubsystem;
+    addRequirements(m_ArmSubsystem, m_ElevatorSubsystem);
+
     // Use addRequirements() here to declare subsystem dependencies.
-  this.m_intakeSubsystem = intakeSubsystem;
-    addRequirements(m_intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    m_ArmSubsystem.brake();
+    m_ArmSubsystem.intakeAlgaeLow_Pivot();
+    m_ArmSubsystem.intakeAlgaeLow_Wheel();
+    m_ElevatorSubsystem.intakeAlgaeLow();
+
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intakeSubsystem.incoral();
-    m_intakeSubsystem.set();
-    if(m_intakeSubsystem.get() - ksetpoint <= 0.6)
-    {m_intakeSubsystem.suck();}
+      if(m_ArmSubsystem.hasGamePiece()){
+        m_ArmSubsystem.holdAlgae_Wheel();
+      }
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_intakeSubsystem.stop();
+    m_ArmSubsystem.primitive_Algae_Pivot();
   }
 
   // Returns true when the command should end.

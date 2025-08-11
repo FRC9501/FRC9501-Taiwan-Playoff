@@ -132,6 +132,7 @@ public final class Constants {
     public static final int intakePivotLeftMotorID = 0;
     public static final int intakeWheelMotorID = 0;
     public static final int intakeCANcoderID = 0;
+    public static final int IntakeIRSensorID = 0;
 
     public static final double intakeCANcoderOffset = 0;
 
@@ -152,16 +153,21 @@ public final class Constants {
 
     public static final double coralPrimitivePosition = 0;
     public static final double coralIntakePosition = 0;
-    public static final double coralL1Position = 0;
-    public static final double coralL2Position = 0;
-    public static final double coralL3Position = 0;
-    public static final double coralL4Position = 0;
+    public static final double coralL1ReadyPosition = 0;
+    public static final double coralL2ReadyPosition = 0;
+    public static final double coralL3ReadyPosition = 0;
+    public static final double coralL4ReadyPosition = 0;
+    public static final double coralL1PutPosition = 0;
+    public static final double coralL2PutPosition = 0;
+    public static final double coralL3PutPosition = 0;
+    public static final double coralL4PutPosition = 0;
     public static final double algaeHighPosition = 0;
     public static final double algaeLowPosition = 0;
     public static final double algaeFloorPosition = 0;
     public static final double algaeNetPosition = 0;
     public static final double algaeProcessorPosition = 0;
     public static final double algaePrimitivePosition = 0;
+    public static final double putL1Vol = 0;
 
     public static final double intakeCoralVol = 0;
     public static final double intakeAlgaeFloorVol = 0;
