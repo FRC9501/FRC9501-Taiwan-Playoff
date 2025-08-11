@@ -50,6 +50,7 @@ public class LeftVisionCmd extends Command {
 
   @Override
   public void initialize() {
+    LEDConstants.arriveSetpoint_Base = false;
   }
 
   @Override

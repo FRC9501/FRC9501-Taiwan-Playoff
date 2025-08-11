@@ -47,6 +47,7 @@ public class RightVisionCmd extends Command {
 
   @Override
   public void initialize() {
+    LEDConstants.arriveSetpoint_Base = false;
   }
 
   @Override
