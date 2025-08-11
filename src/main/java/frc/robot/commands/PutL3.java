@@ -7,6 +7,7 @@ package frc.robot.commands;
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
@@ -39,7 +40,7 @@ public class PutL3 extends Command {
   @Override
   public void execute() {
     ifFeed = ifFeedFunc.getAsBoolean();
-    if((m_ArmSubsystem.arriveSetpoint() && m_ElevatorSubsystem.arriveSetpoint()) && ifFeed){
+    if((m_ArmSubsystem.arriveSetpoint() && m_ElevatorSubsystem.arriveSetpoint()) && (ifFeed || LEDConstants.arriveSetpoint_Base)) {
       m_ArmSubsystem.putL3_Pivot();
     }
   }

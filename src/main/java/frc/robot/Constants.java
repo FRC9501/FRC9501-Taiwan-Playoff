@@ -186,4 +186,11 @@ public final class Constants {
     public static final double leftReefYSetpoint = 0;
     public static final double leftReefZSetpoint = 0;
   }
+  public static class LEDConstants{
+    public static boolean arriveSetpoint_Base = false;
+    public static boolean arriveSetpoint_Arm = false;
+    public static boolean arriveSetpoint_Elevator = false;
+    public static boolean hasGamePiece = false;
+    public static boolean hasTarget = false;
+  }
 }

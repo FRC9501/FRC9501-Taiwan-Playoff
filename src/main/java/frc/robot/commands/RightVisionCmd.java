@@ -5,6 +5,8 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.RightVisionSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -66,6 +68,18 @@ public class RightVisionCmd extends Command {
       if(m_RightVisionSubsystem.arriveRotationPosition()){
         zSpeed=0;
       }
+      if (m_RightVisionSubsystem.arriveXposition() && m_RightVisionSubsystem.arriveYposition() && m_RightVisionSubsystem.arriveRotationPosition()) {
+        LEDConstants.arriveSetpoint_Base = true;
+      } else {
+        xSpeed = MathUtil.applyDeadband(xSpeed, OperatorConstants.kJoystickDeadBand);
+        ySpeed = MathUtil.applyDeadband(ySpeed, OperatorConstants.kJoystickDeadBand);
+        zSpeed = MathUtil.applyDeadband(zSpeed, OperatorConstants.kJoystickDeadBand);
+
+        xSpeed = xLimiter.calculate(xSpeed);
+        ySpeed = yLimiter.calculate(ySpeed);
+        zSpeed = zLimiter.calculate(zSpeed);
+        
+      }
     } 
     else {
       fieldOrient = true;
@@ -87,6 +101,7 @@ public class RightVisionCmd extends Command {
 
   @Override
   public void end(boolean interrupted) {
+    LEDConstants.arriveSetpoint_Base = false;
     m_RightVisionSubsystem.arriveSetpoint();
   }
 

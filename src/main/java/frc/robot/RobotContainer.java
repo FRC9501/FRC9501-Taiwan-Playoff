@@ -31,6 +31,7 @@ import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -50,6 +51,7 @@ public class RobotContainer {
   private final SendableChooser<Command> m_chooser = AutoBuilder.buildAutoChooser();
 
   public RobotContainer() {
+    NamedCommands.registerCommand("TrackRightReef", new RightVisionCmd(m_RightVisionSubsystem, m_SwerveSubsystem, null, null, null));
     SmartDashboard.putData("AutoMode", m_chooser);
     configureBindings();
   }
