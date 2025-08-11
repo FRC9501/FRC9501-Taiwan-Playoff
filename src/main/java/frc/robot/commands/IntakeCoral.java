@@ -10,12 +10,12 @@ import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class Intake extends Command {
+public class IntakeCoral extends Command {
   private IntakeSubsystem m_IntakeSubsystem;
   private ArmSubsystem m_ArmSubsystem;
   private ElevatorSubsystem m_ElevatorSubsystem;
   /** Creates a new Intake. */
-  public Intake(IntakeSubsystem intakeSubsystem, ArmSubsystem armSubsystem, ElevatorSubsystem elevatorSubsystem) {
+  public IntakeCoral(IntakeSubsystem intakeSubsystem, ArmSubsystem armSubsystem, ElevatorSubsystem elevatorSubsystem) {
     this.m_IntakeSubsystem = intakeSubsystem;
     this.m_ArmSubsystem = armSubsystem;
     this.m_ElevatorSubsystem = elevatorSubsystem;

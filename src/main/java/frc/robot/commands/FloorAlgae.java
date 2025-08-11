@@ -31,22 +31,26 @@ public class FloorAlgae extends Command {
     m_ArmSubsystem.brake();
     m_ElevatorSubsystem.intakeAlgaeFloor();
     m_ArmSubsystem.intakeAlgaeFloor_Pivot();
+    m_ArmSubsystem.intakeAlgaeFloor_Wheel();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_ArmSubsystem.intakeAlgaeFloor_Wheel();
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_ElevatorSubsystem.primitive_Algae();
+    m_ArmSubsystem.holdAlgae_Wheel();
+    m_ArmSubsystem.primitive_Algae_Pivot();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_ArmSubsystem.hasGamePiece();
   }
 }

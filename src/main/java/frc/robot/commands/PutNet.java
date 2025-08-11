@@ -38,15 +38,15 @@ public class PutNet extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_ArmSubsystem.arriveSetpoint() && ifFeed && m_ElevatorSubsystem.arriveSetpoint()){
+    ifFeed = ifFeedFunc.getAsBoolean();
+    if(m_ArmSubsystem.arriveSetpoint() && m_ElevatorSubsystem.arriveSetpoint() && ifFeed){
       m_ArmSubsystem.putNet_Wheel();
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

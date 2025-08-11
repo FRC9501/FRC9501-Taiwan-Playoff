@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
-import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.IntakeConstants;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;

@@ -2,7 +2,7 @@ package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.FloorAlgae;
-import frc.robot.commands.Intake;
+import frc.robot.commands.IntakeCoral;
 import frc.robot.commands.LeftVisionCmd;
 import frc.robot.commands.ManualDrive;
 import frc.robot.commands.PutL1;
@@ -11,7 +11,7 @@ import frc.robot.commands.PutL3;
 import frc.robot.commands.PutL4;
 import frc.robot.commands.PutNet;
 import frc.robot.commands.PutProcessor;
-import frc.robot.commands.Ready;
+import frc.robot.commands.ToPrimitive;
 import frc.robot.commands.RightVisionCmd;
 import frc.robot.commands.TakeHighAlgae;
 import frc.robot.commands.TakeLowAlgae;
@@ -45,7 +45,7 @@ public class RobotContainer {
   private final LeftVisionSubsystem m_LeftVisionSubsystem = new LeftVisionSubsystem();
 
   private final CommandXboxController driverController = new CommandXboxController(OperatorConstants.kDriverControllerPort);
-  private final CommandJoystick buttonBoard = new CommandJoystick(OperatorConstants.kButtonBoardPort);
+  private final CommandJoystick panel = new CommandJoystick(OperatorConstants.kpanelPort);
 
   private final SendableChooser<Command> m_chooser = AutoBuilder.buildAutoChooser();
 
@@ -60,22 +60,22 @@ public class RobotContainer {
   DoubleSupplier xSpeedFunc = ()-> driverController.getRawAxis(1);
   DoubleSupplier ySpeedFunc = ()-> driverController.getRawAxis(0);
   DoubleSupplier zSpeedFunc = ()-> driverController.getRawAxis(4);
-  driverController.leftTrigger().whileTrue(new Intake(m_IntakeSubsystem, m_ArmSubsystem, m_ElevatorSubsystem));
+  driverController.leftTrigger().whileTrue(new IntakeCoral(m_IntakeSubsystem, m_ArmSubsystem, m_ElevatorSubsystem));
   driverController.rightBumper().whileTrue(new LeftVisionCmd(m_LeftVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
   driverController.leftBumper().whileTrue(new RightVisionCmd(m_RightVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
   m_SwerveSubsystem.setDefaultCommand(new ManualDrive(m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
   driverController.x().whileTrue(Commands.runOnce(() -> m_SwerveSubsystem.resetGyro()));
   //按鈕盤 
-  buttonBoard.button(0).onTrue(new PutNet(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
-  buttonBoard.button(1).onTrue(new TakeHighAlgae(m_ArmSubsystem, m_ElevatorSubsystem));
-  buttonBoard.button(2).onTrue(new TakeLowAlgae(m_ArmSubsystem, m_ElevatorSubsystem));
-  buttonBoard.button(3).onTrue(new PutProcessor(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
-  buttonBoard.button(4).onTrue(new FloorAlgae(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
-  buttonBoard.button(5).onTrue(new PutL4(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
-  buttonBoard.button(6).onTrue(new PutL3(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
-  buttonBoard.button(7).onTrue(new PutL2(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
-  buttonBoard.button(8).onTrue(new PutL1(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
-  buttonBoard.button(9).onTrue(new Ready(m_ElevatorSubsystem, m_ArmSubsystem));
+  panel.button(0).onTrue(new PutNet(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
+  panel.button(1).onTrue(new TakeHighAlgae(m_ArmSubsystem, m_ElevatorSubsystem));
+  panel.button(2).onTrue(new TakeLowAlgae(m_ArmSubsystem, m_ElevatorSubsystem));
+  panel.button(3).onTrue(new PutProcessor(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
+  panel.button(4).onTrue(new FloorAlgae(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
+  panel.button(5).onTrue(new PutL4(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
+  panel.button(6).onTrue(new PutL3(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
+  panel.button(7).onTrue(new PutL2(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
+  panel.button(8).onTrue(new PutL1(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
+  panel.button(9).onTrue(new ToPrimitive(m_ElevatorSubsystem, m_ArmSubsystem));
 
 }
 

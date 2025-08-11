@@ -9,7 +9,7 @@ public final class Constants {
   public static class OperatorConstants {
     public static final double kJoystickDeadBand = 0.1;
     public static final int kDriverControllerPort = 0;
-    public static final int kButtonBoardPort = 1;
+    public static final int kpanelPort = 1;
   }
 
   public static double setMaxOutput(double output, double maxOutput){

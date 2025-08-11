@@ -38,7 +38,10 @@ public class PutL1 extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_ArmSubsystem.putL1_Wheel();
+    ifFeed = ifFeedFunc.getAsBoolean();
+    if (ifFeed) {
+      m_ArmSubsystem.putL1_Wheel();
+    }
   }
 
   // Called once the command ends or is interrupted.

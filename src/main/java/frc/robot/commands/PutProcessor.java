@@ -38,10 +38,10 @@ public class PutProcessor extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_ElevatorSubsystem.arriveSetpoint()&& ifFeed&& m_ArmSubsystem.arriveSetpoint()){
+    ifFeed = ifFeedFunc.getAsBoolean();
+    if(m_ElevatorSubsystem.arriveSetpoint() && m_ArmSubsystem.arriveSetpoint() && ifFeed){
       m_ArmSubsystem.putProcessor_Wheel();
     }
-    
   }
 
   // Called once the command ends or is interrupted.

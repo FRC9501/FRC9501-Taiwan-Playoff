@@ -6,7 +6,6 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OperatorConstants;
-import static frc.robot.Constants.VisionConstants.*;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.LeftVisionSubsystem;
 

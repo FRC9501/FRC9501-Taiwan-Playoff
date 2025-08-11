@@ -38,7 +38,8 @@ public class PutL3 extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_ArmSubsystem.arriveSetpoint() && ifFeed && m_ElevatorSubsystem.arriveSetpoint()){
+    ifFeed = ifFeedFunc.getAsBoolean();
+    if((m_ArmSubsystem.arriveSetpoint() && m_ElevatorSubsystem.arriveSetpoint()) && ifFeed){
       m_ArmSubsystem.putL3_Pivot();
     }
   }

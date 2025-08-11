@@ -4,8 +4,6 @@
 
 package frc.robot.commands;
 
-import java.util.function.BooleanSupplier;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -37,9 +35,9 @@ public class TakeHighAlgae extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-      if(m_ArmSubsystem.hasGamePiece()){
+    if(m_ArmSubsystem.hasGamePiece()){
         m_ArmSubsystem.holdAlgae_Wheel();
-      }
+    }
     
   }
 
@@ -47,6 +45,7 @@ public class TakeHighAlgae extends Command {
   @Override
   public void end(boolean interrupted) {
     m_ArmSubsystem.primitive_Algae_Pivot();
+    m_ElevatorSubsystem.primitive_Algae();
   }
 
   // Returns true when the command should end.

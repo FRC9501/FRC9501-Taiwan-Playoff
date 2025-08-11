@@ -6,15 +6,10 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.RightVisionSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
-public class RightVisionCmd extends Command {
-    public double turnOutput;
-    public double moveOutput;
-    public double frontOutput;
-    
+public class RightVisionCmd extends Command {    
     private final RightVisionSubsystem m_RightVisionSubsystem;
     private final SwerveSubsystem m_SwerveSubsystem;
 

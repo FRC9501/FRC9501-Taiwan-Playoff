@@ -9,11 +9,11 @@ import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class Ready extends Command {
+public class ToPrimitive extends Command {
   private ElevatorSubsystem m_ElevatorSubsystem;
   private ArmSubsystem m_ArmSubsystem;
   /** Creates a new Ready. */
-  public Ready(ElevatorSubsystem elevatorSubsystem, ArmSubsystem armSubsystem) {
+  public ToPrimitive(ElevatorSubsystem elevatorSubsystem, ArmSubsystem armSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.m_ElevatorSubsystem = elevatorSubsystem;
     this.m_ArmSubsystem = armSubsystem;
