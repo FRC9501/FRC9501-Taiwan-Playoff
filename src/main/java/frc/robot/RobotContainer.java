@@ -53,6 +53,7 @@ public class RobotContainer {
   public RobotContainer() {
     NamedCommands.registerCommand("TrackRightReef", new RightVisionCmd(m_RightVisionSubsystem, m_SwerveSubsystem, null, null, null));
     NamedCommands.registerCommand("takeHighAlgae", new TakeHighAlgae(m_ArmSubsystem, m_ElevatorSubsystem));
+
     SmartDashboard.putData("AutoMode", m_chooser);
     configureBindings();
   }
