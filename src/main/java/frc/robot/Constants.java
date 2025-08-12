@@ -185,6 +185,14 @@ public final class Constants {
     public static final double leftReefXSetpoint = 0;
     public static final double leftReefYSetpoint = 0;
     public static final double leftReefZSetpoint = 0;
+
+    public static final double right_middleReefXSetpoint = 0;
+    public static final double right_middleReefYSetpoint = 0;
+    public static final double right_middleReefZSetpoint = 0;
+    public static final double left_middleReefXSetpoint = 0;
+    public static final double left_middleReefYSetpoint = 0;
+    public static final double left_middleReefZSetpoint = 0;
+
   }
   public static class LEDConstants{
     public static boolean arriveSetpoint_Base = false;
