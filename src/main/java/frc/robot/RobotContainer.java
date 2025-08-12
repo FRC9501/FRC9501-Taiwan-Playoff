@@ -41,7 +41,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotContainer {
-  // private final Vision leftVision = new Vision();
   private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();  
   private final ArmSubsystem m_ArmSubsystem = new ArmSubsystem();
