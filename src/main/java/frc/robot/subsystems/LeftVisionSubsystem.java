@@ -32,15 +32,24 @@ public class LeftVisionSubsystem extends SubsystemBase {
       arriveSetpoint();
     }
 
-    public double getXOutput() {
-        return Constants.setMaxOutput(xPID.calculate(getZ(), VisionConstants.leftReefXSetpoint), 0.2);
-    }
-    public double getYOutput() {
-        return Constants.setMaxOutput(yPID.calculate(getX(), VisionConstants.leftReefYSetpoint), 0.2) ;
-    }
-    public double getZOutput() {
-        return Constants.setMaxOutput(zPID.calculate(getRY(), VisionConstants.leftReefZSetpoint), 0.1);
-    }
+  public double getXOutput_Leftreef() {
+    return Constants.setMaxOutput(xPID.calculate(getZ(), VisionConstants.leftReefXSetpoint), 0.2);
+  }
+  public double getYOutput_Leftreef() {
+    return Constants.setMaxOutput(yPID.calculate(getX(), VisionConstants.leftReefYSetpoint), 0.2) ;
+  }
+  public double getZOutput_Leftreef() {
+    return Constants.setMaxOutput(zPID.calculate(getRY(), VisionConstants.leftReefZSetpoint), 0.1);
+  }
+  public double getXOutput_MiddleReef(){
+    return Constants.setMaxOutput(xPID.calculate(getZ(), VisionConstants.left_MiddleReefXSetpoint), 0.2);
+  }
+  public double getYOutput_MiddleReef(){
+    return Constants.setMaxOutput(yPID.calculate(getX(), VisionConstants.left_MiddleReefYSetpoint), 0.2) ;
+  }
+  public double getZOutput_MiddleReef(){
+    return Constants.setMaxOutput(zPID.calculate(getRY(), VisionConstants.left_MiddleReefZSetpoint), 0.1);
+  }
   public double getX(){
     return LimelightHelpers.getTargetPose3d_RobotSpace("limelight-left").getX();
   }
@@ -95,9 +104,9 @@ public class LeftVisionSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Tz", getZ());
     SmartDashboard.putNumber("RY", getRY());
     SmartDashboard.putBoolean("hastarget", hastarget());
-    SmartDashboard.putNumber("xoutput", getXOutput());
-    SmartDashboard.putNumber("youtput", getYOutput());
-    SmartDashboard.putNumber("RYoutput", getZOutput());
+    SmartDashboard.putNumber("xoutput", getXOutput_Leftreef());
+    SmartDashboard.putNumber("youtput", getYOutput_Leftreef());
+    SmartDashboard.putNumber("RYoutput", getZOutput_Leftreef());
     
   }
 }

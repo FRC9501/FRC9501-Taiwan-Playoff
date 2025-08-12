@@ -41,15 +41,24 @@ public class RightVisionSubsystem extends SubsystemBase {
       arriveSetpoint();
     }
 
-  public double getXOutput() {
+  public double getXOutput_RightReef() {
         return Constants.setMaxOutput(xPID.calculate(getTZ(), VisionConstants.rightReefXSetpoint), 0.2);
   }
-  public double getYOutput() {
+  public double getYOutput_RightReef() {
         return Constants.setMaxOutput(yPID.calculate(getTX(), VisionConstants.rightReefYSetpoint), 0.2) ;
   }
-  public double getZOutput() {
+  public double getZOutput_RightReef() {
         return Constants.setMaxOutput(zPID.calculate(getRY(), VisionConstants.rightReefZSetpoint), 0.1);
   }
+  public double getXOutput_MiddleReef() {
+    return Constants.setMaxOutput(xPID.calculate(getTZ(), VisionConstants.right_MiddleReefXSetpoint), 0.2);
+}
+public double getYOutput_MiddleReef() {
+    return Constants.setMaxOutput(yPID.calculate(getTX(), VisionConstants.right_MiddleReefYSetpoint), 0.2) ;
+}
+public double getZOutput_MiddleReef() {
+    return Constants.setMaxOutput(zPID.calculate(getRY(), VisionConstants.right_MiddleReefZSetpoint), 0.1);
+}
   public double getTX(){
     return LimelightHelpers.getTargetPose3d_RobotSpace("limelight-right").getX();
   }
@@ -104,9 +113,9 @@ public class RightVisionSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Tz", getTZ());
     SmartDashboard.putNumber("RY", getRY());
     SmartDashboard.putBoolean("hastarget", hastarget());
-    SmartDashboard.putNumber("xoutput", getXOutput());
-    SmartDashboard.putNumber("youtput", getYOutput());
-    SmartDashboard.putNumber("RYoutput", getZOutput());
+    SmartDashboard.putNumber("xoutput", getXOutput_MiddleReef());
+    SmartDashboard.putNumber("youtput", getYOutput_MiddleReef());
+    SmartDashboard.putNumber("RYoutput", getZOutput_MiddleReef());
     
   }
 }

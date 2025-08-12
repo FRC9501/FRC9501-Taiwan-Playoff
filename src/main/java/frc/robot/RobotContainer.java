@@ -3,16 +3,20 @@ package frc.robot;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.FloorAlgae;
 import frc.robot.commands.IntakeCoral;
-import frc.robot.commands.LeftVisionCmd;
+import frc.robot.commands.TraclLeftReef;
 import frc.robot.commands.ManualDrive;
 import frc.robot.commands.PutL1;
 import frc.robot.commands.PutL2;
 import frc.robot.commands.PutL3;
 import frc.robot.commands.PutL4;
+import frc.robot.commands.Auto.PutL4_Auto;
+import frc.robot.commands.Auto.TrackLeftReef_Auto;
+import frc.robot.commands.Auto.TrackMiddleReef_Auto;
+import frc.robot.commands.Auto.TrackRightReef_Auto;
 import frc.robot.commands.PutNet;
 import frc.robot.commands.PutProcessor;
 import frc.robot.commands.ToPrimitive;
-import frc.robot.commands.RightVisionCmd;
+import frc.robot.commands.TrackRightReef;
 import frc.robot.commands.TakeHighAlgae;
 import frc.robot.commands.TakeLowAlgae;
 import frc.robot.subsystems.LeftVisionSubsystem;
@@ -51,8 +55,12 @@ public class RobotContainer {
   private final SendableChooser<Command> m_chooser = AutoBuilder.buildAutoChooser();
 
   public RobotContainer() {
-    NamedCommands.registerCommand("TrackRightReef", new RightVisionCmd(m_RightVisionSubsystem, m_SwerveSubsystem, null, null, null));
-    NamedCommands.registerCommand("takeHighAlgae", new TakeHighAlgae(m_ArmSubsystem, m_ElevatorSubsystem));
+    NamedCommands.registerCommand("TrackRightReef", new TrackRightReef_Auto(m_RightVisionSubsystem, m_SwerveSubsystem));
+    NamedCommands.registerCommand("TrackLeftReef", new TrackLeftReef_Auto(m_LeftVisionSubsystem, m_SwerveSubsystem));
+    NamedCommands.registerCommand("TrackMiddleReef", new TrackMiddleReef_Auto(m_RightVisionSubsystem, null, m_SwerveSubsystem));
+    NamedCommands.registerCommand("TakeHighAlgae", new TakeHighAlgae(m_ArmSubsystem, m_ElevatorSubsystem));
+    NamedCommands.registerCommand("PutL4", new PutL4_Auto(m_ArmSubsystem, m_ElevatorSubsystem));
+    
 
     SmartDashboard.putData("AutoMode", m_chooser);
     configureBindings();
@@ -65,8 +73,8 @@ public class RobotContainer {
   DoubleSupplier ySpeedFunc = ()-> driverController.getRawAxis(0);
   DoubleSupplier zSpeedFunc = ()-> driverController.getRawAxis(4);
   driverController.leftTrigger().whileTrue(new IntakeCoral(m_IntakeSubsystem, m_ArmSubsystem, m_ElevatorSubsystem));
-  driverController.rightBumper().whileTrue(new LeftVisionCmd(m_LeftVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
-  driverController.leftBumper().whileTrue(new RightVisionCmd(m_RightVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
+  driverController.rightBumper().whileTrue(new TraclLeftReef(m_LeftVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
+  driverController.leftBumper().whileTrue(new TrackRightReef(m_RightVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
   m_SwerveSubsystem.setDefaultCommand(new ManualDrive(m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
   driverController.x().whileTrue(Commands.runOnce(() -> m_SwerveSubsystem.resetGyro()));
   //按鈕盤 

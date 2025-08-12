@@ -5,13 +5,12 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.RightVisionSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
 
-public class RightVisionCmd extends Command {    
+public class TrackRightReef extends Command {    
     private final RightVisionSubsystem m_RightVisionSubsystem;
     private final SwerveSubsystem m_SwerveSubsystem;
 
@@ -28,7 +27,7 @@ public class RightVisionCmd extends Command {
     private double zSpeed;
     private boolean fieldOrient;
     
-  public RightVisionCmd(RightVisionSubsystem visionSubsystem, SwerveSubsystem swerveSubsystem,DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier zSpeed) {
+  public TrackRightReef(RightVisionSubsystem visionSubsystem, SwerveSubsystem swerveSubsystem,DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier zSpeed) {
     this.m_RightVisionSubsystem = visionSubsystem;
     this.m_SwerveSubsystem = swerveSubsystem;
 
@@ -56,9 +55,9 @@ public class RightVisionCmd extends Command {
     if(m_RightVisionSubsystem.hastarget()) {
       fieldOrient = false;
 
-      xSpeed = m_RightVisionSubsystem.getXOutput();
-      ySpeed = -m_RightVisionSubsystem.getYOutput();
-      zSpeed = -m_RightVisionSubsystem.getZOutput();
+      xSpeed = m_RightVisionSubsystem.getXOutput_RightReef();
+      ySpeed = -m_RightVisionSubsystem.getYOutput_RightReef();
+      zSpeed = -m_RightVisionSubsystem.getZOutput_RightReef();
 
       if(m_RightVisionSubsystem.arriveXposition()){
         xSpeed = 0;
@@ -71,15 +70,6 @@ public class RightVisionCmd extends Command {
       }
       if (m_RightVisionSubsystem.arriveXposition() && m_RightVisionSubsystem.arriveYposition() && m_RightVisionSubsystem.arriveRotationPosition()) {
         LEDConstants.arriveSetpoint_Base = true;
-      } else {
-        xSpeed = MathUtil.applyDeadband(xSpeed, OperatorConstants.kJoystickDeadBand);
-        ySpeed = MathUtil.applyDeadband(ySpeed, OperatorConstants.kJoystickDeadBand);
-        zSpeed = MathUtil.applyDeadband(zSpeed, OperatorConstants.kJoystickDeadBand);
-
-        xSpeed = xLimiter.calculate(xSpeed);
-        ySpeed = yLimiter.calculate(ySpeed);
-        zSpeed = zLimiter.calculate(zSpeed);
-        
       }
     } 
     else {

@@ -10,7 +10,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.LeftVisionSubsystem;
 
-public class LeftVisionCmd extends Command {
+public class TraclLeftReef extends Command {
     public double turnOutput;
     public double moveOutput;
     public double frontOutput;
@@ -31,7 +31,7 @@ public class LeftVisionCmd extends Command {
     private double zSpeed;
     private boolean fieldOrient;
     
-  public LeftVisionCmd(LeftVisionSubsystem visionSubsystem, SwerveSubsystem swerveSubsystem,DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier zSpeed) {
+  public TraclLeftReef(LeftVisionSubsystem visionSubsystem, SwerveSubsystem swerveSubsystem,DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier zSpeed) {
     this.m_LeftVisionSubsystem = visionSubsystem;
     this.m_SwerveSubsystem = swerveSubsystem;
 
@@ -58,12 +58,9 @@ public class LeftVisionCmd extends Command {
     m_LeftVisionSubsystem.LEDDD();
     if(m_LeftVisionSubsystem.hastarget()) {
       fieldOrient = false;
-      xSpeed = m_LeftVisionSubsystem.getXOutput();
-      ySpeed = -m_LeftVisionSubsystem.getYOutput();
-      zSpeed = -m_LeftVisionSubsystem.getZOutput(
-
-      
-      );
+      xSpeed = m_LeftVisionSubsystem.getXOutput_Leftreef();
+      ySpeed = -m_LeftVisionSubsystem.getYOutput_Leftreef();
+      zSpeed = -m_LeftVisionSubsystem.getZOutput_Leftreef();
       if(m_LeftVisionSubsystem.arriveXposition()){
         xSpeed = 0;
       }
@@ -76,8 +73,7 @@ public class LeftVisionCmd extends Command {
       if(m_LeftVisionSubsystem.arriveXposition()&&m_LeftVisionSubsystem.arriveYposition()&&m_LeftVisionSubsystem.arriveRotationPosition()) {
         LEDConstants.arriveSetpoint_Base = true;
       }
-    } 
-    else {
+    } else {
       fieldOrient = true;
       this.xSpeed = -xSpeedFunc.getAsDouble();
       this.ySpeed = -ySpeedFunc.getAsDouble();

@@ -11,11 +11,11 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "New New Path"
+                  "pathName": "Left To I"
                 }
               },
               {
-                "type": "parallel",
+                "type": "sequential",
                 "data": {
                   "commands": [
                     {
@@ -43,7 +43,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "TrackRightReef"
+                  "name": "TrackLeftReef"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "PutL4"
                 }
               }
             ]
@@ -52,13 +58,26 @@
         {
           "type": "path",
           "data": {
-            "pathName": "New New New Path"
+            "pathName": "I Go Back"
           }
         },
         {
-          "type": "named",
+          "type": "parallel",
           "data": {
-            "name": "takeHighAlgae"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "TrackMiddleReef"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "TakeHighAlgae"
+                }
+              }
+            ]
           }
         }
       ]
