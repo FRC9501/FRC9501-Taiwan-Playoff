@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Left To I"
+                  "pathName": "Middle To H"
                 }
               },
               {
@@ -58,7 +58,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "I Go Back"
+            "pathName": "H Go Back"
           }
         },
         {
@@ -68,7 +68,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "TakeHighAlgae"
+                  "name": "TakeLowAlgae"
                 }
               },
               {
