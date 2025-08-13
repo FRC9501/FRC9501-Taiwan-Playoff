@@ -41,7 +41,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotContainer {
-  // private final Vision leftVision = new Vision();
   private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
   private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();  
   private final ArmSubsystem m_ArmSubsystem = new ArmSubsystem();
@@ -60,7 +59,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("TrackMiddleReef", new TrackMiddleReef_Auto(m_RightVisionSubsystem, null, m_SwerveSubsystem));
     NamedCommands.registerCommand("TakeHighAlgae", new TakeHighAlgae(m_ArmSubsystem, m_ElevatorSubsystem));
     NamedCommands.registerCommand("PutL4", new PutL4_Auto(m_ArmSubsystem, m_ElevatorSubsystem));
-    
+    NamedCommands.registerCommand("TakeLowAlgae", new TakeLowAlgae(m_ArmSubsystem, m_ElevatorSubsystem));
 
     SmartDashboard.putData("AutoMode", m_chooser);
     configureBindings();
