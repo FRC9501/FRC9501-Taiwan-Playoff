@@ -29,16 +29,12 @@ public class IntakeCoral extends Command {
     m_ArmSubsystem.coast();
     m_ArmSubsystem.intakeCoral_Pivot();
     m_ElevatorSubsystem.primitive_Coral();
-    m_IntakeSubsystem.intakeCoral_Pivot();
-    m_IntakeSubsystem.intakeCoral_Wheel();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if(m_IntakeSubsystem.hasGamePiece()){
-      m_IntakeSubsystem.intakePrimitive_Pivot();
-      m_IntakeSubsystem.stopMotor();
       m_ArmSubsystem.intakeCoral_Wheel();
       m_ElevatorSubsystem.intakeCoral();
     }

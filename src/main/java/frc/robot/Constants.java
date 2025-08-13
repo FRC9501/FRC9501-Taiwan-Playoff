@@ -74,8 +74,8 @@ public final class Constants {
 
     public static final double wheelDiameterMeters = Units.inchesToMeters(4);
 
-    public static final double driveGearRatio = 1/5.36;
-    public static final double turningGearRatio = 1.0/(150/7);
+    public static final double driveGearRatio = 1/5.95;
+    public static final double turningGearRatio = 1.0/21;
 
     public static final double driveVelocityConversionFactor = 
     (1/driveGearRatio/60)*wheelDiameterMeters*Math.PI;
