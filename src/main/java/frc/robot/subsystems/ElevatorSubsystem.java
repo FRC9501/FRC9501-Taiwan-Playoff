@@ -14,11 +14,11 @@ import frc.robot.Constants.ElevatorConstants;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ElevatorSubsystem extends SubsystemBase {
-    private TalonFX leftTalon;
-    private TalonFX rightTalon;
-    private TalonFXConfiguration elevatorMotorConfig;
-    private PositionDutyCycle request;
-    private MotionMagicConfigs elevatorMotionMagicConfigs;
+    private final TalonFX leftTalon;
+    private final TalonFX rightTalon;
+    private final TalonFXConfiguration elevatorMotorConfig;
+    private final PositionDutyCycle request;
+    private final MotionMagicConfigs elevatorMotionMagicConfigs;
     // private DutyCycleOut duty = new DutyCycleOut(0.2);
     private double elevatorGoalPosition;
 
