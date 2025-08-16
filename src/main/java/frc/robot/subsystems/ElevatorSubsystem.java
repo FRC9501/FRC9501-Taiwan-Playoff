@@ -10,7 +10,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import frc.robot.Constants.ElevatorConstants;
-
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ElevatorSubsystem extends SubsystemBase {
@@ -19,13 +19,16 @@ public class ElevatorSubsystem extends SubsystemBase {
     private final TalonFXConfiguration elevatorMotorConfig;
     private final PositionDutyCycle request;
     private final MotionMagicConfigs elevatorMotionMagicConfigs;
-    // private DutyCycleOut duty = new DutyCycleOut(0.2);
+    private final AnalogInput irSensor;
     private double elevatorGoalPosition;
+    
 
 
     public ElevatorSubsystem() {
         leftTalon = new TalonFX(ElevatorConstants.elevatorLeftMotorID);
         rightTalon = new TalonFX(ElevatorConstants.elevatorRightMotorID);
+
+        irSensor = new AnalogInput(ElevatorConstants.irSensorID);
 
         elevatorGoalPosition = ElevatorConstants.coralPrimitivePosition;
 
@@ -104,6 +107,15 @@ public class ElevatorSubsystem extends SubsystemBase {
     public double getPosition() {
         return rightTalon.getPosition().getValueAsDouble();
     }
+
+    public int getDistance_IRSensor(){
+        return irSensor.getValue();
+    }
+
+    public boolean hasGamePiece_Funnel(){
+        return getDistance_IRSensor() <= 500;
+    }
+
 
     @Override
     public void periodic() {

@@ -112,6 +112,7 @@ public final class Constants {
   public static final class ElevatorConstants{
     public static final int elevatorRightMotorID = 0;
     public static final int elevatorLeftMotorID = 0;
+    public static final int irSensorID = 0;
 
     public static final double coralPrimitivePosition = 0;
     public static final double coralIntakePosition = 0;
@@ -148,8 +149,11 @@ public final class Constants {
     public static final int armWheelMotorID = 0;
     public static final int armCANcoderID = 0;
     public static final int armIRSensorID = 0;
+    public static final int armAbsoluteEncoderID = 0;
+    public static final int armRelativeEncoderFirstID = 0;
+    public static final int armRelativeEncoderSecondID = 0;
 
-    public static final double paeCANcoderOffset = 0;
+    public static final double armAbsoluteEncoderOffset = 0;
 
     public static final double coralPrimitivePosition = 0;
     public static final double coralIntakePosition = 0;

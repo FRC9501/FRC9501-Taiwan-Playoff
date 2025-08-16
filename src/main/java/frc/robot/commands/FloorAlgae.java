@@ -51,6 +51,6 @@ public class FloorAlgae extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_ArmSubsystem.hasGamePiece();
+    return m_ArmSubsystem.hasGamePiece_Arm();
   }
 }

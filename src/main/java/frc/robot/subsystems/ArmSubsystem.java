@@ -7,13 +7,10 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 
-import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -22,18 +19,20 @@ import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class ArmSubsystem extends SubsystemBase {
     private final TalonFX armPivotMotor;
     private final SparkMax armWheelMotor;
-    private final CANcoder armCANcoder;
+    private final DutyCycleEncoder armAbsoluteEncoder;
+    private final Encoder armRelativeEncoder;
     private final AnalogInput irSensor;
 
     private final SparkMaxConfig armWheelMotorConfig;
     private final TalonFXConfiguration armPivotMotorConfig;
-    private final CANcoderConfiguration armCANcoderConfig;
 
     private final PIDController armPID;
     private final ArmFeedforward armFeedforward;
@@ -50,12 +49,12 @@ public class ArmSubsystem extends SubsystemBase {
     public ArmSubsystem() {
         armPivotMotor = new TalonFX(ArmConstants.armPivotMotorID);
         armWheelMotor = new SparkMax(ArmConstants.armWheelMotorID, MotorType.kBrushless);
-        armCANcoder = new CANcoder(ArmConstants.armCANcoderID);
+        armAbsoluteEncoder = new DutyCycleEncoder(ArmConstants.armAbsoluteEncoderID, 1, ArmConstants.armAbsoluteEncoderOffset);
+        armRelativeEncoder = new Encoder(ArmConstants.armRelativeEncoderFirstID, ArmConstants.armRelativeEncoderSecondID, true);
         irSensor = new AnalogInput(ArmConstants.armIRSensorID);
 
         armPivotMotorConfig = new TalonFXConfiguration();
         armWheelMotorConfig = new SparkMaxConfig();
-        armCANcoderConfig = new CANcoderConfiguration();
 
         armPID = new PIDController(0, 0, 0);
         armFeedforward = new ArmFeedforward(0, 0, 0);
@@ -66,13 +65,9 @@ public class ArmSubsystem extends SubsystemBase {
         armWheelMotorConfig.idleMode(IdleMode.kBrake);
         armWheelMotorConfig.inverted(false);
 
-        armCANcoderConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
-        armCANcoderConfig.MagnetSensor.MagnetOffset = ArmConstants.paeCANcoderOffset;
 
         armPivotMotor.getConfigurator().apply(armPivotMotorConfig);
         armWheelMotor.configure(armWheelMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
-        armCANcoder.getConfigurator().apply(armCANcoderConfig);
-
         intakeCoral_Pivot();
     }
     
@@ -152,7 +147,7 @@ public class ArmSubsystem extends SubsystemBase {
 
 
     public double getAbsolutePosition(){
-        return armCANcoder.getAbsolutePosition().getValueAsDouble();
+        return armAbsoluteEncoder.get();
     }
     public double getAngle_Degrees(){
         return getAbsolutePosition() * 360;
@@ -161,12 +156,12 @@ public class ArmSubsystem extends SubsystemBase {
         return Math.toRadians(getAngle_Degrees());
     }
     public double getAngularVelocity(){
-        return Units.rotationsPerMinuteToRadiansPerSecond(armCANcoder.getVelocity().getValueAsDouble() * 60);
+        return Units.rotationsPerMinuteToRadiansPerSecond(armRelativeEncoder.getRate());
     }
     public boolean arriveSetpoint(){
         return Math.abs(armPID.getError()) <= 1;
     }
-    public double getDistance() {
+    public int getDistance() {
         return irSensor.getValue();
     }
 
@@ -179,7 +174,7 @@ public class ArmSubsystem extends SubsystemBase {
         armWheelMotor.configure(armWheelMotorConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
     }
     
-    public boolean hasGamePiece(){
+    public boolean hasGamePiece_Arm(){
         return getDistance() <= 600;
     }
 

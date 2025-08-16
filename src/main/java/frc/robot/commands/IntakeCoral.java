@@ -7,19 +7,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class IntakeCoral extends Command {
-  private IntakeSubsystem m_IntakeSubsystem;
   private ArmSubsystem m_ArmSubsystem;
   private ElevatorSubsystem m_ElevatorSubsystem;
   /** Creates a new Intake. */
-  public IntakeCoral(IntakeSubsystem intakeSubsystem, ArmSubsystem armSubsystem, ElevatorSubsystem elevatorSubsystem) {
-    this.m_IntakeSubsystem = intakeSubsystem;
+  public IntakeCoral(ArmSubsystem armSubsystem, ElevatorSubsystem elevatorSubsystem) {
     this.m_ArmSubsystem = armSubsystem;
     this.m_ElevatorSubsystem = elevatorSubsystem;
-    addRequirements(m_ArmSubsystem, m_ElevatorSubsystem, m_IntakeSubsystem);
+    addRequirements(m_ArmSubsystem, m_ElevatorSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -34,7 +31,7 @@ public class IntakeCoral extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_IntakeSubsystem.hasGamePiece()){
+    if(m_ElevatorSubsystem.hasGamePiece_Funnel()){
       m_ArmSubsystem.intakeCoral_Wheel();
       m_ElevatorSubsystem.intakeCoral();
     }
@@ -50,6 +47,6 @@ public class IntakeCoral extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_ArmSubsystem.hasGamePiece();
+    return m_ArmSubsystem.hasGamePiece_Arm();
   }
 }

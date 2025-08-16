@@ -31,7 +31,6 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.subsystems.ElevatorSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ArmSubsystem;
 
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -42,7 +41,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class RobotContainer {
   private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
-  private final IntakeSubsystem m_IntakeSubsystem = new IntakeSubsystem();  
   private final ArmSubsystem m_ArmSubsystem = new ArmSubsystem();
   private final SwerveSubsystem m_SwerveSubsystem = new SwerveSubsystem();
   private final RightVisionSubsystem m_RightVisionSubsystem = new RightVisionSubsystem();
@@ -71,7 +69,7 @@ public class RobotContainer {
   DoubleSupplier xSpeedFunc = ()-> driverController.getRawAxis(1);
   DoubleSupplier ySpeedFunc = ()-> driverController.getRawAxis(0);
   DoubleSupplier zSpeedFunc = ()-> driverController.getRawAxis(4);
-  driverController.leftTrigger().whileTrue(new IntakeCoral(m_IntakeSubsystem, m_ArmSubsystem, m_ElevatorSubsystem));
+  driverController.leftTrigger().whileTrue(new IntakeCoral(m_ArmSubsystem, m_ElevatorSubsystem));
   driverController.rightBumper().whileTrue(new TraclLeftReef(m_LeftVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
   driverController.leftBumper().whileTrue(new TrackRightReef(m_RightVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
   m_SwerveSubsystem.setDefaultCommand(new ManualDrive(m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));

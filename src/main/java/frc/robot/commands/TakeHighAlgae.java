@@ -35,7 +35,7 @@ public class TakeHighAlgae extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_ArmSubsystem.hasGamePiece()){
+    if(m_ArmSubsystem.hasGamePiece_Arm()){
         m_ArmSubsystem.holdAlgae_Wheel();
     }
     
