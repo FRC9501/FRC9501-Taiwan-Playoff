@@ -24,12 +24,15 @@ public class ToPrimitive extends Command {
   @Override
   public void initialize() {
     m_ElevatorSubsystem.primitive_Coral();
-    m_ArmSubsystem.intakeCoral_Pivot();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    if(m_ArmSubsystem.arriveSetpoint()){
+      m_ArmSubsystem.intakeCoral_Pivot();
+    }
+  }
 
   // Called once the command ends or is interrupted.
   @Override
