@@ -39,10 +39,7 @@ public class TrackLeftReef_Auto extends Command {
     if(m_LeftVisionSubsystem.hastarget()) {
       xSpeed = m_LeftVisionSubsystem.getXOutput_Leftreef();
       ySpeed = -m_LeftVisionSubsystem.getYOutput_Leftreef();
-      zSpeed = -m_LeftVisionSubsystem.getZOutput_Leftreef(
-
-      
-      );
+      zSpeed = -m_LeftVisionSubsystem.getZOutput_Leftreef();
       if(m_LeftVisionSubsystem.arriveXposition()){
         xSpeed = 0;
       }
