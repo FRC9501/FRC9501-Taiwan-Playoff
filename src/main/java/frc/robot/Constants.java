@@ -116,15 +116,15 @@ public final class Constants {
     public static final double safePosition = 0;
     public static final double coralPrimitivePosition = 0;
     public static final double coralIntakePosition = 0;
-    public static final double coralL4Position  = 0;
-    public static final double coralL3Position  = 0;
+    public static final double coralL4Position  = 19.03;
+    public static final double coralL3Position  = 6.98;
     public static final double coralL2Position  = 0;
-    public static final double coralL1Position  = 0;
+    public static final double coralL1Position  = 10.59;
     public static final double algaePrimitivePosition = 0;
     public static final double algaeHighPosition = 20.54;
     public static final double algaeLowPosition = 14.03;
     public static final double algaeFloorPosition = 0;
-    public static final double algaeNetPosition  = 0;
+    public static final double algaeNetPosition  = 21.41;
     public static final double algaeProcessorPosition  = 0;
   }
 
@@ -140,15 +140,15 @@ public final class Constants {
 
     public static final double coralPrimitivePosition = 270;
     public static final double coralIntakePosition = 270;
-    public static final double coralL1PutPosition = 270;
-    public static final double coralL2PutPosition = 270;
-    public static final double coralL3PutPosition = 270;
-    public static final double coralL4PutPosition = 270;
+    public static final double coralL1PutPosition = 140.76;
+    public static final double coralL2PutPosition = 232.11;
+    public static final double coralL3PutPosition = 228.46;
+    public static final double coralL4PutPosition = 226.47;
     public static final double algaeHighPosition = 167.8;
     public static final double algaeLowPosition = 159;
     public static final double algaeFloorPosition = 270;
-    public static final double algaeNetPosition = 270;
-    public static final double algaeProcessorPosition = 270;
+    public static final double algaeNetPosition = 298.18;
+    public static final double algaeProcessorPosition = 186.36;
     public static final double algaePrimitivePosition = 255;
 
     public static final double putL1Vol = 0;
