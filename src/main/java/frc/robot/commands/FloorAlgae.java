@@ -7,6 +7,8 @@ package frc.robot.commands;
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
@@ -14,7 +16,6 @@ import frc.robot.subsystems.ElevatorSubsystem;
 public class FloorAlgae extends Command {
   private ArmSubsystem m_ArmSubsystem;
   private ElevatorSubsystem m_ElevatorSubsystem;
-
 
   /** Creates a new L4. */
   public FloorAlgae(ArmSubsystem armSubsystem, ElevatorSubsystem elevatorSubsystem, BooleanSupplier ifFeedFunc) {
@@ -28,29 +29,32 @@ public class FloorAlgae extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_ArmSubsystem.brake();
-    m_ElevatorSubsystem.intakeAlgaeFloor();
-    m_ArmSubsystem.intakeAlgaeFloor_Pivot();
+    m_ElevatorSubsystem.toSafePosition();
     m_ArmSubsystem.intakeAlgaeFloor_Wheel();
+    LEDConstants.isAlgaeMode = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    if (m_ElevatorSubsystem.isSafe()) {
+      m_ArmSubsystem.intakeAlgaeFloor_Pivot();
+    }
+    if (Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.algaeFloorPosition) <= 5) {
+      m_ElevatorSubsystem.intakeAlgaeFloor();
+    }
+    if (m_ArmSubsystem.hasAlgae()) {
+      LEDConstants.isAlgaeMode = true;
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_ElevatorSubsystem.primitive_Algae();
-    m_ArmSubsystem.holdAlgae_Wheel();
-    m_ArmSubsystem.primitive_Algae_Pivot();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_ArmSubsystem.hasGamePiece_Arm();
+    return false;
   }
 }

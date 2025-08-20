@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
@@ -25,28 +26,26 @@ public class TakeHighAlgae extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_ArmSubsystem.brake();
-    m_ArmSubsystem.intakeAlgaeHigh_Pivot();
-    m_ArmSubsystem.intakeAlgaeHih_Wheel();
+    m_ArmSubsystem.intakeAlgaeHigh_Wheel();
     m_ElevatorSubsystem.intakeAlgaeHigh();
-
+    LEDConstants.isAlgaeMode = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(m_ArmSubsystem.hasGamePiece_Arm()){
-        m_ArmSubsystem.holdAlgae_Wheel();
+    if(m_ElevatorSubsystem.isSafe()){
+      m_ArmSubsystem.intakeAlgaeHigh_Pivot();
     }
-    
+    if(m_ArmSubsystem.hasAlgae()){
+      m_ArmSubsystem.holdAlgae_Wheel();
+      LEDConstants.isAlgaeMode = true;
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_ArmSubsystem.primitive_Algae_Pivot();
-    m_ElevatorSubsystem.primitive_Algae();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

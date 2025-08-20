@@ -7,6 +7,7 @@ package frc.robot.commands;
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.LEDConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -31,25 +32,28 @@ public class PutL2 extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_ArmSubsystem.coast();
-    m_ArmSubsystem.readyL2_Pivot();
-    m_ElevatorSubsystem.putL2();
+    m_ElevatorSubsystem.toSafePosition();
+    LEDConstants.isAlgaeMode = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     ifFeed = ifFeedFunc.getAsBoolean();
-    if((m_ArmSubsystem.arriveSetpoint() && m_ElevatorSubsystem.arriveSetpoint()) && (ifFeed || LEDConstants.arriveSetpoint_Base)) {
+    if (m_ElevatorSubsystem.isSafe()) {
       m_ArmSubsystem.putL2_Pivot();
+    }
+    if (Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.coralL2PutPosition) <= 5) {
+      m_ElevatorSubsystem.putL2();
+    }
+    if((m_ArmSubsystem.arriveSetpoint() && m_ElevatorSubsystem.arriveSetpoint()) && (ifFeed || LEDConstants.arriveSetpoint_Base) && m_ElevatorSubsystem.getMode() == "putL2") {
+      m_ArmSubsystem.putL2_Wheel();
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_ArmSubsystem.brake();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

@@ -10,6 +10,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.SwerveSubsystem;
 
@@ -52,22 +53,28 @@ public class ManualDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.xSpeed = -xSpeedFunc.getAsDouble();
-    this.ySpeed = -ySpeedFunc.getAsDouble();
+    xSpeed = -xSpeedFunc.getAsDouble();
+    ySpeed = -ySpeedFunc.getAsDouble();
     zSpeed = -zSpeedFunc.getAsDouble();
 
-    this.xSpeed = MathUtil.applyDeadband(this.xSpeed, OperatorConstants.kJoystickDeadBand);
-    this.ySpeed = MathUtil.applyDeadband(this.ySpeed, OperatorConstants.kJoystickDeadBand);
-    this.zSpeed = MathUtil.applyDeadband(this.zSpeed, OperatorConstants.kJoystickDeadBand);
+    xSpeed = MathUtil.applyDeadband(this.xSpeed, OperatorConstants.kJoystickDeadBand);
+    ySpeed = MathUtil.applyDeadband(this.ySpeed, OperatorConstants.kJoystickDeadBand);
+    zSpeed = MathUtil.applyDeadband(this.zSpeed, OperatorConstants.kJoystickDeadBand);
 
-    this.xSpeed = xLimiter.calculate(this.xSpeed);
-    this.ySpeed = yLimiter.calculate(this.ySpeed);
-    this.zSpeed = zLimiter.calculate(this.zSpeed);
+    xSpeed = xLimiter.calculate(this.xSpeed);
+    ySpeed = yLimiter.calculate(this.ySpeed);
+    zSpeed = zLimiter.calculate(this.zSpeed);
 
-
-    xSpeed = xSpeed*0.4;
-    ySpeed = ySpeed*0.4;
-    zSpeed = zSpeed*0.4;
+    if (LEDConstants.isSlowMode) {
+      xSpeed = xSpeed*0.4;
+      ySpeed = ySpeed*0.4;
+      zSpeed = zSpeed*0.4;
+    }else{
+      xSpeed = xSpeed*0.4;
+      ySpeed = ySpeed*0.4;
+      zSpeed = zSpeed*0.4;
+    }
+    
   
 
     SmartDashboard.putNumber("ManualDrive/Xspeed", xSpeed);

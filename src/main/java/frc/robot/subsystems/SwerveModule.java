@@ -60,8 +60,8 @@ public class SwerveModule extends SubsystemBase {
     // cancoderConfig.MagnetSensor.AbsoluteSensorDiscontinuityPoint = AbsoluteSensorDiscontinuityPoint.Unsigned_0To1;
     cancoderConfig.MagnetSensor.MagnetOffset = offset;
 
-    turningConfig.idleMode(IdleMode.kBrake);
-    driveConfig.idleMode(IdleMode.kBrake);  
+    turningConfig.idleMode(IdleMode.kCoast);
+    driveConfig.idleMode(IdleMode.kCoast);  
     
     turningMotor.configure(turningConfig,ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);
     driveMotor.configure(driveConfig, ResetMode.kResetSafeParameters, PersistMode.kNoPersistParameters);

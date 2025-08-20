@@ -31,25 +31,25 @@ public class PutL4 extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_ArmSubsystem.coast();
-    m_ArmSubsystem.readyL4_Pivot();
     m_ElevatorSubsystem.putL4();
+    LEDConstants.isAlgaeMode = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     ifFeed = ifFeedFunc.getAsBoolean();
-    if((m_ArmSubsystem.arriveSetpoint() && m_ElevatorSubsystem.arriveSetpoint()) && (ifFeed || LEDConstants.arriveSetpoint_Base)) {
+    if (m_ElevatorSubsystem.isSafe()) {
       m_ArmSubsystem.putL4_Pivot();
+    }
+    if((m_ArmSubsystem.arriveSetpoint() && m_ElevatorSubsystem.arriveSetpoint()) && (ifFeed || LEDConstants.arriveSetpoint_Base) && m_ArmSubsystem.getMode() == "putL4") {
+      m_ArmSubsystem.putL4_Wheel();
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_ArmSubsystem.brake();
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

@@ -52,25 +52,25 @@ public final class Constants {
   }
 
   public class SwerveConstants {
-    public static final int leftFrontDrive_ID = 7;
-    public static final int leftBackDrive_ID = 8;
-    public static final int rightFrontDrive_ID = 6;
-    public static final int rightBackDrive_ID = 5;
+    public static final int leftFrontDrive_ID = 2;//2
+    public static final int leftBackDrive_ID = 3;//3
+    public static final int rightFrontDrive_ID = 1;//1
+    public static final int rightBackDrive_ID = 4;//4
 
-    public static final int leftFrontTurning_ID = 3;
-    public static final int leftBackTurning_ID = 4;
-    public static final int rightFrontTurning_ID = 2;
-    public static final int rightBackTurning_ID = 1;
+    public static final int leftFrontTurning_ID = 6;
+    public static final int leftBackTurning_ID = 7;
+    public static final int rightFrontTurning_ID = 5;
+    public static final int rightBackTurning_ID = 8;
 
-    public static final int leftFrontAbsolutedEncoder_ID = 11;
-    public static final int leftBackAbsolutedEncoder_ID = 12;
-    public static final int rightFrontAbsolutedEncoder_ID = 10;
-    public static final int rightBackAbsolutedEncoder_ID = 9;
+    public static final int leftFrontAbsolutedEncoder_ID = 10;
+    public static final int leftBackAbsolutedEncoder_ID = 11;
+    public static final int rightFrontAbsolutedEncoder_ID = 9;
+    public static final int rightBackAbsolutedEncoder_ID = 12;
 
-    public static final double leftFrontOffset = 0.4714;
-    public static final double leftBackOffset = -0.0515;
-    public static final double rightFrontOffset = -0.2717;
-    public static final double rightBackOffset = 0.0376;
+    public static final double leftFrontOffset = 0.480224;
+    public static final double leftBackOffset = 0.041503;
+    public static final double rightFrontOffset = -0.410644;
+    public static final double rightBackOffset = -0.140625;
 
     public static final double wheelDiameterMeters = Units.inchesToMeters(4);
 
@@ -110,10 +110,10 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants{
-    public static final int elevatorRightMotorID = 0;
-    public static final int elevatorLeftMotorID = 0;
-    public static final int irSensorID = 0;
+    public static final int elevatorRightMotorID = 13;
+    public static final int elevatorLeftMotorID = 14;
 
+    public static final double safePosition = 0;
     public static final double coralPrimitivePosition = 0;
     public static final double coralIntakePosition = 0;
     public static final double coralL4Position  = 0;
@@ -121,63 +121,45 @@ public final class Constants {
     public static final double coralL2Position  = 0;
     public static final double coralL1Position  = 0;
     public static final double algaePrimitivePosition = 0;
-    public static final double algaeHighPosition = 0;
-    public static final double algaeLowPosition = 0;
+    public static final double algaeHighPosition = 20.54;
+    public static final double algaeLowPosition = 14.03;
     public static final double algaeFloorPosition = 0;
     public static final double algaeNetPosition  = 0;
     public static final double algaeProcessorPosition  = 0;
   }
 
-  public static final class IntakeConstants{
-    public static final int intakePivotRightMotorID = 0;
-    public static final int intakePivotLeftMotorID = 0;
-    public static final int intakeWheelMotorID = 0;
-    public static final int intakeCANcoderID = 0;
-    public static final int IntakeIRSensorID = 0;
-
-    public static final double intakeCANcoderOffset = 0;
-
-    public static final double intakeOutPosition = 0;
-    public static final double intakePrimitivePosition = 0;
-
-    public static final double intakeCoralVol = 0;
-    public static final double rejectCoralVol = 0;
-  }
   
   public static final class ArmConstants{
-    public static final int armPivotMotorID = 0;
-    public static final int armWheelMotorID = 0;
-    public static final int armCANcoderID = 0;
-    public static final int armIRSensorID = 0;
+    public static final int armPivotMotorID = 15;
+    public static final int armWheelMotorID = 16;
     public static final int armAbsoluteEncoderID = 0;
-    public static final int armRelativeEncoderFirstID = 0;
-    public static final int armRelativeEncoderSecondID = 0;
+    public static final int armRelativeEncoderFirstID = 1;
+    public static final int armRelativeEncoderSecondID = 2;
 
-    public static final double armAbsoluteEncoderOffset = 0;
+    public static final double armAbsoluteEncoderOffset = 0.152896;
 
-    public static final double coralPrimitivePosition = 0;
-    public static final double coralIntakePosition = 0;
-    public static final double coralL1ReadyPosition = 0;
-    public static final double coralL2ReadyPosition = 0;
-    public static final double coralL3ReadyPosition = 0;
-    public static final double coralL4ReadyPosition = 0;
-    public static final double coralL1PutPosition = 0;
-    public static final double coralL2PutPosition = 0;
-    public static final double coralL3PutPosition = 0;
-    public static final double coralL4PutPosition = 0;
-    public static final double algaeHighPosition = 0;
-    public static final double algaeLowPosition = 0;
-    public static final double algaeFloorPosition = 0;
-    public static final double algaeNetPosition = 0;
-    public static final double algaeProcessorPosition = 0;
-    public static final double algaePrimitivePosition = 0;
+    public static final double coralPrimitivePosition = 270;
+    public static final double coralIntakePosition = 270;
+    public static final double coralL1PutPosition = 270;
+    public static final double coralL2PutPosition = 270;
+    public static final double coralL3PutPosition = 270;
+    public static final double coralL4PutPosition = 270;
+    public static final double algaeHighPosition = 167.8;
+    public static final double algaeLowPosition = 159;
+    public static final double algaeFloorPosition = 270;
+    public static final double algaeNetPosition = 270;
+    public static final double algaeProcessorPosition = 270;
+    public static final double algaePrimitivePosition = 255;
+
     public static final double putL1Vol = 0;
-
-    public static final double intakeCoralVol = 0;
-    public static final double intakeAlgaeFloorVol = 0;
-    public static final double intakeAlgaeHighVol = 0;
-    public static final double intakeAlgaeLowVol = 0;
-    public static final double holdAlgaeVol = 0;
+    public static final double putL2Vol = 0;
+    public static final double putL3Vol = 0;
+    public static final double putL4Vol = 0;
+    public static final double intakeCoralVol = 3;
+    public static final double intakeAlgaeFloorVol = 12;
+    public static final double intakeAlgaeHighVol = 12;
+    public static final double intakeAlgaeLowVol = 12;
+    public static final double holdAlgaeVol = 12;
     public static final double putProcessorVol = 0;
     public static final double putNetVol = 0;
   }
@@ -204,5 +186,7 @@ public final class Constants {
     public static boolean arriveSetpoint_Elevator = false;
     public static boolean hasGamePiece = false;
     public static boolean hasTarget = false;
+    public static boolean isAlgaeMode = false;
+    public static boolean isSlowMode = false;
   }
 }

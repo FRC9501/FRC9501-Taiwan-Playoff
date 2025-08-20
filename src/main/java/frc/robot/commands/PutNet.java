@@ -7,6 +7,7 @@ package frc.robot.commands;
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
@@ -30,9 +31,9 @@ public class PutNet extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_ArmSubsystem.brake();
     m_ArmSubsystem.putNet_Pivot();
     m_ElevatorSubsystem.putNet();
+    LEDConstants.isAlgaeMode = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -24,7 +24,7 @@ public class TrackMiddleReef_Auto extends Command {
     this.m_RightVisionSubsystem = rightVisionSubsystem; 
     this.m_SwerveSubsystem = swerveSubsystem;
 
-    addRequirements(m_LeftVisionSubsystem,m_RightVisionSubsystem, m_SwerveSubsystem);
+    addRequirements(m_LeftVisionSubsystem, m_RightVisionSubsystem, m_SwerveSubsystem);
   }
 
 

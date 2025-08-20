@@ -26,8 +26,7 @@ public class PutL4_Auto extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_ArmSubsystem.coast();
-    m_ArmSubsystem.readyL4_Pivot();
+    m_ArmSubsystem.putL4_Pivot();
     m_ElevatorSubsystem.putL4();
   }
 
@@ -42,7 +41,6 @@ public class PutL4_Auto extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_ArmSubsystem.brake();
     LEDConstants.arriveSetpoint_Base = false;
   }
 
