@@ -70,6 +70,6 @@ public class TrackLeftReef_Auto extends Command {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return LEDConstants.arriveSetpoint_Base;
   }
 }
