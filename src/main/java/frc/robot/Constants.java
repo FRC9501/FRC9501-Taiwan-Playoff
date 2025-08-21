@@ -171,10 +171,16 @@ public final class Constants {
     public static final double rightReefXSetpoint = 0.4233;
     public static final double rightReefYSetpoint = -0.3216;
     public static final double rightReefZSetpoint = -8;
+    public static final double rightReefXSetpoint_L4 = 0.4233;
+    public static final double rightReefYSetpoint_L4 = -0.3216;
+    public static final double rightReefZSetpoint_L4 = -8;
 
-    public static final double leftReefXSetpoint = 0;
-    public static final double leftReefYSetpoint = 0;
-    public static final double leftReefZSetpoint = 0;
+    public static final double leftReefXSetpoint = 0.264;
+    public static final double leftReefYSetpoint = 0.339;
+    public static final double leftReefZSetpoint = 20.921;
+    public static final double leftReefXSetpoint_L4 = 0.264;
+    public static final double leftReefYSetpoint_L4 = 0.339;
+    public static final double leftReefZSetpoint_L4 = 20.921;
 
     public static final double right_MiddleReefXSetpoint = 0;
     public static final double right_MiddleReefYSetpoint = 0;
@@ -192,5 +198,6 @@ public final class Constants {
     public static boolean hasTarget = false;
     public static boolean isAlgaeMode = false;
     public static boolean isSlowMode = false;
+    public static boolean isL4Mode = false;
   }
 }

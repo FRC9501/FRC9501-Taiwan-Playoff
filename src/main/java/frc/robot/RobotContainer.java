@@ -4,7 +4,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Auto.ArmOut_Auto;
 import frc.robot.commands.Auto.PutL1_Auto;
 import frc.robot.commands.Auto.ReadyL1_Auto;
-import frc.robot.commands.TraclLeftReef;
+import frc.robot.commands.TrackLeftReef;
 import frc.robot.commands.IntakeCoral;
 import frc.robot.commands.ManualDrive;
 import frc.robot.commands.PutL1;
@@ -65,7 +65,7 @@ public class RobotContainer {
   DoubleSupplier ySpeedFunc = ()-> driverController.getRawAxis(0);
   DoubleSupplier zSpeedFunc = ()-> driverController.getRawAxis(4);
   driverController.leftTrigger().whileTrue(new IntakeCoral(m_ArmSubsystem, m_ElevatorSubsystem));
-  driverController.rightBumper().whileTrue(new TraclLeftReef(m_LeftVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
+  driverController.rightBumper().whileTrue(new TrackLeftReef(m_LeftVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
   driverController.leftBumper().whileTrue(new TrackRightReef(m_RightVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
   m_SwerveSubsystem.setDefaultCommand(new ManualDrive(m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
   driverController.x().whileTrue(Commands.runOnce(() -> m_SwerveSubsystem.resetGyro()));

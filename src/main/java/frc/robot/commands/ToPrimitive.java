@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
+import frc.robot.Constants.LEDConstants;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class ToPrimitive extends Command {
@@ -26,6 +27,7 @@ public class ToPrimitive extends Command {
   public void initialize() {
     m_ElevatorSubsystem.toSafePosition();
     m_ArmSubsystem.stopWheel();
+    LEDConstants.isL4Mode = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

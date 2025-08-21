@@ -10,7 +10,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.subsystems.LeftVisionSubsystem;
 
-public class TraclLeftReef extends Command {
+public class TrackLeftReef extends Command {
     public double turnOutput;
     public double moveOutput;
     public double frontOutput;
@@ -31,7 +31,7 @@ public class TraclLeftReef extends Command {
     private double zSpeed;
     private boolean fieldOrient;
     
-  public TraclLeftReef(LeftVisionSubsystem visionSubsystem, SwerveSubsystem swerveSubsystem,DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier zSpeed) {
+  public TrackLeftReef(LeftVisionSubsystem visionSubsystem, SwerveSubsystem swerveSubsystem,DoubleSupplier xSpeed, DoubleSupplier ySpeed, DoubleSupplier zSpeed) {
     this.m_LeftVisionSubsystem = visionSubsystem;
     this.m_SwerveSubsystem = swerveSubsystem;
 

@@ -31,8 +31,8 @@ public class RightVisionSubsystem extends SubsystemBase {
 
 
   public RightVisionSubsystem() {
-      xPID = new PIDController(0.15, 0, 0.001);
-      yPID = new PIDController(0.17, 0, 0.005);
+      xPID = new PIDController(0.17, 0, 0.001);
+      yPID = new PIDController(0.19, 0, 0.005);
       zPID = new PIDController(0.01, 0, 0);
 
       
@@ -73,10 +73,10 @@ public double getZOutput_MiddleReef() {
   }
 
   public boolean arriveXposition(){
-    return Math.abs(xPID.getError()) <= 0.05;
+    return Math.abs(xPID.getError()) <= 0.01;
   }
   public boolean arriveYposition(){
-    return Math.abs(yPID.getError()) <= 0.05;
+    return Math.abs(yPID.getError()) <= 0.01;
   }
   public boolean arriveRotationPosition(){
     return Math.abs(zPID.getError()) <= 1;
@@ -97,13 +97,11 @@ public double getZOutput_MiddleReef() {
   public void LEDDD(){
     if(arriveXposition() && arriveYposition() && arriveRotationPosition()){
       arriveSetpoint();
-    }
-    else{
-        if(hastarget()){
-          tracking_hasTarget();
-        }
-        else{
-          tracking_noTarget();
+    }else{
+      if(hastarget()){
+        tracking_hasTarget();
+      }else{
+        tracking_noTarget();
       }
     }
   }
@@ -113,9 +111,9 @@ public double getZOutput_MiddleReef() {
     SmartDashboard.putNumber("Tz", getTZ());
     SmartDashboard.putNumber("RY", getRY());
     SmartDashboard.putBoolean("hastarget", hastarget());
-    SmartDashboard.putNumber("xoutput", getXOutput_MiddleReef());
-    SmartDashboard.putNumber("youtput", getYOutput_MiddleReef());
-    SmartDashboard.putNumber("RYoutput", getZOutput_MiddleReef());
+    SmartDashboard.putNumber("xoutput", getXOutput_RightReef());
+    SmartDashboard.putNumber("youtput", getYOutput_RightReef());
+    SmartDashboard.putNumber("RYoutput", getZOutput_RightReef());
     
   }
 }

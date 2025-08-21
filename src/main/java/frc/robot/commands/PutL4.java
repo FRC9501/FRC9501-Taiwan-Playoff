@@ -32,7 +32,8 @@ public class PutL4 extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_ElevatorSubsystem.toSafePosition();;
+    m_ElevatorSubsystem.toSafePosition();
+    LEDConstants.isL4Mode = true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

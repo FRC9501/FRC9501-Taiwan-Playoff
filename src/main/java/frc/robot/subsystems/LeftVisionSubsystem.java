@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.LimelightHelpers;
 
@@ -22,8 +23,8 @@ public class LeftVisionSubsystem extends SubsystemBase {
   private final DoubleArraySubscriber botPose;
 
   public LeftVisionSubsystem() {
-      xPID = new PIDController(0.15, 0, 0.001);
-      yPID = new PIDController(0.17, 0, 0.005);
+      xPID = new PIDController(0.17, 0, 0.001);
+      yPID = new PIDController(0.19, 0, 0.005);
       zPID = new PIDController(0.01, 0, 0);
 
       table = NetworkTableInstance.getDefault().getTable("limelight-left");
@@ -33,13 +34,25 @@ public class LeftVisionSubsystem extends SubsystemBase {
     }
 
   public double getXOutput_Leftreef() {
-    return Constants.setMaxOutput(xPID.calculate(getZ(), VisionConstants.leftReefXSetpoint), 0.2);
+    if (LEDConstants.isL4Mode) {
+      return Constants.setMaxOutput(xPID.calculate(getZ(), VisionConstants.leftReefXSetpoint_L4), 0.3);
+    }else{
+      return Constants.setMaxOutput(xPID.calculate(getZ(), VisionConstants.leftReefXSetpoint), 0.3);
+    }
   }
   public double getYOutput_Leftreef() {
-    return Constants.setMaxOutput(yPID.calculate(getX(), VisionConstants.leftReefYSetpoint), 0.2) ;
+    if (LEDConstants.isL4Mode) {
+      return Constants.setMaxOutput(yPID.calculate(getX(), VisionConstants.leftReefYSetpoint_L4), 0.3) ;
+    }else{
+      return Constants.setMaxOutput(yPID.calculate(getX(), VisionConstants.leftReefYSetpoint), 0.3) ;
+    }
   }
   public double getZOutput_Leftreef() {
-    return Constants.setMaxOutput(zPID.calculate(getRY(), VisionConstants.leftReefZSetpoint), 0.1);
+    if (LEDConstants.isL4Mode) {
+      return Constants.setMaxOutput(zPID.calculate(getRY(), VisionConstants.leftReefZSetpoint_L4), 0.1);
+    }else{
+      return Constants.setMaxOutput(zPID.calculate(getRY(), VisionConstants.leftReefZSetpoint), 0.1);
+    }
   }
   public double getXOutput_MiddleReef(){
     return Constants.setMaxOutput(xPID.calculate(getZ(), VisionConstants.left_MiddleReefXSetpoint), 0.2);
@@ -64,10 +77,10 @@ public class LeftVisionSubsystem extends SubsystemBase {
   }
 
   public boolean arriveXposition(){
-    return Math.abs(xPID.getError())<0.05;
+    return Math.abs(xPID.getError())<0.01;
   }
   public boolean arriveYposition(){
-    return Math.abs(yPID.getError())<0.05;
+    return Math.abs(yPID.getError())<0.01;
   }
   public boolean arriveRotationPosition(){
     return Math.abs(zPID.getError())<1;
