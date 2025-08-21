@@ -1,6 +1,9 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.Auto.ArmOut_Auto;
+import frc.robot.commands.Auto.PutL1_Auto;
+import frc.robot.commands.Auto.ReadyL1_Auto;
 import frc.robot.commands.TraclLeftReef;
 import frc.robot.commands.IntakeCoral;
 import frc.robot.commands.ManualDrive;
@@ -48,7 +51,9 @@ public class RobotContainer {
     // NamedCommands.registerCommand("TakeHighAlgae", new TakeHighAlgae(m_ArmSubsystem, m_ElevatorSubsystem));
     // NamedCommands.registerCommand("PutL4", new PutL4_Auto(m_ArmSubsystem, m_ElevatorSubsystem).withTimeout(2));
     // NamedCommands.registerCommand("ReadyL4", new PutL4_Auto(m_ArmSubsystem, m_ElevatorSubsystem).withTimeout(0.8));
-
+    NamedCommands.registerCommand("ReadyL1", new ReadyL1_Auto(m_ArmSubsystem, m_ElevatorSubsystem));
+    NamedCommands.registerCommand("PutL1", new PutL1_Auto(m_ArmSubsystem, m_ElevatorSubsystem).withTimeout(1));
+    NamedCommands.registerCommand("ArmOut", new ArmOut_Auto(m_ArmSubsystem, m_ElevatorSubsystem));
     SmartDashboard.putData("AutoMode", m_chooser);
     configureBindings();
   }
