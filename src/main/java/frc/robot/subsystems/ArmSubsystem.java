@@ -75,33 +75,45 @@ public class ArmSubsystem extends SubsystemBase {
         armGoalPosition = ArmConstants.coralL1PutPosition;
         mode = "putL1";
     }
-    public void putL2_Pivot() {
+    public void putL2_Pivot(){
         armGoalPosition = ArmConstants.coralL2PutPosition;
         mode = "putL2";
     }
-    public void putL3_Pivot() {
+    public void putL3_Pivot(){
         armGoalPosition = ArmConstants.coralL3PutPosition;
         mode = "putL3";
     }
-    public void putL4_Pivot() {
+    public void putL4_Pivot(){
         armGoalPosition = ArmConstants.coralL4PutPosition;
         mode = "putL4";
     }
-    public void intakeAlgaeHigh_Pivot(){
+    public void readyL2_Pivot() {
+        armGoalPosition = ArmConstants.coralL2ReadyPosition;
+        mode = "readyL2";
+    }
+    public void readyL3_Pivot() {
+        armGoalPosition = ArmConstants.coralL3ReadyPosition;
+        mode = "readyL3";
+    }
+    public void readyL4_Pivot() {
+        armGoalPosition = ArmConstants.coralL4ReadyPosition;
+        mode = "readyL4";
+    }
+    public void removeAlgaeHigh_Pivot(){
         armGoalPosition = ArmConstants.algaeHighPosition;
         back = false;
-        mode = "intakeAlgae_High";
+        mode = "removeAlgae_High";
     }
-    public void intakeAlgaeLow_Pivot(){
+    public void removeAlgaeLow_Pivot(){
         armGoalPosition = ArmConstants.algaeLowPosition;
         back = false;
-        mode = "intakeAlgae_Low";
+        mode = "removeAlgae_Low";
     }
-    public void intakeAlgaeFloor_Pivot(){
-        armGoalPosition = ArmConstants.algaeFloorPosition;
-        back = false;
-        mode = "intakeAlgae_Low";
-    }
+    // public void removeAlgaeFloor_Pivot(){
+    //     armGoalPosition = ArmConstants.algaeFloorPosition;
+    //     back = false;
+    //     mode = "removeAlgae_Low";
+    // }
     public void putNet_Pivot() {
         armGoalPosition = ArmConstants.algaeNetPosition;
         back = true;
@@ -122,11 +134,11 @@ public class ArmSubsystem extends SubsystemBase {
     public void intakeCoral_Wheel(){
         armWheelMotor.setVoltage(ArmConstants.intakeCoralVol);
     }
-    public void intakeAlgaeHigh_Wheel(){
-        armWheelMotor.setVoltage(ArmConstants.intakeAlgaeHighVol);
+    public void removeAlgaeHigh_Wheel(){
+        armWheelMotor.setVoltage(ArmConstants.removeAlgaeHighVol);
     }
-    public void intakeAlgaeLow_Wheel(){
-        armWheelMotor.setVoltage(ArmConstants.intakeAlgaeLowVol);
+    public void removeAlgaeLow_Wheel(){
+        armWheelMotor.setVoltage(ArmConstants.removeAlgaeLowVol);
     }
     public void intakeAlgaeFloor_Wheel(){
         armWheelMotor.setVoltage(ArmConstants.intakeAlgaeFloorVol);
@@ -181,7 +193,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean hasCoral(){
-        return armWheelMotor.getSupplyCurrent().getValueAsDouble() >= 0.8;
+        return armWheelMotor.getSupplyCurrent().getValueAsDouble() >= 0.9;
     }
 
     public String getMode(){
@@ -213,5 +225,6 @@ public class ArmSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("Arm/HasAlgae", hasAlgae());
         SmartDashboard.putBoolean("Arm/ArmArriveSetpoint", arriveSetpoint());
         SmartDashboard.putString("Arm/ArmMode", mode);
+        SmartDashboard.putBoolean("Arm/HasCoral", hasCoral());
     }
 }

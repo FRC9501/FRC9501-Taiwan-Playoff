@@ -4,6 +4,9 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.TraclLeftReef;
 import frc.robot.commands.IntakeCoral;
 import frc.robot.commands.ManualDrive;
+import frc.robot.commands.PutL1;
+import frc.robot.commands.PutL2;
+import frc.robot.commands.PutL3;
 import frc.robot.commands.PutL4;
 import frc.robot.commands.TrackRightReef;
 import frc.robot.commands.ToPrimitive;
@@ -69,9 +72,9 @@ public class RobotContainer {
   //按鈕盤 
   
   panel.button(4).onTrue(new PutL4(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
-  // panel.button(6).onTrue(new PutL3(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
-  // panel.button(8).onTrue(new PutL2(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
-  // panel.button(10).onTrue(new PutL1(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
+  panel.button(6).onTrue(new PutL3(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
+  panel.button(8).onTrue(new PutL2(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
+  panel.button(10).onTrue(new PutL1(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
   panel.button(12).onTrue(new ToPrimitive(m_ElevatorSubsystem, m_ArmSubsystem));
 
 

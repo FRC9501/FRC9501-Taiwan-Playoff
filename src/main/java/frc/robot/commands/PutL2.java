@@ -41,13 +41,15 @@ public class PutL2 extends Command {
   public void execute() {
     ifFeed = ifFeedFunc.getAsBoolean();
     if (m_ElevatorSubsystem.isSafe()) {
-      m_ArmSubsystem.putL2_Pivot();
+      m_ArmSubsystem.readyL2_Pivot();
     }
-    if (Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.coralL2PutPosition) <= 1) {
+    if (Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.coralL2ReadyPosition) <= 1) {
       m_ElevatorSubsystem.putL2();
     }
     if((m_ArmSubsystem.arriveSetpoint() && m_ElevatorSubsystem.arriveSetpoint()) && (ifFeed || LEDConstants.arriveSetpoint_Base) && m_ElevatorSubsystem.getMode() == "putL2") {
+      m_ArmSubsystem.putL2_Pivot();
       m_ArmSubsystem.putL2_Wheel();
+
     }
   }
 

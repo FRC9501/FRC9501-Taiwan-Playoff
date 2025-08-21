@@ -118,10 +118,10 @@ public class ElevatorSubsystem extends SubsystemBase {
         leftTalon.setPosition(0);
     }
     public boolean arriveSetpoint(){
-        return Math.abs(getPosition() - elevatorGoalPosition) <= 0.1;
+        return Math.abs(getPosition() - elevatorGoalPosition) <= 0.3;
     }
     public boolean isSafe(){
-        return Math.abs(getPosition() - ElevatorConstants.safePosition) <= 0.2;
+        return Math.abs(getPosition() - ElevatorConstants.safePosition) <= 0.3;
     }
     public double getPosition() {
         return leftTalon.getPosition().getValueAsDouble();
@@ -129,6 +129,14 @@ public class ElevatorSubsystem extends SubsystemBase {
 
     public String getMode(){
         return mode;
+    }
+
+    public double getLeftMotorVoltage(){
+        return leftTalon.getMotorVoltage().getValueAsDouble();
+    }
+
+    public double getRightMotorVoltage(){
+        return rightTalon.getMotorVoltage().getValueAsDouble();
     }
 
 
@@ -145,6 +153,11 @@ public class ElevatorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Elevator/Setpoint", elevatorGoalPosition);
         SmartDashboard.putString("Elevator/ElevatorMode", mode);
         SmartDashboard.putBoolean("Elevaotr/ArriveSetpoint", arriveSetpoint());
+        SmartDashboard.putNumber("Elevator/LeftMotorVoltage", getLeftMotorVoltage());
+        SmartDashboard.putNumber("Elevator/RightMotorVoltage", getRightMotorVoltage());
+        SmartDashboard.putNumber("Elevator/LeftMotorTemp", leftTalon.getDeviceTemp().getValueAsDouble());
+        SmartDashboard.putNumber("Elevator/RightMotorTemp", rightTalon.getDeviceTemp().getValueAsDouble());
+        SmartDashboard.putNumber("Elevator/RightMotorPosition", rightTalon.getPosition().getValueAsDouble());
     }
 
 

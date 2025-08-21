@@ -40,14 +40,17 @@ public class PutL4 extends Command {
   public void execute() {
     ifFeed = ifFeedFunc.getAsBoolean();
     if (m_ElevatorSubsystem.isSafe()) {
-      m_ArmSubsystem.putL4_Pivot();
+      m_ArmSubsystem.readyL4_Pivot();
     }
-    if (Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.coralL4PutPosition) <= 10) {
+    if (Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.coralL4ReadyPosition) <= 10) {
       m_ElevatorSubsystem.putL4();
     }
     //Math.abs(m_ElevatorSubsystem.getPosition() - ElevatorConstants.coralL4RealPosition) <= 0.1
-    if((m_ArmSubsystem.arriveSetpoint() && m_ElevatorSubsystem.arriveSetpoint()) && (ifFeed || LEDConstants.arriveSetpoint_Base) && m_ArmSubsystem.getMode() == "putL4") {
-      m_ArmSubsystem.putL4_Wheel();
+    if((m_ArmSubsystem.arriveSetpoint() && m_ElevatorSubsystem.arriveSetpoint()) && (ifFeed || LEDConstants.arriveSetpoint_Base) && m_ElevatorSubsystem.getMode() == "putL4") {
+      m_ArmSubsystem.putL4_Pivot();
+      if (Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.coralL4PutPosition) <= 1) {
+        m_ArmSubsystem.putL4_Wheel();
+      }
     }
   }
 
