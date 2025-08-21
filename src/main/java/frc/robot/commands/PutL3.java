@@ -43,7 +43,7 @@ public class PutL3 extends Command {
     if (m_ElevatorSubsystem.isSafe()) {
       m_ArmSubsystem.putL3_Pivot();
     }
-    if (Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.coralL3PutPosition) <= 5) {
+    if (Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.coralL3PutPosition) <= 1) {
       m_ElevatorSubsystem.putL3();
     }
     if((m_ArmSubsystem.arriveSetpoint() && m_ElevatorSubsystem.arriveSetpoint()) && (ifFeed || LEDConstants.arriveSetpoint_Base) && m_ElevatorSubsystem.getMode() == "putL3") {

@@ -40,7 +40,7 @@ public class FloorAlgae extends Command {
     if (m_ElevatorSubsystem.isSafe()) {
       m_ArmSubsystem.intakeAlgaeFloor_Pivot();
     }
-    if (Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.algaeFloorPosition) <= 5) {
+    if (Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.algaeFloorPosition) <= 1) {
       m_ElevatorSubsystem.intakeAlgaeFloor();
     }
     if (m_ArmSubsystem.hasAlgae()) {

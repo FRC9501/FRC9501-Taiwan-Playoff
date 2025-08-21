@@ -4,11 +4,14 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.IntakeCoral;
 import frc.robot.commands.TraclLeftReef;
 import frc.robot.commands.ManualDrive;
+import frc.robot.commands.PutL4;
 import frc.robot.commands.Auto.PutL4_Auto;
 import frc.robot.commands.Auto.TrackLeftReef_Auto;
 import frc.robot.commands.Auto.TrackRightReef_Auto;
 import frc.robot.commands.TrackRightReef;
 import frc.robot.commands.TakeHighAlgae;
+import frc.robot.commands.TakeLowAlgae;
+import frc.robot.commands.ToPrimitive;
 import frc.robot.subsystems.LeftVisionSubsystem;
 import frc.robot.subsystems.RightVisionSubsystem;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -63,17 +66,20 @@ public class RobotContainer {
   driverController.leftBumper().whileTrue(new TrackRightReef(m_RightVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
   m_SwerveSubsystem.setDefaultCommand(new ManualDrive(m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
   driverController.x().whileTrue(Commands.runOnce(() -> m_SwerveSubsystem.resetGyro()));
+
+  // driverController.b().toggleOnTrue(new TakeLowAlgae(m_ArmSubsystem, m_ElevatorSubsystem));
+  // driverController.y().onTrue(new ToPrimitive(m_ElevatorSubsystem, m_ArmSubsystem));
   //按鈕盤 
-  // panel.button(0).onTrue(new PutNet(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
-  // panel.button(1).onTrue(new TakeHighAlgae(m_ArmSubsystem, m_ElevatorSubsystem));
-  // panel.button(2).toggleOnTrue(new TakeLowAlgae(m_ArmSubsystem, m_ElevatorSubsystem));
-  // panel.button(3).onTrue(new PutProcessor(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
-  // panel.button(4).onTrue(new FloorAlgae(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
-  // panel.button(5).onTrue(new PutL4(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
+  // panel.button(3).onTrue(new PutNet(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
+  // panel.button(5).onTrue(new TakeHighAlgae(m_ArmSubsystem, m_ElevatorSubsystem));
+  panel.button(7).toggleOnTrue(new TakeLowAlgae(m_ArmSubsystem, m_ElevatorSubsystem));
+  // panel.button(11).onTrue(new PutProcessor(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
+  // panel.button(9).onTrue(new FloorAlgae(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
+  panel.button(4).onTrue(new PutL4(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
   // panel.button(6).onTrue(new PutL3(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
-  // panel.button(7).onTrue(new PutL2(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
-  // panel.button(8).onTrue(new PutL1(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
-  // panel.button(9).onTrue(new ToPrimitive(m_ElevatorSubsystem, m_ArmSubsystem));
+  // panel.button(8).onTrue(new PutL2(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
+  // panel.button(10).onTrue(new PutL1(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
+  panel.button(12).onTrue(new ToPrimitive(m_ElevatorSubsystem, m_ArmSubsystem));
 
 }
 

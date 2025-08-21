@@ -55,7 +55,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         rightTalon.setControl(new Follower(leftTalon.getDeviceID(), true));
 
         resetEncoder();
-        primitive_Coral();
+        primitive_Algae();
 
         request = new MotionMagicVoltage(elevatorGoalPosition) ;
     }
@@ -144,6 +144,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Elevator/Position", getPosition());
         SmartDashboard.putNumber("Elevator/Setpoint", elevatorGoalPosition);
         SmartDashboard.putString("Elevator/ElevatorMode", mode);
+        SmartDashboard.putBoolean("Elevaotr/ArriveSetpoint", arriveSetpoint());
     }
 
 

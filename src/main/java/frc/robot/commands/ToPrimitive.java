@@ -42,7 +42,7 @@ public class ToPrimitive extends Command {
     if(m_ElevatorSubsystem.isSafe() && LEDConstants.isAlgaeMode == false){
       m_ArmSubsystem.intakeCoral_Pivot();
     }
-    if ((Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.coralIntakePosition) <= 5) && (LEDConstants.isAlgaeMode == false)) {
+    if ((Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.coralIntakePosition) <= 1) && (LEDConstants.isAlgaeMode == false)) {
       m_ElevatorSubsystem.primitive_Coral();
     }
   }

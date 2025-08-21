@@ -7,6 +7,8 @@ package frc.robot.commands;
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.ElevatorConstants;
 import frc.robot.Constants.LEDConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
@@ -31,7 +33,7 @@ public class PutL4 extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_ElevatorSubsystem.putL4();
+    m_ElevatorSubsystem.toSafePosition();;
     LEDConstants.isAlgaeMode = false;
   }
 
@@ -42,7 +44,10 @@ public class PutL4 extends Command {
     if (m_ElevatorSubsystem.isSafe()) {
       m_ArmSubsystem.putL4_Pivot();
     }
-    if((m_ArmSubsystem.arriveSetpoint() && m_ElevatorSubsystem.arriveSetpoint()) && (ifFeed || LEDConstants.arriveSetpoint_Base) && m_ArmSubsystem.getMode() == "putL4") {
+    if (Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.coralL4PutPosition) <= 10) {
+      m_ElevatorSubsystem.putL4();
+    }
+    if((m_ArmSubsystem.arriveSetpoint() && Math.abs(m_ElevatorSubsystem.getPosition() - ElevatorConstants.coralL4RealPosition) <= 0.1) && (ifFeed || LEDConstants.arriveSetpoint_Base) && m_ArmSubsystem.getMode() == "putL4") {
       m_ArmSubsystem.putL4_Wheel();
     }
   }

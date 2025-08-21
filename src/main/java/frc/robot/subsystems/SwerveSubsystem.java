@@ -204,5 +204,7 @@ public class SwerveSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Swerve/rightFrontDrivingMotorPosition", rightFront.getDrivePosition());
     SmartDashboard.putNumber("Swerve/rightBackDrivingMotorPosition", rightBack.getDrivePosition());
     SmartDashboard.putNumber("Swerve/zSpeed", zSpeed);
+    SmartDashboard.putNumber("sWERVE/GYRO", gyro.getAngle());
+    SmartDashboard.putNumber("Swerve/leftBackturningMotorVelocity", leftBack.getTurningMotorVelocity());
   }
 }

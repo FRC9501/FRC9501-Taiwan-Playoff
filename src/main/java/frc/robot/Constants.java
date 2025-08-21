@@ -113,16 +113,17 @@ public final class Constants {
     public static final int elevatorRightMotorID = 13;
     public static final int elevatorLeftMotorID = 14;
 
-    public static final double safePosition = 0;
-    public static final double coralPrimitivePosition = 0;
-    public static final double coralIntakePosition = 0;
-    public static final double coralL4Position  = 19.03;
+    public static final double safePosition = 9.12;
+    public static final double coralPrimitivePosition = 8.78;
+    public static final double coralIntakePosition = 7.83;
+    public static final double coralL4Position  = 19.23;//19.03
+    public static final double coralL4RealPosition = 19.03;
     public static final double coralL3Position  = 6.98;
     public static final double coralL2Position  = 0;
     public static final double coralL1Position  = 10.59;
     public static final double algaePrimitivePosition = 0;
     public static final double algaeHighPosition = 20.54;
-    public static final double algaeLowPosition = 14.03;
+    public static final double algaeLowPosition = 9.77;
     public static final double algaeFloorPosition = 0;
     public static final double algaeNetPosition  = 21.41;
     public static final double algaeProcessorPosition  = 0;
@@ -136,16 +137,16 @@ public final class Constants {
     public static final int armRelativeEncoderFirstID = 1;
     public static final int armRelativeEncoderSecondID = 2;
 
-    public static final double armAbsoluteEncoderOffset = 0.152896;
+    public static final double armAbsoluteEncoderOffset = -0.169;
 
-    public static final double coralPrimitivePosition = 270;
-    public static final double coralIntakePosition = 270;
+    public static final double coralPrimitivePosition = 92.9;
+    public static final double coralIntakePosition = 92.9;
     public static final double coralL1PutPosition = 140.76;
     public static final double coralL2PutPosition = 232.11;
     public static final double coralL3PutPosition = 228.46;
     public static final double coralL4PutPosition = 226.47;
     public static final double algaeHighPosition = 167.8;
-    public static final double algaeLowPosition = 159;
+    public static final double algaeLowPosition = 179.36;
     public static final double algaeFloorPosition = 270;
     public static final double algaeNetPosition = 298.18;
     public static final double algaeProcessorPosition = 186.36;
@@ -154,7 +155,7 @@ public final class Constants {
     public static final double putL1Vol = 0;
     public static final double putL2Vol = 0;
     public static final double putL3Vol = 0;
-    public static final double putL4Vol = 0;
+    public static final double putL4Vol = -0.6;
     public static final double intakeCoralVol = 3;
     public static final double intakeAlgaeFloorVol = 12;
     public static final double intakeAlgaeHighVol = 12;

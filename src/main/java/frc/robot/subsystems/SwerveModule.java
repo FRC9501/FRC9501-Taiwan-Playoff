@@ -94,6 +94,10 @@ public class SwerveModule extends SubsystemBase {
     return absolutedEncoder.getAbsolutePosition().getValueAsDouble();
   }
 
+  public double getTurningMotorVelocity(){
+    return turningMotor.getEncoder().getVelocity();
+  }
+
   public double getTurningMotorPosition(){
     return turningMotor.getEncoder().getPosition();
   }

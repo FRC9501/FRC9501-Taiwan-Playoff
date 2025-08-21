@@ -63,7 +63,7 @@ public class ArmSubsystem extends SubsystemBase {
 
         armPivotMotor.getConfigurator().apply(armPivotMotorConfig);
         armWheelMotor.getConfigurator().apply(armWheelMotorConfig);
-        intakeCoral_Pivot();
+        primitive_Algae_Pivot();
     }
     
     //pivot
