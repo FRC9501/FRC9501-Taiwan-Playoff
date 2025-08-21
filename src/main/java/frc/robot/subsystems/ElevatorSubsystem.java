@@ -121,7 +121,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         return Math.abs(getPosition() - elevatorGoalPosition) <= 0.1;
     }
     public boolean isSafe(){
-        return getPosition() >= (ElevatorConstants.safePosition - 0.1);
+        return Math.abs(getPosition() - ElevatorConstants.safePosition) <= 0.2;
     }
     public double getPosition() {
         return leftTalon.getPosition().getValueAsDouble();

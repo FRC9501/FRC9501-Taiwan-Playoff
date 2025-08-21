@@ -6,7 +6,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.LEDConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
@@ -25,24 +24,17 @@ public class ToPrimitive extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if (LEDConstants.isAlgaeMode) {
-      m_ArmSubsystem.primitive_Algae_Pivot();
-    }else{
-      m_ElevatorSubsystem.toSafePosition();
-      m_ArmSubsystem.stopWheel();
-    }
+    m_ElevatorSubsystem.toSafePosition();
+    m_ArmSubsystem.stopWheel();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_ArmSubsystem.arriveSetpoint() && LEDConstants.isAlgaeMode) {
-      m_ElevatorSubsystem.primitive_Algae();
-    }
-    if(m_ElevatorSubsystem.isSafe() && LEDConstants.isAlgaeMode == false){
+    if(m_ElevatorSubsystem.isSafe()){
       m_ArmSubsystem.intakeCoral_Pivot();
     }
-    if ((Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.coralIntakePosition) <= 1) && (LEDConstants.isAlgaeMode == false)) {
+    if ((Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.coralIntakePosition) <= 1)) {
       m_ElevatorSubsystem.primitive_Coral();
     }
   }

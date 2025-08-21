@@ -7,7 +7,7 @@ package frc.robot.commands;
 import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.LEDConstants;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
@@ -31,8 +31,7 @@ public class PutL1 extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_ElevatorSubsystem.putL1();
-    LEDConstants.isAlgaeMode = false;
+    m_ElevatorSubsystem.toSafePosition();;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -41,6 +40,9 @@ public class PutL1 extends Command {
     ifFeed = ifFeedFunc.getAsBoolean();
     if(m_ElevatorSubsystem.isSafe()){
       m_ArmSubsystem.putL1_Pivot();
+    }
+    if (Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.coralL1PutPosition) <= 3) {
+      m_ElevatorSubsystem.putL1();
     }
     if (ifFeed && m_ArmSubsystem.arriveSetpoint() && m_ElevatorSubsystem.arriveSetpoint() && m_ElevatorSubsystem.getMode() == "putL1") {
       m_ArmSubsystem.putL1_Wheel();

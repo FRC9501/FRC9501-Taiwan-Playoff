@@ -33,7 +33,6 @@ public class PutL3 extends Command {
   @Override
   public void initialize() {
     m_ElevatorSubsystem.toSafePosition();
-    LEDConstants.isAlgaeMode = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
