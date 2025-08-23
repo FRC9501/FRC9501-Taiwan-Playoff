@@ -193,7 +193,7 @@ public class ArmSubsystem extends SubsystemBase {
     }
 
     public boolean hasCoral(){
-        return armWheelMotor.getSupplyCurrent().getValueAsDouble() >= 0.9;
+        return armWheelMotor.getSupplyCurrent().getValueAsDouble() >= 1.8;
     }
 
     public String getMode(){

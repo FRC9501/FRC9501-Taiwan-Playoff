@@ -113,10 +113,10 @@ public class LeftVisionSubsystem extends SubsystemBase {
   }
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Tx", getX());
-    SmartDashboard.putNumber("Tz", getZ());
-    SmartDashboard.putNumber("RY", getRY());
-    SmartDashboard.putBoolean("hastarget", hastarget());
+    SmartDashboard.putNumber("LeftVision/Tx", getX());
+    SmartDashboard.putNumber("LeftVision/Tz", getZ());
+    SmartDashboard.putNumber("LeftVision/RY", getRY());
+    SmartDashboard.putBoolean("LeftVision/hastarget", hastarget());
     SmartDashboard.putNumber("xoutput", getXOutput_Leftreef());
     SmartDashboard.putNumber("youtput", getYOutput_Leftreef());
     SmartDashboard.putNumber("RYoutput", getZOutput_Leftreef());

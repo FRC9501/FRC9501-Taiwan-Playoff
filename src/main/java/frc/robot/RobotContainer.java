@@ -11,6 +11,9 @@ import frc.robot.commands.PutL1;
 import frc.robot.commands.PutL2;
 import frc.robot.commands.PutL3;
 import frc.robot.commands.PutL4;
+import frc.robot.commands.ColdMode;
+import frc.robot.commands.RemoveAlgae_High;
+import frc.robot.commands.RemoveAlgae_Low;
 import frc.robot.commands.TrackRightReef;
 import frc.robot.commands.ToPrimitive;
 import frc.robot.subsystems.LeftVisionSubsystem;
@@ -65,8 +68,8 @@ public class RobotContainer {
   DoubleSupplier ySpeedFunc = ()-> driverController.getRawAxis(0);
   DoubleSupplier zSpeedFunc = ()-> driverController.getRawAxis(4);
   driverController.leftTrigger().whileTrue(new IntakeCoral(m_ArmSubsystem, m_ElevatorSubsystem));
-  driverController.rightBumper().whileTrue(new TrackLeftReef(m_LeftVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
-  driverController.leftBumper().whileTrue(new TrackRightReef(m_RightVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
+  driverController.leftBumper().whileTrue(new TrackLeftReef(m_LeftVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
+  driverController.rightBumper().whileTrue(new TrackRightReef(m_RightVisionSubsystem, m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
   m_SwerveSubsystem.setDefaultCommand(new ManualDrive(m_SwerveSubsystem, xSpeedFunc, ySpeedFunc, zSpeedFunc));
   driverController.x().whileTrue(Commands.runOnce(() -> m_SwerveSubsystem.resetGyro()));
 
@@ -81,6 +84,9 @@ public class RobotContainer {
   panel.button(8).onTrue(new PutL2(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
   panel.button(10).onTrue(new PutL1(m_ArmSubsystem, m_ElevatorSubsystem, ifFeed));
   panel.button(12).onTrue(new ToPrimitive(m_ElevatorSubsystem, m_ArmSubsystem));
+  panel.button(7).onTrue(new RemoveAlgae_Low(m_ArmSubsystem, m_ElevatorSubsystem));
+  panel.button(5).onTrue(new RemoveAlgae_High(m_ArmSubsystem, m_ElevatorSubsystem));
+  panel.button(11).or(panel.button(9)).onTrue(new ColdMode(m_ArmSubsystem, m_ElevatorSubsystem));
 
 
   // panel.button(7).toggleOnTrue(new TakeLowAlgae(m_ArmSubsystem, m_ElevatorSubsystem));

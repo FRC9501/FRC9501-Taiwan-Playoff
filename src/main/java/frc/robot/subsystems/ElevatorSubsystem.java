@@ -158,6 +158,7 @@ public class ElevatorSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Elevator/LeftMotorTemp", leftTalon.getDeviceTemp().getValueAsDouble());
         SmartDashboard.putNumber("Elevator/RightMotorTemp", rightTalon.getDeviceTemp().getValueAsDouble());
         SmartDashboard.putNumber("Elevator/RightMotorPosition", rightTalon.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("LeftMotorTemp", leftTalon.getDeviceTemp().getValueAsDouble());
     }
 
 

@@ -107,10 +107,10 @@ public double getZOutput_MiddleReef() {
   }
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Tx", getTX());
-    SmartDashboard.putNumber("Tz", getTZ());
-    SmartDashboard.putNumber("RY", getRY());
-    SmartDashboard.putBoolean("hastarget", hastarget());
+    SmartDashboard.putNumber("RightVision/Tx", getTX());
+    SmartDashboard.putNumber("RightVision/Tz", getTZ());
+    SmartDashboard.putNumber("RightVision/RY", getRY());
+    SmartDashboard.putBoolean("RightVision/hastarget", hastarget());
     SmartDashboard.putNumber("xoutput", getXOutput_RightReef());
     SmartDashboard.putNumber("youtput", getYOutput_RightReef());
     SmartDashboard.putNumber("RYoutput", getZOutput_RightReef());

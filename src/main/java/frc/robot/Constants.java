@@ -122,8 +122,8 @@ public final class Constants {
     public static final double coralL2Position  = 0;
     public static final double coralL1Position  = 11.21;
     public static final double algaePrimitivePosition = 0;
-    public static final double algaeHighPosition = 20.54;
-    public static final double algaeLowPosition = 9.77;
+    public static final double algaeHighPosition = 18.52;//20.54
+    public static final double algaeLowPosition = 10.67;//9.77
     public static final double algaeFloorPosition = 0;
     public static final double algaeNetPosition  = 21.41;
     public static final double algaeProcessorPosition  = 0;
@@ -137,7 +137,7 @@ public final class Constants {
     public static final int armRelativeEncoderFirstID = 1;
     public static final int armRelativeEncoderSecondID = 2;
 
-    public static final double armAbsoluteEncoderOffset = -0.169;
+    public static final double armAbsoluteEncoderOffset = 0.0124;
 
     public static final double coralPrimitivePosition = 92.9;
     public static final double coralIntakePosition = 92.9;
@@ -148,8 +148,8 @@ public final class Constants {
     public static final double coralL2ReadyPosition = 229.12;
     public static final double coralL3ReadyPosition = 228.46;
     public static final double coralL4ReadyPosition = 210.66;
-    public static final double algaeHighPosition = 167.8;
-    public static final double algaeLowPosition = 179.36;
+    public static final double algaeHighPosition = 174.42;//167.8
+    public static final double algaeLowPosition = 178.22;//179.36
     public static final double algaeFloorPosition = 270;
     public static final double algaeNetPosition = 298.18;
     public static final double algaeProcessorPosition = 186.36;
@@ -160,27 +160,27 @@ public final class Constants {
     public static final double putL3Vol = -1.2;
     public static final double putL4Vol = -1.2;
     public static final double intakeCoralVol = 3;
-    public static final double intakeAlgaeFloorVol = 12;
-    public static final double removeAlgaeHighVol = 12;
-    public static final double removeAlgaeLowVol = 12;
+    public static final double intakeAlgaeFloorVol = -12;
+    public static final double removeAlgaeHighVol = -12;
+    public static final double removeAlgaeLowVol = -12;
     public static final double holdAlgaeVol = 12;
     public static final double putProcessorVol = 0;
     public static final double putNetVol = 0;
   }
   public static class VisionConstants{
-    public static final double rightReefXSetpoint = 0.4233;
-    public static final double rightReefYSetpoint = -0.3216;
-    public static final double rightReefZSetpoint = -8;
-    public static final double rightReefXSetpoint_L4 = 0.4233;
-    public static final double rightReefYSetpoint_L4 = -0.3216;
-    public static final double rightReefZSetpoint_L4 = -8;
+    public static final double rightReefXSetpoint = 0.4880;
+    public static final double rightReefYSetpoint = -0.3234;
+    public static final double rightReefZSetpoint = -18.14;
+    public static final double rightReefXSetpoint_L4 = 0.6142;
+    public static final double rightReefYSetpoint_L4 = -0.2876;
+    public static final double rightReefZSetpoint_L4 = -18.415;
 
-    public static final double leftReefXSetpoint = 0.264;
-    public static final double leftReefYSetpoint = 0.339;
-    public static final double leftReefZSetpoint = 20.921;
-    public static final double leftReefXSetpoint_L4 = 0.264;
-    public static final double leftReefYSetpoint_L4 = 0.339;
-    public static final double leftReefZSetpoint_L4 = 20.921;
+    public static final double leftReefXSetpoint = 0.2008;
+    public static final double leftReefYSetpoint = 0.4466;
+    public static final double leftReefZSetpoint = 10.998;
+    public static final double leftReefXSetpoint_L4 = 0.3776;
+    public static final double leftReefYSetpoint_L4 = 0.4025;
+    public static final double leftReefZSetpoint_L4 = 13.273;
 
     public static final double right_MiddleReefXSetpoint = 0;
     public static final double right_MiddleReefYSetpoint = 0;

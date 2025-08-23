@@ -35,7 +35,7 @@ public class RemoveAlgae_Low extends Command {
       m_ArmSubsystem.removeAlgaeLow_Pivot();
     }
     if (Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.algaeLowPosition) <= 1) {
-      m_ElevatorSubsystem.intakeAlgaeHigh();
+      m_ElevatorSubsystem.intakeAlgaeLow();
     }
   }
 

@@ -4,40 +4,46 @@
 
 package frc.robot.commands;
 
+import java.util.function.BooleanSupplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.LEDConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class RemoveAlgae_High extends Command {
-  /** Creates a new RemoveAlgae_High. */
-  private final ArmSubsystem m_ArmSubsystem;
-  private final ElevatorSubsystem m_ElevatorSubsystem;
-  public RemoveAlgae_High(ArmSubsystem armSubsystem, ElevatorSubsystem elevatorSubsystem) {
-    // Use addRequirements() here to declare subsystem dependencies.
+public class ColdMode extends Command {
+  private ArmSubsystem m_ArmSubsystem;
+  private ElevatorSubsystem m_ElevatorSubsystem;
+  private BooleanSupplier ifFeedFunc;
+
+  /** Creates a new L4. */
+  public ColdMode(ArmSubsystem armSubsystem, ElevatorSubsystem elevatorSubsystem) {
     this.m_ArmSubsystem = armSubsystem;
     this.m_ElevatorSubsystem = elevatorSubsystem;
     addRequirements(m_ArmSubsystem, m_ElevatorSubsystem);
+
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_ElevatorSubsystem.toSafePosition();
-    m_ArmSubsystem.removeAlgaeHigh_Pivot();
-    m_ArmSubsystem.removeAlgaeHigh_Wheel();
+    LEDConstants.isAlgaeMode = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (m_ElevatorSubsystem.isSafe()) {
-      m_ArmSubsystem.removeAlgaeHigh_Pivot();
+      m_ArmSubsystem.primitive_Algae_Pivot();;
     }
-    if (Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.algaeHighPosition) <= 1) {
-      m_ElevatorSubsystem.intakeAlgaeHigh();
+    if (Math.abs(m_ArmSubsystem.getAngle_Degrees_PID() - ArmConstants.algaePrimitivePosition) <= 1) {
+      m_ElevatorSubsystem.putL2();
     }
+
   }
 
   // Called once the command ends or is interrupted.
